@@ -1,0 +1,45 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}What is My HTTP Headers - View and Analyze HTTP Headers | Shub Raj Apps{% endblock %}
+
+{% block description %}Discover your HTTP headers instantly with Shub Raj Apps' HTTP Headers tool. Analyze and view HTTP headers to troubleshoot web issues quickly and efficiently.{% endblock %}
+
+{% block keywords %}what is my HTTP headers, HTTP headers tool, view HTTP headers, analyze HTTP headers, online HTTP headers checker, HTTP request headers{% endblock %}
+
+{% block og_title %}What is My HTTP Headers - Shub Raj Apps | View and Analyze HTTP Headers{% endblock %}
+
+{% block og_description %}Instantly discover your HTTP headers with our online tool. Analyze HTTP headers to troubleshoot web issues quickly and easily.{% endblock %}
+
+{% block content %}
+    <h2>What Are My Headers?</h2>
+    <p>This page displays your HTTP headers, including User Agent, Accept-Encoding, Host, Referer, and more.</p>
+
+    <!-- Card to display headers -->
+    <div class="header-info">
+        <h3>Your HTTP Headers</h3>
+        <ul id="headerList">
+            {% for key, value in client_headers.items %}
+            <li><strong>{{ key|slice:"5:" }}: </strong>{{value}}</li>
+            {% endfor %}
+            <!-- Additional headers will be populated here -->
+        </ul>
+    </div>
+    
+    <section class="seo-blog">
+        <h2>Understand Your HTTP Headers</h2>
+        <p>
+            HTTP headers are essential parts of web communication. They contain information about the request and response between your browser and a web server. For example, they can tell you what browser you’re using, how your request is handled, and other important details that help improve web performance.
+        </p>
+        <p>
+            With our <a href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">HTTP Headers Tool</a>, you can easily view and analyze these headers to solve web issues quickly. Our user-friendly tool shows important headers like <strong>User-Agent</strong>, <strong>Accept-Encoding</strong>, <strong>Host</strong>, and <strong>Referer</strong>.
+        </p>
+        <p>
+            Whether you’re fixing problems on a website, checking if it works well across different browsers, or optimizing speed, this tool makes it simple.
+        </p>
+        <p>
+            Try our HTTP Headers Tool today to better understand your web interactions.
+        </p>
+    </section>
+    
+{% endblock %}

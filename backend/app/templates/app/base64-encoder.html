@@ -1,0 +1,42 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Base64 Encode - Online Base64 Encoder | Shub Raj Apps{% endblock %}
+
+{% block description %}Quickly encode text and data to Base64 format with Shub Raj Apps' Base64 encoder. Convert your data into Base64 for easy sharing and embedding.{% endblock %}
+
+{% block keywords %}base64 encode, base64 encoder, online base64 encode, convert text to base64, base64 conversion, encode base64 online{% endblock %}
+
+{% block og_title %}Base64 Encode - Shub Raj Apps | Online Base64 Encoder{% endblock %}
+
+{% block og_description %}Use our Base64 encoder to quickly convert text and data into Base64 format. Simple, efficient, and fast.{% endblock %}
+
+{% block content %}
+<h2>Base64 Encoder</h2>
+<p>Encode your text to Base64 format as you type below. Paste or type your text to see the Base64 encoded output.</p>
+<div class="encoder-section">
+    <textarea id="textInput" class="input-text" placeholder="Type your text here..."></textarea>
+    <div class="action-buttons">
+        <button id="clearBtn" class="btn" disabled>Clear</button>
+    </div>
+    <div>
+        <p class="output-label">Base64 Encoded Output:</p>
+        <textarea id="textOutput" class="output-text" placeholder="Your encoded text will appear here..." readonly></textarea>
+    </div>
+</div>
+<section class="seo-blog">
+    <h2>Why use Base64 Encoding?</h2>
+    <p>
+        Encoding data is essential for various applications, especially when sharing information across platforms. Our <a href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">Base64 Encoder</a> at app.shubraj.com makes this process easy.
+    </p>
+    <p>
+        Whether you're a developer looking to encode text for APIs, a designer embedding images in HTML, or simply someone wanting to share data securely, our user-friendly tool allows you to convert any text to Base64 format quickly and efficiently. Just type or paste your text into the input box, and the encoded output will appear in real time on the right.
+    </p>
+    <p>
+        Experience the simplicity and speed of our Base64 encoder today. With just a few clicks, you can easily prepare your data for seamless sharing and embedding. Dive in and discover how our tool can simplify your encoding tasks.
+    </p>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'app/js/b64Encoder.js' %}"></script>
+{% endblock %}

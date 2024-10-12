@@ -1,0 +1,73 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Bcrypt Generator - Secure Hashing Tool | Shub Raj Apps{% endblock %}
+
+{% block description %}Encrypt passwords and sensitive data securely using Bcrypt with Shub Raj Apps. Easily generate Bcrypt hashes for enhanced security.{% endblock %}
+
+{% block keywords %}bcrypt encrypt, bcrypt hash generator, bcrypt encryption, secure password hashing, bcrypt online tool, encrypt with bcrypt{% endblock %}
+
+{% block og_title %}Bcrypt Generator - Shub Raj Apps | Secure Hashing Tool{% endblock %}
+
+{% block og_description %}Use our online Bcrypt encrypt tool to generate secure password hashes. Protect your data with strong encryption.{% endblock %}
+
+{% block content %}
+    <div class="hash-section">
+        <h2>Bcrypt Hash Generator</h2>
+        <p>Enter text and select salt rounds to generate a Bcrypt hash.</p>
+
+        <!-- Bcrypt Hash Input Section in a Card -->
+        <div class="card">
+            <label for="hashInput">Enter Text:</label>
+            <textarea id="hashInput" placeholder="Enter your text here..." rows="5"></textarea>
+
+            <label for="hashVersion">Salt Rounds:</label>
+            <select id="hashVersion">
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10" selected>10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+            </select>
+            <!-- Buttons Below the Input Card -->
+            <div class="action-buttons">
+                <button id="generateBtn" class="btn" disabled>Generate Bcrypt Hash</button> <!-- Disabled initially -->
+                <button id="copyBtn" class="btn" disabled>Copy to Clipboard</button> <!-- Disabled initially -->
+            </div>
+        </div>
+
+        <!-- Bcrypt Hash Output Section in a Hidden Card -->
+        <div class="card" id="hashCard">
+            <label for="hashOutput">Bcrypt Hash:</label>
+            <div id="hashOutput" readonly></div>
+        </div>
+    </div>
+    <section class="seo-blog">
+        <h2>Secure Your Data with Bcrypt Encryption</h2>
+        <p>
+            In an era where data security is paramount, safeguarding your passwords and sensitive information has never been more critical. Our <a href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">Bcrypt Hash Generator</a> provides an easy and effective way to encrypt your data securely.
+        </p>
+        <p>
+            With just a few clicks, you can generate strong Bcrypt hashes, enhancing the security of your applications and protecting your users' data. Simply enter the text you wish to encrypt, choose your desired salt rounds, and let our tool handle the rest. 
+        </p>
+        <p>
+            Bcrypt is renowned for its adaptability and strength, making it a popular choice for secure password hashing. Don't leave your data vulnerable utilize our Bcrypt generator today to ensure your information is safe and sound.
+        </p>
+    </section>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+<script src="{% static 'app/js/bcryptGenerator.js' %}"></script>
+{% endblock %}

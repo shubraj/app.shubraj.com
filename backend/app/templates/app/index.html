@@ -1,0 +1,130 @@
+{% extends "app/base.html" %}
+{% block description %}Shub Raj Apps offers a variety of online tools, including hashing, image and text utilities, verification tools, SEO tools, Fiverr, blogging resources, and social media tools. Simplify your tasks with ease.{% endblock description %}
+{% block keywords %}online tools, shubraj, hashing, image tools, text utilities, verification tools, seo tools, fiverr tools,blogging, social media tools, email verifier, IP lookup{% endblock keywords %}
+{% block og_title %}Shub Raj Apps - Image, Text, Hashing, Verification, SEO, Social Medias & More Tools{% endblock og_title %}
+{% block og_description %}Online tools for hashing, image and text processing, verification,validation, SEO, Fiverr, blogging and social media and more.{% endblock og_description %}
+{% block title %}Shub Raj Apps - Image, Text, Hashing, Verification, SEO, Blogging, Social Medias & More Tools{% endblock title %}
+{% block content %}
+    <section id="encoding-decoding-tools">  
+        <h2>Encoding and Decoding</h2>  
+        <div class="tools-grid">  
+            <a href="{% url 'app_app:base64_decoder' %}" class="tool-card">  
+                <h3>Base64 Decoder</h3>  
+                <p>Convert data between various formats instantly.</p>  
+            </a>  
+            <a href="{% url 'app_app:base64_encoder' %}" class="tool-card">  
+                <h3>Base64 Encoder</h3>  
+                <p>Convert text to Base64 format easily.</p>  
+            </a>  
+            <a href="{% url "app_app:base64_decode_image" %}" class="tool-card">  
+                <h3>Base64 Decode Image</h3>  
+                <p>Retrive images from Base64 strings.</p>  
+            </a>  
+            <a href="{% url "app_app:base64_encode_image" %}" class="tool-card">  
+            <h3>Base64 Encode Image</h3>  
+            <p>Convert images into Base64 string.</p>  
+        </a>  
+        <a href="{% url "app_app:cloudflare_email_decoder" %}" class="tool-card">  
+            <h3>Cloudflare Email Decoder</h3>  
+            <p>Decrypt cloudflare email obfuscation</p>  
+        </a>  
+        </div>   
+    </section>
+
+    <section id="hashing-generator-tools">   
+        <h2>Hash Generator</h2>
+        <div class="tools-grid">   
+            <a href="{% url "app_app:md5_generator" %}" class="tool-card">   
+                <h3>MD5 Generator</h3>
+                <p>Create MD5 hashes quickly.</p>
+            </a>
+            <a href="{% url "app_app:sha_generator" %}" class="tool-card">
+                <h3>SHA Generator</h3>
+                <p>Generate secure SHA hashes.</p>
+            </a>
+            <a href="{% url "app_app:bcrypt_generator" %}" class="tool-card">
+                <h3>BCrypt Generator</h3>
+                <p>Hash passwords using BCrypt algorithm.</p>
+            </a>
+        </div>
+    </section>
+
+    <section id="data-formatter-tools">
+        <h2>Data Formatter and Beautifier</h2>
+        <div class="tools-grid">
+            <a href="{% url "app_app:css_beautifier" %}" class="tool-card">
+                <h3>CSS Beautifier</h3>
+                <p>Format and clean CSS code.</p>
+            </a>
+            <a href="{% url "app_app:json_beautifier" %}" class="tool-card">
+                <h3>JSON Beautifier</h3>
+                <p>Prettify and validate JSON data.</p>
+            </a>
+            <a href="{% url "app_app:markdown_editor" %}" class="tool-card">
+                <h3>Online Markdown Editor</h3>
+                <p>Write and preview Markdown in real-time.</p>
+            </a>
+        </div>
+    </section>
+    <section id="color-tools">
+    <h2>Color Tools</h2>
+    <div class="tools-grid">
+        <a href="{% url "app_app:color_converter" %}" class="tool-card">
+            <h3>Color Converter</h3>
+            <p>Convert colors between different formats (RGB,HEX,HSL).</p>
+        </a>
+        <a href="{% url "app_app:image_color_picker" %}" class="tool-card">
+            <h3>Image Color Picker</h3>
+            <p>Extract color codes (RGB,HEX,HSL) from an image.</p>
+        </a>
+    </div>
+</section>
+<section id="image-tools">
+    <h2>Image Tools</h2>
+    <div class="tools-grid">
+        <a href="{% url "app_app:svg_to_jpg" %}" class="tool-card">
+            <h3>SVG to JPG</h3>
+            <p>Convert SVG image to JPG format.</p>
+        </a>
+        <a href="{% url "app_app:svg_to_png" %}" class="tool-card">
+            <h3>SVG to PNG</h3>
+            <p>Convert SVG image into PNG format.</p>
+        </a>
+    </div>
+</section>
+<section id="network-tools">
+    <h2>Network and System Tools</h2>
+    <div class="tools-grid">
+        <a href="{% url "app_app:ipaddress_lookup" %}" class="tool-card">
+            <h3>IP Address Lookup</h3>
+            <p>Get detailed information about any IP.</p>
+        </a>
+        <a href="{% url "app_app:what_is_my_headers" %}" class="tool-card">
+            <h3>What is my headers?</h3>
+            <p>View your browser's HTTP headers.</p>
+        </a>
+    </div>
+</section>
+<section id="verification-tools">
+    <h2>Validation and Verification</h2>
+    <div class="tools-grid">
+        <a href="{% url "app_app:email_checker" %}" class="tool-card">
+            <h3>Email Checker</h3>
+            <p>Verify email address validity and check if email exists.</p>
+        </a>
+    </div>
+</section>
+<section id="text-tools">
+    <h2>Text Tools</h2>
+    <div class="tools-grid">
+        <a href="{% url "app_app:random_password_generator" %}" class="tool-card">
+            <h3>Random Password Generator</h3>
+            <p>Create strong, random passwords instantly.</p>
+        </a>
+        <a href="{% url "app_app:word_counter" %}" class="tool-card">
+            <h3>Word Counter</h3>
+            <p>Online tool to count words, characters, spaces and paragraphs in text.</p>
+        </a>
+    </div>
+</section>
+{% endblock content %}

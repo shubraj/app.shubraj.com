@@ -1,0 +1,55 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}IP Address Details - Free IP Lookup Tool | Shub Raj Apps{% endblock %}
+
+{% block description %}Get comprehensive IP address details for free with Shub Raj Apps' IP Lookup tool. Discover location, ISP, and more about any IP address effortlessly.{% endblock %}
+
+{% block keywords %}IP address details free, IP lookup, IP geolocation, find IP information, online IP checker, free IP details, IP address information{% endblock %}
+
+{% block og_title %}IP Address Details - Shub Raj Apps | Free IP Lookup Tool{% endblock %}
+
+{% block og_description %}Access detailed information about any IP address for free. Use our IP Lookup tool to find location, ISP, and more.{% endblock %}
+
+{% block content %}
+    <h2>What's My IP</h2>
+    <p>Find your current IP address and detailed information below. Enter a different IP address to get its details.</p>
+
+    <!-- Custom IP Lookup Section -->
+    <div class="custom-ip-lookup">
+        <input id="customIp" class="ip-input" type="text" placeholder="Enter IP address...">
+        <button id="lookupIpBtn" class="btn" disabled>Lookup IP Address</button>
+    </div>
+
+    <!-- Card to display IP details -->
+    <div class="ip-lookup-section">
+        <div class="ip-card">
+            <h3>IP Address Details</h3>
+            <input id="currentIp" class="ip-input" type="text" readonly />
+            <div class="ip-details">
+                <ul id="ipDetailsList">
+                    <!-- Details like Latitude, Longitude, ISP, etc. will be populated here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Blog Section -->
+    <section class="seo-blog">
+        <h2>Understanding IP Addresses</h2>
+        <p>
+            Have you ever wondered what an IP address really is? Think of it as your device's home address on the internet. It’s how websites and services find and connect with you. 
+            With our free IP Lookup tool at <a href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">app.shubraj.com</a>, you can easily find out details about any IP address. Whether it's your own or someone else's, 
+            our tool reveals valuable information like the geographical location and the Internet Service Provider (ISP). 
+        </p>
+        <p>
+            Knowing these details can be helpful for a variety of reasons. Maybe you’re trying to troubleshoot a connection issue, check for unusual activity, or just satisfy your curiosity about 
+            where someone’s connecting from. Whatever the case, using our tool is straightforward and can give you insights that enhance your online experience. So why not give it a try? 
+            Just enter an IP address and uncover the details in seconds.
+        </p>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/ipLookup.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Email Checker - Unlimited Free Email Verification | Shub Raj Apps{% endblock %}
+
+{% block description %}Verify the validity of email addresses with Shub Raj Apps' Email Checker Tool. Enjoy unlimited and free email verification to ensure your contacts are valid. Use our email checker tool for quick and reliable email validation and verification.{% endblock %}
+
+{% block keywords %}email checker, free email lookup, email verification, email validation, valid email checker, email checker tool, unlimited email verification, check email validity{% endblock %}
+
+{% block og_title %}Email Checker - Shub Raj Apps | Unlimited Free Email Verification{% endblock %}
+
+{% block og_description %}Validate email addresses effortlessly with our unlimited and free Email Checker tool. Ensure your email lists are clean and effective with quick email validation.{% endblock %}
+
+{% block content %}
+    <div class="email-section">
+        <h2>Email Verifier</h2>
+        <p>Quickly verify if an email is valid and exists. Enter an email address below to check its status.</p>
+        <div id="emailOutput"></div>
+        <div class="card">
+            <label for="emailInput">Enter Email Address:</label>
+            <input type="text" id="emailInput" placeholder="Enter your email here...">
+            <div class="action-buttons">
+                <button id="verifyBtn" class="btn verify-email-btn" disabled>Verify Email</button>
+            </div>
+        </div>
+    </div>
+    <section class="seo-blog">
+        <h2>Validate Your Email Address Easily with Our Email Checker</h2>
+        <p>
+            Email is a way to send messages electronically between people. Each email address has a specific format, which usually looks like this: <strong>username@example.com</strong>. The part before the "@" is the username, and the part after is the domain that manages the email.
+        </p>
+        <p>
+            To ensure that your emails reach the right person, servers use MX (Mail Exchange) records. These records tell the server where to send emails for a specific domain, helping route your messages correctly.
+        </p>
+        <p>
+            Our <a href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">Email Checker</a> helps you verify if an email address is valid. Just enter the email you want to check and click on "Verify Email." Our tool will quickly check its status to make sure you only send messages to active accounts.
+        </p>
+        <p>
+            Stop worrying about bounced emails and ensure your communications are reliable. Try our Email Checker today to keep your contact list accurate.
+        </p>
+    </section>
+    
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/emailVerifier.js' %}"></script>
+{% endblock %}

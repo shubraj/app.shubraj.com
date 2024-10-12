@@ -1,0 +1,44 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}CSS Beautifier - Format Your CSS Code | Shub Raj Apps{% endblock %}
+
+{% block description %}Beautify and format your CSS code effortlessly with Shub Raj Apps' CSS Beautifier. Improve code readability and maintainability in seconds.{% endblock %}
+
+{% block keywords %}CSS beautifier, CSS formatter, online CSS beautifier, beautify CSS code, format CSS, CSS code beautification{% endblock %}
+
+{% block og_title %}CSS Beautifier - Shub Raj Apps | Format and Beautify Your CSS Code{% endblock %}
+
+{% block og_description %}Use our online CSS Beautifier to quickly format and beautify your CSS code. Enhance readability and organization effortlessly.{% endblock %}
+
+{% block content %}
+    <h2>CSS Beautifier</h2>
+    <p>Format and beautify your CSS code below. Paste your CSS in the left box and click "Beautify CSS" to see the formatted output on the right.</p>
+    <div class="css-beautifier">
+        <textarea id="cssInput" class="css-input" placeholder="Paste your CSS here..."></textarea>
+        <div class="action-buttons">
+            <button id="beautifyBtn" class="btn">Beautify CSS</button>
+            <button id="clearBtn" class="btn">Clear</button>
+        </div>
+        <div>
+            <p class="output-label">Beautified CSS Output:</p>
+            <textarea id="cssOutput" class="css-output" placeholder="Your beautified CSS will appear here..." readonly></textarea>
+        </div>
+    </div>
+    <section class="seo-blog">
+        <h2>Transform Your CSS Code with Our CSS Beautifier</h2>
+        <p>
+            Struggling to maintain readable CSS code? Our <a href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">CSS Beautifier</a> is here to help! This intuitive online tool allows you to effortlessly format and beautify your CSS, enhancing readability and organization.
+        </p>
+        <p>
+            Simply paste your unformatted CSS into the left box, hit the "Beautify CSS" button, and watch as your code transforms into a well-structured format on the right. Whether you're cleaning up a project or just want your code to look its best, our tool makes it quick and easy.
+        </p>
+        <p>
+            Don't let messy code slow you down. Try our CSS Beautifier today and elevate your coding experience.
+        </p>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/cssBeautifier.js' %}"></script>
+{% endblock %}

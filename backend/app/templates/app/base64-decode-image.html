@@ -1,0 +1,75 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block description %}
+Easily decode Base64 encoded images with Shub Raj Apps' Base64 image decoder. Quickly convert Base64 strings back to images with our efficient tool.
+{% endblock description %}
+
+{% block keywords %}
+base64 decode image, base64 image decoder, decode base64 image, base64 to image, online base64 decoder, image decoding tools
+{% endblock keywords %}
+
+{% block og_title %}
+Base64 Decode Image - Shub Raj Apps | Online Image Decoder
+{% endblock og_title %}
+
+{% block og_description %}
+Use our Base64 image decoder to quickly and easily decode Base64 encoded images. Simple, fast, and efficient.
+{% endblock og_description %}
+
+{% block title %}
+Base64 Decode Image - Online Image Decoder | Shub Raj Apps
+{% endblock title %}
+
+{% block content %}
+    <div class="image-base64-section">
+        <h2>Base64 to Image Decoder</h2>
+        <p>Paste your Base64 string below to convert it into an image.</p>
+
+        <!-- Base64 Input Section in a Card -->
+        <div class="card">
+            <label for="base64Input">Base64 Input:</label>
+            <textarea id="base64Input" placeholder="Paste Base64 string here..."></textarea>
+
+            <div class="action-buttons">
+                <button id="decodeBtn" class="btn" disabled>Decode to Image</button>
+                <button id="downloadBtn" class="btn" disabled>Download Image</button>
+            </div>
+        </div>
+
+        <!-- Image Display Section in a Separate Card -->
+        <div class="card" id="imageCard" style="display: none;"> <!-- Hidden until decoded -->
+            <label for="decodedImage">Decoded Image:</label>
+            <img id="decodedImage" src="" alt="Decoded Image will appear here">
+        </div>
+
+        <!-- Image Information Section in a Separate Card -->
+        <div class="card image-info" id="imageInfo" style="display: none;"> <!-- Initially hidden -->
+            <h4>File Info:</h4>
+            <p id="resolution">Resolution: </p>
+            <p id="mimeType">MIME Type: </p>
+            <p id="extension">Extension: </p>
+            <p id="size">Size: </p>
+        </div>
+    </div>
+
+    <section class="seo-blog">
+        <h2>What is Base64 Encoding?</h2>
+        <p>
+            Base64 encoding is a method used to convert binary data, like images, into a string of ASCII characters. This makes it easier to transmit over the internet, as text can be more reliably handled by various protocols and systems. 
+            If you've ever come across a Base64 string, you might have found it a bit confusing. That’s where our Base64 to Image Decoder comes in handy.
+        </p>
+        <p>
+            With our tool at <a href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">app.shubraj.com</a>, converting Base64 strings back into images is quick and effortless. Just paste your Base64 string into the input box, hit "Decode," and voila! 
+            Your image will appear in seconds. Plus, you can download it for your projects or personal use. 
+        </p>
+        <p>
+            Whether you're a developer needing to decode images from APIs, or just someone curious about what a Base64 string represents, our easy-to-use decoder will simplify the process. 
+            Try it out today and unlock the potential of your Base64 strings!
+        </p>
+    </section>
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'app/js/base64ToImage.js' %}"></script>
+{% endblock scripts %}

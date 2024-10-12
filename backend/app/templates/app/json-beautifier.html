@@ -1,0 +1,48 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}JSON Beautifier - Format and Prettify Your JSON Data | Shub Raj Apps{% endblock %}
+
+{% block description %}Transform and format your JSON data effortlessly with Shub Raj Apps' JSON Beautifier. Improve readability and structure for easier debugging and sharing.{% endblock %}
+
+{% block keywords %}JSON beautifier, JSON formatter online, prettify JSON, format JSON data, online JSON tool, JSON beautification{% endblock %}
+
+{% block og_title %}JSON Beautifier - Shub Raj Apps | Online JSON Formatter{% endblock %}
+
+{% block og_description %}Easily beautify and format your JSON data with our online JSON Beautifier tool. Make your JSON more readable and organized instantly.{% endblock %}
+
+{% block content %}
+    <h2>JSON Beautifier and Formatter</h2>
+    <p>Format, validate, and beautify your JSON data below. Paste your JSON in the left box and click "Format JSON" to see the formatted output on the right.</p>
+    
+    <!-- JSON Formatter Section -->
+    <div class="json-formatter">
+        <textarea id="jsonInput" class="json-input" placeholder="Paste your JSON here..."></textarea>
+        <div class="action-buttons">
+            <button id="formatBtn" class="btn">Format JSON</button>
+            <button id="clearBtn" class="btn">Clear</button>
+        </div>
+        <div>
+            <p class="output-label">Formatted JSON Output:</p>
+            <textarea id="jsonOutput" class="json-output" placeholder="Your formatted JSON will appear here..." readonly></textarea>
+        </div>
+    </div>
+
+    <!-- SEO Blog Section -->
+    <section class="seo-blog">
+        <h2>Streamline Your JSON with Our JSON Beautifier</h2>
+        <p>
+            Struggling with messy JSON data? Our <a href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">JSON Beautifier</a> is here to help. This powerful tool makes it easy to format, validate, and beautify your JSON effortlessly.
+        </p>
+        <p>
+            Simply paste your JSON code in the input box, click "Format JSON," and watch as it transforms into a clean, organized structure. Whether you're debugging or preparing your data for sharing, this tool enhances readability and saves you time.
+        </p>
+        <p>
+            Experience a smoother workflow today try our JSON Beautifier and take the hassle out of managing your JSON data.
+        </p>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/jsonFormatter.js' %}"></script>
+{% endblock %}

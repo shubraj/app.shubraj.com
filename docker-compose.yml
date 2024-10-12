@@ -1,0 +1,31 @@
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/backend
+      - static_volume:/backend/staticfiles
+      - media_volume:/backend/mediafiles
+    expose:
+      - "8000" 
+    env_file:
+      - ./backend/.env
+    command: >
+      sh -c "python manage.py collectstatic --noinput && gunicorn --bind 0.0.0.0:8000 shubrajcom.wsgi:application"
+
+  nginx:
+    image: nginx:latest
+    depends_on:
+      - app
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - static_volume:/backend/staticfiles
+      - media_volume:/backend/mediafiles
+    ports:
+      - "80:80"
+
+volumes:
+  static_volume:
+  media_volume:

@@ -1,0 +1,45 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Cloudflare Email Decoder - Retrieve Original Email Addresses | Shub Raj Apps{% endblock %}
+
+{% block description %}Decode Cloudflare protected email addresses with Shub Raj Apps' Cloudflare Email Decoder. Quickly retrieve original email addresses from encoded formats.{% endblock %}
+
+{% block keywords %}Cloudflare email decoder, decode email, email decoder tool, retrieve email addresses, email protection, online email decoder{% endblock %}
+
+{% block og_title %}Cloudflare Email Decoder - Shub Raj Apps | Retrieve Original Email Addresses{% endblock %}
+
+{% block og_description %}Easily decode Cloudflare protected email addresses and access original email formats with our online decoder tool.{% endblock %}
+
+{% block content %}
+    <h2>Cloudflare Email Decoder</h2>
+    <p>Enter the obfuscated email string below to decode it:</p>
+    <div class="cf-decoder">
+        <div>
+            <label for="obfuscatedInput">Obfuscated Email:</label>
+            <input type="text" id="obfuscatedInput" placeholder="e.g., 59313c353536192a312c3b2b3833773a3634" />
+        </div>
+        <div class="action-buttons">
+            <button id="decodeBtn" class="btn" disabled>Decode</button>
+        </div>
+        <div>
+            <label for="decodedOutput">Decoded Email:</label>
+            <input type="text" id="decodedOutput" placeholder="Decoded email will appear here" readonly />
+        </div>
+    </div>
+    <section class="seo-blog">
+        <h2>Decode Cloudflare Protected Emails with Ease</h2>
+        <p>
+            Have you ever encountered obfuscated email addresses while browsing? With our <a href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">Cloudflare Email Decoder</a>, you can easily reveal the original email addresses behind those encoded formats.
+        </p>
+        <p>
+            Our user-friendly tool allows you to decode Cloudflare-protected emails quickly and efficiently. Just enter the obfuscated email string, hit the decode button, and watch as we retrieve the original address for you. It's that simple.
+        </p>
+        <p>
+            Whether you're a developer looking to improve user experience or simply curious about hidden email addresses, our Cloudflare Email Decoder is here to help. Don’t let obfuscation stand in your way—give it a try today and unlock the email addresses you need.
+        </p>
+    </section>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'app/js/cloudflareEmailDecoder.js' %}"></script>
+{% endblock %}

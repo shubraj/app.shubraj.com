@@ -1,0 +1,53 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Base64 Encode Image - Online Image Encoder | Shub Raj Apps{% endblock %}
+
+{% block description %}Easily encode images to Base64 format with Shub Raj Apps' Base64 image encoder. Quickly convert images to Base64 strings for embedding or transferring data.{% endblock %}
+
+{% block keywords %}base64 encode image, base64 image encoder, encode image to base64, base64 to string, online base64 encoder, image encoding tools{% endblock %}
+
+{% block og_title %}Base64 Encode Image - Shub Raj Apps | Online Image Encoder{% endblock %}
+
+{% block og_description %}Use our Base64 image encoder to quickly convert images into Base64 strings for easy embedding and data transfer. Fast and simple.{% endblock %}
+
+{% block content %}
+
+    <div class="image-base64-section">
+        <h2>Image to Base64 Encoder</h2>
+        <p>Upload an image to convert it into Base64 format.</p>
+
+        <!-- Image Upload Section in a Card -->
+        <div class="card">
+            <label for="imageInput">Select an Image:</label>
+            <input type="file" id="imageInput" accept="image/*">
+            <div class="action-buttons">
+                <button id="encodeBtn" class="btn" disabled>Encode Image</button>
+                <button id="copyBtn" class="btn" disabled>Copy to Clipboard</button>
+            </div>
+        </div>
+
+        <!-- Base64 Output Section in a Separate Card -->
+        <div class="card">
+            <label for="base64Output">Base64 Output:</label>
+            <textarea id="base64Output" readonly placeholder="Base64 string will appear here..."></textarea>
+        </div>
+    </div>
+    <section class="seo-blog">
+        <h2>Why Use Base64 Encoding for Images?</h2>
+        <p>
+            Have you ever needed to embed images directly into your HTML or CSS? Base64 encoding can make this process super easy. By converting your images into Base64 strings, you can embed them directly within your code, eliminating the need for separate image files. This can help streamline your web projects and enhance loading times.
+        </p>
+        <p>
+            With our <a href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">Base64 Image Encoder</a> at app.shubraj.com, you can quickly convert your images to Base64 format. Simply upload your image, click "Encode," and you’ll get the Base64 string in an instant! 
+            This tool is perfect for developers and designers looking to simplify their workflow or anyone who wants to understand how Base64 encoding works.
+        </p>
+        <p>
+            So whether you're looking to embed images in your web applications or just curious about Base64 encoding, our user-friendly encoder is here to help you every step of the way. Give it a try and see how easy it can be!
+        </p>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/imageToBase64.js' %}"></script>
+{% endblock %}

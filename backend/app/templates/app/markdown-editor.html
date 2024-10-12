@@ -1,0 +1,47 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Online Markdown Compiler - Write and Preview Markdown in Real-Time | Shub Raj Apps{% endblock %}
+
+{% block description %}Write and preview Markdown in real-time with Shub Raj Apps' Markdown Compiler. Effortlessly create formatted documents with live previews for enhanced productivity.{% endblock %}
+
+{% block keywords %}Markdown compiler, online Markdown editor, real-time Markdown preview, write Markdown online, Markdown formatting tool{% endblock %}
+
+{% block og_title %}Markdown Compiler - Shub Raj Apps | Write and Preview Markdown in Real-Time{% endblock %}
+
+{% block og_description %}Experience the convenience of writing and previewing Markdown in real-time. Our online Markdown Compiler makes document creation easy and efficient.{% endblock %}
+
+{% block content %}
+    <h2>Markdown Editor</h2>
+    <p>Write and preview Markdown in real-time. The left pane is for Markdown input, and the right pane shows the rendered output.</p>
+
+    <!-- Markdown Editor Section -->
+    <div class="editor-container">
+        <!-- Markdown Input Area -->
+        <textarea id="markdownInput" placeholder="Write your Markdown here..."></textarea>
+
+        <!-- Markdown Preview Area -->
+        <div id="markdownPreview" class="md-preview">
+            <!-- Live preview will appear here -->
+        </div>
+    </div>
+
+    <!-- SEO Blog Section -->
+    <section class="seo-blog">
+        <h2>Simplify Writing With Our Markdown Compiler</h2>
+        <p>
+            Are you looking for an efficient way to write and format documents? Look no further! Our <a href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">Markdown Compiler</a> allows you to write and preview Markdown in real-time, making document creation smoother and more intuitive.
+        </p>
+        <p>
+            With a simple and user-friendly interface, you can easily craft your content in the left pane while instantly seeing the rendered output on the right. Whether you're drafting notes, writing articles, or creating documentation, our tool enhances your productivity and helps you focus on what matters most—your writing.
+        </p>
+        <p>
+            Experience the convenience of real-time Markdown editing today. Try our Markdown Compiler and transform the way you create documents!
+        </p>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="{% static 'app/js/markdownEditor.js' %}"></script>
+{% endblock %}

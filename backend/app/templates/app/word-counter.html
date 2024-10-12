@@ -1,0 +1,44 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Word Counter - Count Words, Characters, Spaces & Sentences | Shub Raj Apps{% endblock %}
+
+{% block description %}Count words, characters, spaces, and sentences effortlessly with Shub Raj Apps' Word Counter tool. Get accurate statistics for your text instantly.{% endblock %}
+
+{% block keywords %}word counter, count words, count characters, count spaces, count sentences, online word counter, text statistics, writing tools{% endblock %}
+
+{% block og_title %}Word Counter - Shub Raj Apps | Count Words, Spaces, Sentences & More{% endblock %}
+
+{% block og_description %}Easily count words, characters, spaces, and sentences with our online Word Counter tool. Get instant and accurate text statistics.{% endblock %}
+
+{% block content %}
+    <h2>Word Counter</h2>
+    <p>Count words, characters, and sentences in real-time as you type.</p>
+    <div class="word-counter-section">
+        <textarea id="textInput" class="input-text" placeholder="Start typing to count words, characters, and sentences..."></textarea>
+        <div class="wordcounter-output-section">
+            <div id="wordCount" class="wordcounter-output-item">Words: 0</div>
+            <div id="charCount" class="wordcounter-output-item">Characters: 0</div>
+            <div id="charCountNoSpaces" class="wordcounter-output-item">Characters (no spaces): 0</div>
+            <div id="sentenceCount" class="wordcounter-output-item">Sentences: 0</div>
+        </div>
+    </div>
+    
+    <section class="seo-blog">
+        <h2>Effortlessly Track Your Writing with Our Word Counter</h2>
+        <p>
+            Are you looking for an easy way to keep track of your writing? Our <a href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">Word Counter</a> tool makes it simple to count words, characters, spaces, and sentences in real-time. It’s perfect for students, writers, and professionals who want to ensure their writing is clear and concise.
+        </p>
+        <p>
+            Whether you're working on an essay, a blog post, or a report, our Word Counter helps you stay within your limits and polish your writing. With instant feedback as you type, you can see your progress and make adjustments without any hassle.
+        </p>
+        <p>
+            Try our Word Counter today and make writing easier. Accurate text statistics are just a click away.
+        </p>
+    </section>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'app/js/wordCounter.js' %}"></script>
+{% endblock %}

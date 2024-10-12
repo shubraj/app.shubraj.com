@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="{% block description %}{% endblock description %}">
+    <meta name="keywords" content="{% block keywords %}{% endblock keywords %}">
+    <meta name="author" content="Shub Raj Lama">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags for Social Media Sharing -->
+    <meta property="og:title" content="{% block og_title %}{% endblock og_title %}">
+    <meta property="og:description" content="{% block og_description %}{% endblock og_description %}">
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://app.shubraj.com/assets/images/og-image.jpg">
+    <meta property="og:site_name" content="Shub Raj Apps">
+
+    <!-- Canonical Link -->
+    <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'app/img/favicon.ico' %}" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'app/img/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'app/img/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'app/img/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'app/site.webmanifest' %}">
+    <!-- Title -->
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Fonts and Stylesheets -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="{% static 'app/css/style.css' %}" rel="stylesheet">
+</head>    
+    
+    
+    
+<body>  
+    {% include 'app/fragments/spinner.html' %}
+    {% include 'app/fragments/header.html' %}
+
+   <main class="container">  
+    {% block content %} {% endblock content %}
+   </main>
+   {% include 'app/fragments/notification.html' %}
+   {% include 'app/fragments/footer.html' %}
+   <script src="{% static 'app/js/main.js' %}"> </script>
+   {% block scripts %}{% endblock scripts %}
+</body>
+</html>

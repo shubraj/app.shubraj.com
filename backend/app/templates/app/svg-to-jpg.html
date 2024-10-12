@@ -1,0 +1,46 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Convert SVG to JPG - Effortless SVG to JPG Conversion | Shub Raj Apps{% endblock %}
+
+{% block description %}Convert SVG images to JPG format quickly and easily with Shub Raj Apps' SVG to JPG Converter. Maintain image quality and enjoy seamless file conversions online.{% endblock %}
+
+{% block keywords %}convert SVG to JPG, SVG to JPG converter, online image converter, SVG to JPG tool, image conversion, rasterize SVG{% endblock %}
+
+{% block og_title %}Convert SVG to JPG - Shub Raj Apps | Effortless SVG to JPG Conversion{% endblock %}
+
+{% block og_description %}Easily convert SVG images to high-quality JPG files with our online converter. Fast, simple, and reliable for all your image conversion needs.{% endblock %}
+
+{% block content %}
+    <div class="svg-jpg-converter-section">
+        <h2>SVG to JPG Converter</h2>
+        <p>Upload your SVG file and convert it to JPG format. Once converted, you can download the JPG image.</p>
+        
+        <!-- Responsive file input -->
+        <input type="file" id="svgInput" accept=".svg" />
+        
+        <!-- Conversion and Download buttons -->
+        <div class="action-buttons">
+            <button id="convertSVGBtn" class="btn" disabled>Convert to JPG</button>
+            <button id="downloadSVGBtn" class="btn" disabled>Download JPG</button>
+        </div>
+    </div>
+
+    <!-- SEO Blog Section -->
+    <section class="seo-blog">
+        <h2>Effortlessly Convert SVG to JPG</h2>
+        <p>
+            Are you looking to convert SVG images to JPG format without losing quality? Look no further! Our <a href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">SVG to JPG Converter</a> provides a fast and seamless way to transform your vector graphics into high-quality raster images.
+        </p>
+        <p>
+            Simply upload your SVG file, click the conversion button, and download your new JPG image in seconds. Whether you're working on web graphics, presentations, or any other project, our converter ensures you maintain the integrity of your images.
+        </p>
+        <p>
+            Say goodbye to complicated conversion processes—try our SVG to JPG Converter today and experience hassle-free image transformation!
+        </p>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/svgToJpg.js' %}"></script>
+{% endblock %}

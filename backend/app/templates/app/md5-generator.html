@@ -1,0 +1,54 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}MD5 Generator - Create MD5 Hashes Effortlessly | Shub Raj Apps{% endblock %}
+
+{% block description %}Generate MD5 hashes effortlessly with Shub Raj Apps' MD5 Generator. Secure your data and ensure integrity with this easy-to-use online tool.{% endblock %}
+
+{% block keywords %}MD5 generator, create MD5 hash, online MD5 tool, MD5 hash calculator, data integrity, hash generator{% endblock %}
+
+{% block og_title %}MD5 Generator - Shub Raj Apps | Effortlessly Create MD5 Hashes{% endblock %}
+
+{% block og_description %}Secure your data by generating MD5 hashes with our online MD5 Generator. Fast, simple, and reliable for all your hashing needs.{% endblock %}
+
+{% block content %}
+    <div class="hash-section">
+        <h2>MD5 Hash Generator</h2>
+        <p>Enter text below to generate its MD5 hash.</p>
+
+        <!-- MD5 Hash Input Section in a Card -->
+        <div class="card">
+            <label for="hashInput">Enter Text:</label>
+            <textarea id="hashInput" placeholder="Enter your text here..." rows="5"></textarea>
+            <div class="action-buttons">
+                <button id="generateBtn" class="btn" disabled>Generate MD5 Hash</button>
+                <button id="copyBtn" class="btn" disabled>Copy to Clipboard</button> <!-- Disabled initially -->
+            </div>
+        </div>
+
+        <!-- MD5 Hash Output Section in a Hidden Card -->
+        <div class="card" id="hashCard">
+            <label for="hashOutput">MD5 Hash:</label>
+            <div id="hashOutput" readonly></div>
+        </div>
+    </div>
+
+    <!-- SEO Blog Section -->
+    <section class="seo-blog">
+        <h2>Secure Your Data with Our MD5 Hash Generator</h2>
+        <p>
+            In today's digital landscape, data integrity is crucial. Our <a href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">MD5 Generator</a> makes it easy for you to create MD5 hashes, ensuring your information remains secure and unaltered.
+        </p>
+        <p>
+            Simply enter your text in the input box, and with a click of a button, generate a unique MD5 hash in seconds. This tool is perfect for developers, security professionals, and anyone looking to verify data integrity with ease.
+        </p>
+        <p>
+            Experience the simplicity and efficiency of our MD5 Generator today. Protect your data with confidence.
+        </p>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+<script src="{% static 'app/js/md5Generator.js' %}"></script>
+{% endblock %}

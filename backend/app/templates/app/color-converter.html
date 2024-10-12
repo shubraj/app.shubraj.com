@@ -1,0 +1,50 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Color Conversion Tools - RGB, HEX, HSL Conversions | Shub Raj Apps{% endblock %}
+
+{% block description %}Convert colors easily with Shub Raj Apps. Use our online tools to convert RGB to HEX, HEX to RGB, RGB to HSL, HSL to RGB, and HSL to HEX. Perfect for designers and developers.{% endblock %}
+
+{% block keywords %}RGB to HEX, HEX to RGB, RGB to HSL, HSL to RGB, HSL to HEX, color conversion tools, online color converter, color utilities{% endblock %}
+
+{% block og_title %}Color Conversion Tools - Shub Raj Apps | RGB, HEX, HSL Conversions{% endblock %}
+
+{% block og_description %}Easily convert between RGB, HEX, and HSL color formats with our online tools. Simplify your design process with fast and reliable color conversions.{% endblock %}
+
+{% block content %}
+    <h2>Color Code Converter</h2>
+    <p>Convert between HEX, RGB, and HSL color codes.</p>
+    <div class="color-converter-section">
+        <div>
+            <label for="hexInput">HEX:</label>
+            <input type="text" id="hexInput" placeholder="#ffffff" />
+        </div>
+        <div>
+            <label for="rgbInput">RGB:</label>
+            <input type="text" id="rgbInput" placeholder="rgb(255, 255, 255)" />
+        </div>
+        <div>
+            <label for="hslInput">HSL:</label>
+            <input type="text" id="hslInput" placeholder="hsl(0, 0%, 100%)" />
+        </div>
+        <div class="action-buttons">
+            <button id="convertBtn" class="btn" disabled>Convert</button>
+        </div>
+    </div>
+    <section class="seo-blog">
+        <h2>Effortlessly Convert Colors with Our Online Tools</h2>
+        <p>
+            Are you a designer or developer looking to easy your color conversion process? Look no further! With our <a href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">Color Conversion Tools</a>, you can easily switch between HEX, RGB, and HSL formats, ensuring you have the right color code for any project.
+        </p>
+        <p>
+            Simply input your color in one format, click the convert button, and watch as the tool provides you with the corresponding values in all formats. Whether you need to convert a HEX code to RGB for CSS, or HSL to HEX for a design project, our user-friendly interface makes it a breeze.
+        </p>
+        <p>
+            Say goodbye to tedious calculations and hello to efficiency. Try our Color Code Converter today and enhance your workflow with seamless color management.
+        </p>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/colorCodeConverter.js' %}"></script>
+{% endblock %}

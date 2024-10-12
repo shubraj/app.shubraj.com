@@ -1,0 +1,47 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Convert SVG to PNG - Effortless SVG to PNG Conversion | Shub Raj Apps{% endblock %}
+
+{% block description %}Convert SVG images to PNG format effortlessly with Shub Raj Apps' SVG to PNG Converter. Preserve image quality and enjoy easy file conversions online.{% endblock %}
+
+{% block keywords %}convert SVG to PNG, SVG to PNG converter, online image converter, SVG to PNG tool, image conversion, rasterize SVG{% endblock %}
+
+{% block og_title %}Convert SVG to PNG - Shub Raj Apps | Effortless SVG to PNG Conversion{% endblock %}
+
+{% block og_description %}Easily convert SVG images to high-quality PNG files with our online converter. Simple, fast, and reliable for all your image conversion needs.{% endblock %}
+
+{% block content %}
+    <!-- Main SVG to PNG Converter Section -->
+    <div class="svg-png-converter-section">
+        <h2>SVG to PNG Converter</h2>
+        <p>Upload your SVG file and convert it to PNG format. Once converted, you can download the PNG image.</p>
+        
+        <!-- Responsive file input -->
+        <input type="file" id="svgInput" accept=".svg" />
+        
+        <!-- Conversion and Download buttons -->
+        <div class="action-buttons">
+            <button id="convertSVGBtn" class="btn" disabled>Convert to PNG</button>
+            <button id="downloadSVGBtn" class="btn" disabled>Download PNG</button>
+        </div>
+    </div>
+
+    <!-- SEO Blog Section -->
+    <section class="seo-blog">
+        <h2>Convert SVG to PNG</h2>
+        <p>
+            Looking for a simple and effective way to convert your SVG images to PNG format? Our <a href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">SVG to PNG Converter</a> makes it easy to transform vector graphics into high-quality raster images in just a few clicks.
+        </p>
+        <p>
+            With our user-friendly interface, you can upload your SVG file, click to convert, and download your PNG image all without any complicated processes. Whether you need PNGs for web design, presentations, or any creative project, our converter ensures you maintain the quality of your images.
+        </p>
+        <p>
+            Experience the convenience of fast and reliable image conversion. Try our SVG to PNG Converter today and unlock a world of seamless file transformations.
+        </p>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/svgToPng.js' %}"></script>
+{% endblock %}
