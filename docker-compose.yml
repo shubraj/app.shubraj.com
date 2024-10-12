@@ -24,7 +24,7 @@ services:
       - static_volume:/backend/staticfiles
       - media_volume:/backend/mediafiles
     ports:
-      - "80:80"
+      - "8090:80"
 
 volumes:
   static_volume:
