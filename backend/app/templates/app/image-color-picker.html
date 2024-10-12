@@ -12,6 +12,7 @@
 {% block og_description %}Select and extract colors from your images with our Image Color Picker tool. Ideal for designers seeking to capture color values for their projects.{% endblock %}
 
 {% block content %}
+<div class="privacy-policy-section">
     <h2>Image Color Selector</h2>
     <p>Upload an image and click on it to select colors in RGB, HEX, and HSL formats.</p>
 
@@ -41,19 +42,19 @@
             <input type="text" id="hslValue" readonly>
         </div>
     </div>
-
-    <section class="seo-blog">
-        <h2>Discover the Perfect Colors with Our Image Color Picker</h2>
-        <p>
-            Are you a designer or artist looking to extract color values from your images effortlessly? Look no further! Our <a href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">Image Color Picker</a> provides a simple and efficient way to identify and select colors from any uploaded image.
-        </p>
-        <p>
-            With just a few clicks, you can upload an image and pick colors in RGB, HEX, and HSL formats. Whether you're working on a design project or just exploring color palettes, this tool makes it easy to find and save the colors you love.
-        </p>
-        <p>
-            Start enhancing your creative projects today. Upload your image and see how our Image Color Picker can simplify your color selection process.
-        </p>
-    </section>
+</div>
+<section class="seo-blog">
+    <h2>Discover the Perfect Colors with Our Image Color Picker</h2>
+    <p>
+        Are you a designer or artist looking to extract color values from your images effortlessly? Look no further! Our <a href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">Image Color Picker</a> provides a simple and efficient way to identify and select colors from any uploaded image.
+    </p>
+    <p>
+        With just a few clicks, you can upload an image and pick colors in RGB, HEX, and HSL formats. Whether you're working on a design project or just exploring color palettes, this tool makes it easy to find and save the colors you love.
+    </p>
+    <p>
+        Start enhancing your creative projects today. Upload your image and see how our Image Color Picker can simplify your color selection process.
+    </p>
+</section>
 {% endblock %}
 
 {% block scripts %}

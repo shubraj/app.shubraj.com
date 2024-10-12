@@ -532,8 +532,7 @@ padding: 0.5rem 1.25rem;
     border-radius: 12px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     margin: 2rem auto;
-    max-width: 500px;
-    word-break: break-all
+    max-width: 600px;
 }
 
 .header-info h3 {
@@ -909,13 +908,13 @@ padding: 0.5rem 1.25rem;
     text-align: center;
 }
 /* Privacy Policy  */
-.privacy-policy-section {
+.privacy-policy-section, .image-color-picker {
     max-width: 800px;
     margin: auto;
-    padding: 40px 20px;
+    padding: 20px 20px;
     flex: 1;
 }
-.privacy-policy-section h2 {
+.privacy-policy-section h2, .image-color-picker h2 {
     text-align: center;
     color: var(--accent-color);
     font-size: 2rem;
