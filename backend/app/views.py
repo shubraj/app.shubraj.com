@@ -1,5 +1,8 @@
 from django.shortcuts import render
+from django.views import View
 from django.views.generic import TemplateView
+from django.contrib import messages
+from .utils.email_validator import EmailValidator,InvalidEmailSyntax,DomainDoesNotExist,NoMXRecordsFound,EmailNotFound,EmailValidationError
 
 class HomePageView(TemplateView):
     
@@ -29,9 +32,24 @@ class ColorConverter(TemplateView):
 class CSSBeautifier(TemplateView):
     template_name = "app/css-beautifier.html"
 
-class EmailChecker(TemplateView):
+class EmailChecker(View):
     template_name = "app/email-checker.html"
+    def get(self,request):
+        return render(request,self.template_name)
+    def post(self,request,*args,**kwargs):
+        try:
+            email = request.POST.get("email","")
+            _,msg = EmailValidator(email).validate()
+            messages.success(request, msg)
 
+        except (DomainDoesNotExist,NoMXRecordsFound) as e:
+            messages.info(request,e)
+        except (InvalidEmailSyntax,EmailNotFound) as e:
+            messages.error(request,e)
+        except (EmailValidationError,Exception) as e:
+            messages.error(request,f"The email '{email}' does not exist.")
+            
+        return render(request,self.template_name)
 class ImageColorPicker(TemplateView):
     template_name = "app/image-color-picker.html"
 

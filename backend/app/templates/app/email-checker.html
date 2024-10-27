@@ -15,13 +15,20 @@
     <div class="email-section">
         <h2>Email Verifier</h2>
         <p>Quickly verify if an email is valid and exists. Enter an email address below to check its status.</p>
-        <div id="emailOutput"></div>
+        {% if messages %}
+            {% for message in messages %}
+                <div id="emailOutput" style="display:block;background-color:{% if message.tags == 'success' %}green{% elif message.tags == 'info' %}deepskyblue{% else %}red{% endif %};">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
         <div class="card">
-            <label for="emailInput">Enter Email Address:</label>
-            <input type="text" id="emailInput" placeholder="Enter your email here...">
-            <div class="action-buttons">
-                <button id="verifyBtn" class="btn verify-email-btn" disabled>Verify Email</button>
-            </div>
+            <form method="post" id="emailForm">
+                {% csrf_token %}
+                <label for="emailInput">Enter Email Address:</label>
+                <input type="email" id="emailInput" name="email" placeholder="Enter your email here..." required>
+                <div class="action-buttons">
+                    <button id="verifyBtn" class="btn verify-email-btn" type="submit" disabled>Verify Email</button>
+                </div>
+            </form>
         </div>
     </div>
     <section class="seo-blog">
