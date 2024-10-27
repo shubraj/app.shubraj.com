@@ -1,6 +1,10 @@
 asgiref==3.8.1
 Django==5.1.2
+dnspython==2.7.0
 gunicorn==23.0.0
+numpy==2.1.2
+opencv-python==4.10.0.84
 packaging==24.1
+pillow==11.0.0
 python-dotenv==1.0.1
 sqlparse==0.5.1
