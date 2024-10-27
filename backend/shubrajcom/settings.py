@@ -118,8 +118,7 @@ TIME_ZONE = "Asia/Kathmandu"
 USE_I18N = True
 
 USE_TZ = True
-
-CSRF_TRUSTED_ORIGINS = ['https://app.shubraj.com',"http://localhost:8000","http://localhost:8090"]
+CSRF_TRUSTED_ORIGINS = ['https://app.shubraj.com/',"http://localhost:8000","http://localhost:8090"]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
