@@ -1,5 +1,5 @@
 # Dockerfile
-FROM python:3.12.7-alpine3.20
+FROM python:3.11
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
