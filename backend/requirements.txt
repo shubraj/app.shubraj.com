@@ -7,4 +7,5 @@ opencv-python==4.10.0.84
 packaging==24.1
 pillow==11.0.0
 python-dotenv==1.0.1
+setuptools==75.2.0
 sqlparse==0.5.1

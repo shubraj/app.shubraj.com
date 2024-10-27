@@ -13,6 +13,7 @@ gunicorn = "^23.0.0"
 dnspython = "^2.7.0"
 pillow = "^11.0.0"
 opencv-python = "^4.10.0.84"
+setuptools = "^75.2.0"
 
 
 [build-system]
