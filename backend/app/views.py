@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView
 from django.contrib import messages
+from django.core.cache import cache
 from .utils.email_validator import EmailValidator,InvalidEmailSyntax,DomainDoesNotExist,NoMXRecordsFound,EmailNotFound,EmailValidationError
 
 class HomePageView(TemplateView):
@@ -34,22 +35,50 @@ class CSSBeautifier(TemplateView):
 
 class EmailChecker(View):
     template_name = "app/email-checker.html"
-    def get(self,request):
-        return render(request,self.template_name)
-    def post(self,request,*args,**kwargs):
+    CACHE_TIMEOUT = 60 * 60 * 24 * 7
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request, *args, **kwargs):
+        email = request.POST.get("email", "")
+        cache_key = f'email_check_{email}'
+
+        # Check if the result is already cached
+        cached_result = cache.get(cache_key)
+        if cached_result is not None:
+            # Display cached message based on type
+            msg_type = cached_result['type']
+            msg_content = cached_result['message']
+            getattr(messages, msg_type)(request, msg_content)
+            return render(request, self.template_name)
+
         try:
-            email = request.POST.get("email","")
-            _,msg = EmailValidator(email).validate()
+            _, msg = EmailValidator(email).validate()
+            # Cache the success message with its type
+            cache.set(cache_key, {'type': 'success', 'message': msg}, timeout=self.CACHE_TIMEOUT)
             messages.success(request, msg)
 
-        except (DomainDoesNotExist,NoMXRecordsFound) as e:
-            messages.info(request,e)
-        except (InvalidEmailSyntax,EmailNotFound) as e:
-            messages.error(request,e)
-        except (EmailValidationError,Exception) as e:
-            messages.error(request,f"The email '{email}' does not exist.")
-            
-        return render(request,self.template_name)
+        except DomainDoesNotExist as e:
+            cache.set(cache_key, {'type': 'info', 'message': str(e)}, timeout=self.CACHE_TIMEOUT)
+            messages.info(request, str(e))
+        except NoMXRecordsFound as e:
+            cache.set(cache_key, {'type': 'info', 'message': str(e)}, timeout=self.CACHE_TIMEOUT)
+            messages.info(request, str(e))
+        except InvalidEmailSyntax as e:
+            cache.set(cache_key, {'type': 'error', 'message': str(e)}, timeout=self.CACHE_TIMEOUT)
+            messages.error(request, str(e))
+        except EmailNotFound as e:
+            cache.set(cache_key, {'type': 'error', 'message': str(e)}, timeout=self.CACHE_TIMEOUT)
+            messages.error(request, str(e))
+        except EmailValidationError as e:
+            cache.set(cache_key, {'type': 'error', 'message': f"The email '{email}' does not exist."}, timeout=self.CACHE_TIMEOUT)
+            messages.error(request, f"The email '{email}' does not exist.")
+        except Exception as e:
+            cache.set(cache_key, {'type': 'error', 'message': f"An unexpected error occurred: {str(e)}"}, timeout=self.CACHE_TIMEOUT)
+            messages.error(request, f"An unexpected error occurred: {str(e)}")
+
+        return render(request, self.template_name)
 class ImageColorPicker(TemplateView):
     template_name = "app/image-color-picker.html"
 

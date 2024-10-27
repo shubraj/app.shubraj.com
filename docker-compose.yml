@@ -10,12 +10,14 @@ services:
       - static_volume:/backend/staticfiles
       - media_volume:/backend/mediafiles
     expose:
-      - "8000" 
+      - "8000"
     env_file:
       - ./backend/.env
     command: >
       sh -c "python manage.py collectstatic --noinput && gunicorn --bind 0.0.0.0:8000 shubrajcom.wsgi:application"
     restart: always
+    depends_on:
+      - redis  
 
   nginx:
     image: nginx:latest
@@ -28,6 +30,12 @@ services:
     ports:
       - "8090:80"
     restart: always
+
+  redis:
+    image: redis:alpine
+    restart: always
+    expose:
+      - "6379"  # Redis default port
 
 volumes:
   static_volume:

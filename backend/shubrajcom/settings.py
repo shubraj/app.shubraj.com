@@ -120,6 +120,17 @@ USE_I18N = True
 USE_TZ = True
 CSRF_TRUSTED_ORIGINS = ['https://*.shubraj.com',"http://*.shubraj.com","http://localhost:8000","http://localhost:8090"]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://redis:6379/1', 
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'IGNORE_EXCEPTIONS': True,  # This ensures cache failures don't break the app
+        }
+    }
+}
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
