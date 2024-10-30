@@ -4,13 +4,15 @@ from .views import (
     Base64Encoder,BcryptGenerator,CloudflareEmailDecoder,ColorConverter,CSSBeautifier,
     EmailChecker,ImageColorPicker,IPaddressLookup,JSONBeautifier,MarkdownEditor,
     MD5Generator,RandomPasswordGenerator,SHAGenerator,SVGtoJPG,SVGtoPNG,
-    WhatIsMyHeaders,WordCounter,PrivacyPolicy
+    WhatIsMyHeaders,WordCounter,PrivacyPolicy,DVPhotoTool
 )
 
 app_name = "app_app"
 
 urlpatterns = [
+
     path("privacy-policy/",PrivacyPolicy.as_view(),name="privacy_policy"),
+    path("dv-photo-tool/",DVPhotoTool.as_view(),name="dv_photo_tool"),
     path("word-counter/",WordCounter.as_view(),name="word_counter"),
     path("what-is-my-headers/",WhatIsMyHeaders.as_view(),name="what_is_my_headers"),
     path("svg-to-png/",SVGtoPNG.as_view(),name="svg_to_png"),

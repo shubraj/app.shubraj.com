@@ -120,3 +120,11 @@ class WordCounter(TemplateView):
 
 class PrivacyPolicy(TemplateView):
     template_name = "app/privacy-policy.html"
+
+class DVPhotoTool(View):
+    template_name = "app/dv-photo-tool.html"
+    def get(self,request):
+        return render(request,self.template_name)
+    def post(self,request,*args,**kwargs):
+        print(request.FILES["photo"])
+        return render(request,self.template_name)

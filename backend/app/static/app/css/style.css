@@ -921,4 +921,54 @@ padding: 0.5rem 1.25rem;
     font-size: 2rem;
     margin-bottom: 1rem;
 }
+/* EDV */
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.upload-label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.input-file {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--secondary-accent);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.feedback-container {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.feedback-message {
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.adjusted-photo-container {
+    margin-top: 1.5rem;
+}
+
+.adjusted-photo {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
 

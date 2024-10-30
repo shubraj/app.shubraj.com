@@ -1,0 +1,84 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block title %}EDV Photo Tool - Verify Your Diversity Visa Photo | Shub Raj Apps{% endblock %}
+
+{% block description %}Verify if your photo meets the Electronic Diversity Visa (EDV) requirements. Use our EDV photo tool to check photo eligibility.{% endblock %}
+
+{% block keywords %}EDV photo tool, visa photo checker, diversity visa photo requirements, EDV photo eligibility{% endblock %}
+
+{% block og_title %}EDV Lottery Photo Tool - Shub Raj Apps | Verify Your Photo{% endblock %}
+
+{% block og_description %}Check if your photo meets the Electronic Diversity Visa requirements using DevToolkit's EDV Photo Tool. Ensure compliance with just a few clicks.{% endblock %}
+{% block content %}
+<h2>Electronic Diversity Visa ( EDV ) Photo Tool</h2>
+<p>Upload your photo to check if it meets the EDV requirements. Our tool will validate your photo and make adjustments if necessary.</p>
+
+<!-- Enhanced Photo Upload Section -->
+<section class="photo-tool">
+    <form id="photoForm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="upload-section">
+            <label for="photoInput" class="upload-label">Select Photo:</label>
+            <input type="file" name="photo" id="photoInput" class="input-file" required aria-label="Upload your photo">
+            <button type="submit" class="btn">Check Photo</button>
+        </div>
+    </form>
+
+    <div id="feedbackContainer" class="feedback-container">
+        <div id="photoFeedback" class="feedback-message">hiiii</div>
+        
+        <div id="adjustedPhotoContainer" class="adjusted-photo-container" style="display: none;">
+            <h3>Adjusted Photo:</h3>
+            <img id="adjustedPhoto" src="" alt="Adjusted photo" class="adjusted-photo">
+        </div>
+    </div>
+</section>
+    <!-- Requirements and Blog Section -->
+    <section class="seo-blog">
+        <h2>Ensure Your Photo is Ready for the EDV Program with Our EDV Photo Tool</h2>
+        <p>
+            If you’re applying for the Electronic Diversity Visa (EDV) Program, having the right photo is crucial. Our EDV Photo Tool is here to help you check if your photo meets all the necessary guidelines, so you don’t have to worry about eligibility issues. Just upload your photo, and the tool will quickly check if it aligns with the EDV requirements.
+        </p>
+        <p>
+            With our EDV Photo Tool, you’ll get instant feedback on your photo’s eligibility. If there are any small issues, the tool can make adjustments automatically, saving you time and giving you peace of mind that your application photo is ready to go!
+        </p>
+
+        <h3>Why Use an EDV Photo Tool for Eligibility?</h3>
+        <p>
+            The EDV program has strict photo rules, and even small mistakes can lead to a disqualified application. A compliant photo shows your face clearly, with the right size, background, and lighting. Our EDV Photo Tool carefully checks for these details, ensuring your photo meets the guidelines and keeping you on track for a successful application.
+        </p>
+
+        <h3>What Our EDV Photo Tool Checks</h3>
+        <p>Our EDV Photo Tool reviews your photo for these requirements:</p>
+        <ul>
+            <li><strong>Color:</strong> The photo must be in color, not black and white.</li>
+            <li><strong>Size:</strong> The dimensions should be exactly 2x2 inches (51x51 mm) with a resolution of 600x600 pixels.</li>
+            <li><strong>Recentness:</strong> It should be taken within the last six months to show your current appearance.</li>
+            <li><strong>Background:</strong> A plain white or off-white background is needed for proper contrast.</li>
+            <li><strong>Head Position:</strong> Your head should be centered, taking up about 50-70% of the photo.</li>
+            <li><strong>Eye Position:</strong> Your eyes should be between 1 and 1 3/8 inches from the bottom of the photo.</li>
+            <li><strong>Lighting:</strong> Lighting should be even with no shadows on your face or background.</li>
+            <li><strong>No Accessories:</strong> Avoid glasses or any items that cover your face.</li>
+        </ul>
+
+        <h3>How the EDV Photo Tool Helps You Meet Requirements</h3>
+        <p>
+            Our EDV Photo Tool doesn’t just identify issues – it can also make small adjustments if your photo is close but not quite right. For instance, if your background isn’t completely white or your face alignment is a bit off, the tool will fix these details for you. You’ll be able to preview the updated photo and know it’s ready for submission.
+        </p>
+
+        <h3>Tips for Taking a Great EDV Program Photo</h3>
+        <p>
+            To help you take a photo that’s already close to EDV standards, here are a few tips:
+        </p>
+        <ul>
+            <li>Stand against a plain white or light-colored wall to get a clean background.</li>
+            <li>Use lighting from both sides to avoid shadows on your face or background.</li>
+            <li>Don’t wear hats, glasses, or other items that cover your face, unless required for religious reasons.</li>
+            <li>Keep a neutral expression, looking straight at the camera with open eyes.</li>
+        </ul>
+
+        <p>
+            Getting an EDV-compliant photo doesn’t have to be complicated. With our EDV Photo Tool, you can check your photo’s eligibility and receive quick adjustments to ensure it meets every requirement. Try our tool today, and feel confident that your photo is ready for a smooth application process!
+        </p>
+    </section>
+{% endblock %}

@@ -2,11 +2,15 @@ from PIL import Image
 import cv2
 import numpy as np
 import os
+import time
+from pathlib import Path
 
-def process_dv_image(image_path, output_path="output_dv_image.jpg", is_scanned=False):
+def process_dv_image(image_path):
     # Load the image
     img = Image.open(image_path)
-
+    filename = Path(img.filename).stem
+    extension = Path(img.filename).suffix
+    output_path = f"app-shubraj-com-{filename}-{time.time_ns()}{extension}"
     # Check format
     if img.format != "JPEG":
         return "Image is not in JPEG format. Please provide a JPEG image.", False
@@ -14,16 +18,12 @@ def process_dv_image(image_path, output_path="output_dv_image.jpg", is_scanned=F
     # Check size and resize to 600x600 pixels if needed
     if img.size != (600, 600):
         img = img.resize((600, 600), Image.LANCZOS)
-        print("Resized image to 600x600 pixels.")
 
     # Additional checks for scanned photos
-    if is_scanned:
-        if img.size != (600, 600):
-            return "For scanned images, please provide an image with 2x2 inches (51x51 mm) dimensions.", False
-        elif img.info.get("dpi", (0, 0))[0] != 300:
-            return "Scanned image does not have a resolution of 300 DPI.", False
-        else:
-            print("Scanned image meets the 2x2 inches and 300 DPI requirements.")
+    if img.size != (600, 600):
+        return "For scanned images, please provide an image with 2x2 inches (51x51 mm) dimensions.", False
+    elif img.info.get("dpi", (300, 300))[0] != 300:
+        return "Scanned image does not have a resolution of 300 DPI.", False
 
     # Convert to OpenCV format for further checks
     img_cv = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
@@ -37,11 +37,18 @@ def process_dv_image(image_path, output_path="output_dv_image.jpg", is_scanned=F
         return "No face detected in the image. Please ensure the face is visible.", False
     elif len(faces) > 1:
         return "Multiple faces detected. Please ensure only one face is visible in the image.", False
-    else:
-        print("Single face detected in the image.")
+
+    # Check for glasses and masks
+    eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')
+    face = faces[0]
+    x, y, w, h = face
+    roi_gray = cv2.cvtColor(img_cv[y:y+h, x:x+w], cv2.COLOR_BGR2GRAY)
+    eyes = eye_cascade.detectMultiScale(roi_gray)
+
+    if len(eyes) < 2:  # If less than two eyes detected, may indicate glasses or mask
+        return "The detected face may be wearing glasses or a mask. Please ensure the face is unobstructed.", False
 
     # Center crop to show upper body only
-    x, y, w, h = faces[0]
     face_center_y = y + h // 2
 
     # Define crop region (from above the head to below the shoulders, estimated for a head-centered crop)
@@ -58,8 +65,6 @@ def process_dv_image(image_path, output_path="output_dv_image.jpg", is_scanned=F
     brightness_threshold = 100  # Adjust if needed
     if brightness < brightness_threshold:
         return "Image is too dark. Ensure the face is well-lit.", False
-    else:
-        print("Image lighting is adequate.")
 
     # Enhanced Background Detection
     img_np = np.array(img_cropped)
@@ -74,10 +79,7 @@ def process_dv_image(image_path, output_path="output_dv_image.jpg", is_scanned=F
     white_pixels = (img_np[:, :, :3] > white_threshold).all(axis=2) & (background_mask == 1)
     white_coverage = np.sum(white_pixels) / np.sum(background_mask == 1) if np.sum(background_mask == 1) > 0 else 0  # Avoid division by zero
 
-    # Debug: print white coverage percentage
-    print(f"White coverage percentage in background: {white_coverage * 100:.2f}%")
-
-    required_white_coverage = 0.85  # Require 85% white pixels in background
+    required_white_coverage = 0.45  # Require 45% white pixels in background
     if white_coverage < required_white_coverage:
         return "Background is not sufficiently white. Ensure a plain white or off-white background.", False
 
@@ -88,18 +90,14 @@ def process_dv_image(image_path, output_path="output_dv_image.jpg", is_scanned=F
     if file_size_kb > 240:
         os.remove(output_path)  # Delete the file if size exceeds the limit
         return f"Image file size is {file_size_kb:.2f} KB, which exceeds the 240 KB limit.", False
-    else:
-        print(f"Image file size is {file_size_kb:.2f} KB, which is within the limit.")
 
-    return "Image meets all DV requirements with correct cropping and white or off-white background.", True
+    return output_path, True
 
 # Example usage
-image_path = "test.jpg"
+image_path = "random.jpg"
 output_path = "output_dv_image.jpg"
-is_scanned = False  # Set this to True if using a scanned photo
-message, status = process_dv_image(image_path, output_path, is_scanned)
-print(message)
+message, status = process_dv_image(image_path)
 if status:
     print("Image is compliant with DV Program requirements.")
 else:
-    print("Image did not meet all requirements.")
+    print(message)
