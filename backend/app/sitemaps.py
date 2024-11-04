@@ -6,7 +6,8 @@ from .urls import urlpatterns,app_name
 class DynamicViewSitemap(Sitemap):
     changefreq = 'weekly'
     priority = 1.0
-
+    protocol = "https"
+    
     def items(self):
         static_patterns = []
 
