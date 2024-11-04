@@ -6,14 +6,17 @@ import time
 from pathlib import Path
 
 def process_dv_image(image_path):
+    errors = []  # List to accumulate all errors
+
     # Load the image
     img = Image.open(image_path)
     filename = Path(img.filename).stem
     extension = Path(img.filename).suffix
     output_path = f"app-shubraj-com-{filename}-{time.time_ns()}{extension}"
+
     # Check format
     if img.format != "JPEG":
-        return "Image is not in JPEG format. Please provide a JPEG image.", False
+        errors.append("Image is not in JPEG format. Please provide a JPEG image.")
 
     # Check size and resize to 600x600 pixels if needed
     if img.size != (600, 600):
@@ -21,9 +24,9 @@ def process_dv_image(image_path):
 
     # Additional checks for scanned photos
     if img.size != (600, 600):
-        return "For scanned images, please provide an image with 2x2 inches (51x51 mm) dimensions.", False
+        errors.append("For scanned images, please provide an image with 2x2 inches (51x51 mm) dimensions.")
     elif img.info.get("dpi", (300, 300))[0] != 300:
-        return "Scanned image does not have a resolution of 300 DPI.", False
+        errors.append("Scanned image does not have a resolution of 300 DPI.")
 
     # Convert to OpenCV format for further checks
     img_cv = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
@@ -34,9 +37,9 @@ def process_dv_image(image_path):
 
     # Ensure there is exactly one face detected
     if len(faces) == 0:
-        return "No face detected in the image. Please ensure the face is visible.", False
+        errors.append("No face detected in the image. Please ensure the face is visible.")
     elif len(faces) > 1:
-        return "Multiple faces detected. Please ensure only one face is visible in the image.", False
+        errors.append("Multiple faces detected. Please ensure only one face is visible in the image.")
 
     # Check for glasses and masks
     eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')
@@ -46,7 +49,7 @@ def process_dv_image(image_path):
     eyes = eye_cascade.detectMultiScale(roi_gray)
 
     if len(eyes) < 2:  # If less than two eyes detected, may indicate glasses or mask
-        return "The detected face may be wearing glasses or a mask. Please ensure the face is unobstructed.", False
+        errors.append("The detected face may be wearing glasses or a mask. Please ensure the face is unobstructed.")
 
     # Center crop to show upper body only
     face_center_y = y + h // 2
@@ -62,9 +65,9 @@ def process_dv_image(image_path):
     # Check lighting on cropped image
     gray = cv2.cvtColor(np.array(img_cropped), cv2.COLOR_RGB2GRAY)
     brightness = np.mean(gray)
-    brightness_threshold = 100  # Adjust if needed
+    brightness_threshold = 80  # Adjust if needed
     if brightness < brightness_threshold:
-        return "Image is too dark. Ensure the face is well-lit.", False
+        errors.append("Image is too dark. Ensure the face is well-lit.")
 
     # Enhanced Background Detection
     img_np = np.array(img_cropped)
@@ -81,17 +84,19 @@ def process_dv_image(image_path):
 
     required_white_coverage = 0.45  # Require 45% white pixels in background
     if white_coverage < required_white_coverage:
-        return "Background is not sufficiently white. Ensure a plain white or off-white background.", False
+        errors.append("Background is not sufficiently white. Ensure a plain white or off-white background.")
 
+    
     # Save image if all conditions are met and check file size
     img_cropped.save(output_path, "JPEG", quality=85)
     file_size_kb = os.path.getsize(output_path) / 1024  # File size in KB
 
     if file_size_kb > 240:
         os.remove(output_path)  # Delete the file if size exceeds the limit
-        return f"Image file size is {file_size_kb:.2f} KB, which exceeds the 240 KB limit.", False
+        errors.append(f"Image file size is {file_size_kb:.2f} KB, which exceeds the 240 KB limit.")
 
     return output_path, True
+
 
 # Example usage
 image_path = "random.jpg"
