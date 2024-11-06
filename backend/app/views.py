@@ -4,6 +4,9 @@ from django.views.generic import TemplateView
 from django.contrib import messages
 from django.core.cache import cache
 from .utils.email_validator import EmailValidator,InvalidEmailSyntax,DomainDoesNotExist,NoMXRecordsFound,EmailNotFound,EmailValidationError
+from .utils.dv_tools import process_dv_image
+from django.conf import settings
+from pathlib import Path
 
 class HomePageView(TemplateView):
     
@@ -123,8 +126,26 @@ class PrivacyPolicy(TemplateView):
 
 class DVPhotoTool(View):
     template_name = "app/dv-photo-tool.html"
+    media_dir = Path(settings.MEDIA_ROOT).resolve()
     def get(self,request):
         return render(request,self.template_name)
     def post(self,request,*args,**kwargs):
-        print(request.FILES["photo"])
-        return render(request,self.template_name)
+        context = {}
+        image_file = request.FILES["photo"]
+        image_path = f"/tmp/{image_file.name}"
+        with open(image_path, 'wb') as f:
+            for chunk in image_file.chunks():
+                f.write(chunk)
+        result, success = process_dv_image(self.media_dir,image_path)
+        context["success"] = success
+        if not success:
+            context = {
+                "errors":result,
+            }
+        else:
+            context = {
+                "messages":result[0],
+                "image":f'{settings.MEDIA_URL}{result[-1]}',
+            }
+        print(result,success)
+        return render(request,self.template_name,context)

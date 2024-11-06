@@ -2,17 +2,17 @@
 {% load static %}
 {% block title %}DV Photo Checker & Tool - Check Your Diversity Visa Photo Requirements | Shub Raj Apps{% endblock %}
 
-{% block description %}Use our DV Photo Checker to ensure your photo meets the Diversity Visa (DV) requirements. Our DV Photo Tool provides instant feedback and adjustments for compliance.{% endblock %}
+{% block description %}Use our DV Photo Checker to ensure your photo meets the Diversity Visa (DV) requirements. Our DV Photo Tool provides instant feedback and adjustments for compliance with official DV Lottery guidelines.{% endblock %}
 
-{% block keywords %}DV photo checker, DV photo tool, Diversity Visa photo tool, DV photo requirements, visa photo checker{% endblock %}
+{% block keywords %}DV photo checker, DV photo tool, Diversity Visa photo tool, DV photo requirements, DV Lottery photo compliance, DV Lottery photo checker{% endblock %}
 
 {% block og_title %}DV Lottery Photo Checker & Tool - Shub Raj Apps | Ensure Your Photo Meets Requirements{% endblock %}
 
-{% block og_description %}Ensure your photo complies with DV Lottery requirements using our DV Photo Checker. Quick, easy, and reliable photo verification for the DV program.{% endblock %}
+{% block og_description %}Ensure your photo complies with DV Lottery requirements using our DV Photo Checker. Quick, easy, and reliable photo verification for the DV program compliance.{% endblock %}
 
 {% block content %}
-<h2>DV Photo Checker & Tool for Diversity Visa Applications</h2>
-<p>Upload your photo to see if it meets Diversity Visa (DV) requirements. Our DV Photo Checker validates and adjusts your photo as needed to ensure it complies with DV guidelines.</p>
+<h1>DV Photo Checker & DV Photo Tool for Diversity Visa Applications</h1>
+<p>Welcome to our <strong>DV Photo Checker</strong> and <strong>DV Photo Tool</strong> help you prepare your Diversity Visa (DV) Lottery application photo with ease and precision. Simply upload your photo, and our tool will automatically check it against the official DV Lottery requirements.</p>
 
 <!-- Enhanced Photo Upload Section -->
 <section class="photo-tool">
@@ -26,64 +26,75 @@
     </form>
 
     <div id="feedbackContainer" class="feedback-container">
-        <div id="photoFeedback" class="feedback-message" style="display: none;">Checking photo...</div>
+        {% for message in messages %}
+            <div id="photoFeedback" class="feedback-message">Checking photo...</div>
+        {% endfor %}
         
-        <div id="adjustedPhotoContainer" class="adjusted-photo-container" style="display: none;">
+        {% if image %}
+        <div id="adjustedPhotoContainer" class="adjusted-photo-container">
             <h3>Adjusted Photo:</h3>
-            <img id="adjustedPhoto" src="" alt="Adjusted photo" class="adjusted-photo">
+            <img id="adjustedPhoto" src="{{image}}" alt="Adjusted photo for DV requirements" class="adjusted-photo">
+            <a href="{{ image }}" download id="downloadBtn">Download Photo</a>
         </div>
+        {% endif %}
     </div>
 </section>
 
 <!-- Requirements and Blog Section -->
 <section class="seo-blog">
-    <h2>Verify Your Photo for the DV Program with Our DV Photo Checker</h2>
-    <p>
-        Applying for the Diversity Visa (DV) Program? Use our DV Photo Checker to verify that your photo meets all DV Lottery requirements. Just upload your photo, and the DV Photo Tool will instantly check it for compliance.
-    </p>
-    <p>
-        With our DV Photo Tool, you’ll receive quick feedback on your photo’s eligibility. Any small adjustments needed for compliance can be made automatically, ensuring your photo is ready for the DV application process.
-    </p>
+    <h2>Verify Your Photo for the DV Program with Our DV Photo Checker & Tool</h2>
+    <p>Using our <strong>DV Photo Checker</strong> ensures that your photo is compliant with Diversity Visa (DV) Lottery requirements. Our advanced <strong>DV Photo Tool</strong> offers quick feedback on whether your photo meets the necessary specifications, so you can confidently proceed with your application.</p>
 
     <h3>Why Use a DV Photo Checker?</h3>
-    <p>
-        The DV program has specific photo requirements. A photo that doesn’t meet these standards may disqualify your application. Our DV Photo Checker reviews essential details like size, background, and lighting, helping you avoid common mistakes.
-    </p>
+    <p>The Diversity Visa (DV) program has strict photo requirements. Non-compliant photos can disqualify your application. With our DV Photo Checker, you’ll avoid common issues related to photo size, background, lighting, and composition. Ensure that your photo meets DV Lottery standards by letting our DV Photo Tool do the work for you.</p>
 
     <h3>What the DV Photo Tool Checks</h3>
-    <p>Our DV Photo Tool evaluates your photo based on these requirements:</p>
+    <p>Our DV Photo Tool evaluates your photo based on the official requirements, including:</p>
     <ul>
         <li><strong>Color:</strong> The photo must be in color, not black and white.</li>
         <li><strong>Size:</strong> 2x2 inches (51x51 mm) with a resolution of 600x600 pixels.</li>
-        <li><strong>File Format:</strong> The photo must be in JPEG (.jpg) format.</li>
-        <li><strong>File Size:</strong> The photo size must be equal to or less than 240 kB.</li>
-        <li><strong>Aspect Ratio:</strong> The photo must be in a square aspect ratio, meaning the height and width must be equal.</li>
+        <li><strong>File Format:</strong> JPEG (.jpg) format only.</li>
+        <li><strong>File Size:</strong> No more than 240 kB.</li>
+        <li><strong>Aspect Ratio:</strong> A square aspect ratio is required.</li>
         <li><strong>Recency:</strong> Taken within the last six months.</li>
         <li><strong>Background:</strong> Plain white or off-white background.</li>
-        <li><strong>Head Position:</strong> Centered, taking up about 50-70% of the photo.</li>
-        <li><strong>Eye Position:</strong> Eyes should be 1 to 1 3/8 inches from the bottom.</li>
-        <li><strong>Lighting:</strong> Even lighting, no shadows.</li>
+        <li><strong>Head Position:</strong> Centered, occupying 50-70% of the photo.</li>
+        <li><strong>Eye Position:</strong> Eyes positioned 1 to 1 3/8 inches from the bottom.</li>
+        <li><strong>Lighting:</strong> Even lighting with no shadows.</li>
         <li><strong>No Accessories:</strong> No glasses or items covering the face.</li>
     </ul>
 
     <h3>How Our DV Photo Tool Ensures Compliance</h3>
-    <p>
-        The DV Photo Tool not only checks but also adjusts minor photo issues to help meet DV requirements. Whether it’s background color or head positioning, our tool provides corrections so you can confidently submit a compliant photo.
-    </p>
+    <p>Our tool doesn’t just check your photo but also makes adjustments when needed. If your photo’s background needs improvement or the head position needs adjustment, our DV Photo Tool will help ensure compliance for a smooth application process.</p>
 
-    <h3>Tips for Taking a Great DV Program Photo</h3>
-    <p>
-        Here are a few tips for taking a DV-compliant photo:
-    </p>
+    <h3>Tips for Taking a Great DV Lottery Program Photo</h3>
+    <p>Follow these tips to improve your chances of capturing a compliant photo for the DV Lottery:</p>
     <ul>
-        <li>Use a plain white or light-colored wall as a background.</li>
-        <li>Ensure balanced lighting on your face to avoid shadows.</li>
-        <li>Remove hats, glasses, or other accessories unless required for religious purposes.</li>
+        <li>Use a plain, light-colored wall as a background.</li>
+        <li>Ensure balanced lighting to avoid shadows.</li>
+        <li>Avoid wearing hats, glasses, or other accessories unless required for religious reasons.</li>
         <li>Keep a neutral expression, looking directly at the camera.</li>
     </ul>
 
+    <h3>Additional Information for DV Photo Requirements</h3>
     <p>
-        Ensure your photo meets DV requirements with our DV Photo Checker. Get quick verification and adjustments, making the DV application process stress-free. Try it now!
+        Please note: We strive to match the US government’s requirements for Diversity Visa (DV) photos, but we cannot guarantee complete accuracy. This tool is updated regularly, but we advise you to check the official guidelines at <a href="https://dvprogram.state.gov">DV Lottery Program</a> for the latest requirements. Our service is private and not affiliated with the US government. All uploaded photos are deleted within one hour.
     </p>
+    
+    <h3>Benefits of Using Our DV Photo Checker and Tool</h3>
+    <p>With our DV Photo Tool, you gain access to features that make the photo-checking process seamless:</p>
+    <ul>
+        <li><strong>Completely Free:</strong> Use our tool for free with no hidden charges. Our AI-powered system processes your photo quickly, even during peak times.</li>
+        <li><strong>Easy to Use:</strong> No special skills are needed to use our online service. Simply upload your photo, and our tool will handle the adjustments.</li>
+        <li><strong>High-Quality Photos from Your Phone:</strong> Use your smartphone or any camera to take the photo—no professional equipment required.</li>
+        <li><strong>Home Convenience:</strong> Eliminate the need to visit a photo studio. Use our tool from the comfort of your home.</li>
+    </ul>
+    
+    <p>Remember, editing DV photos with photo editors should only involve adjustments that do not alter your appearance. This means no filters or color changes are allowed. Fixing brightness, background, and other technical aspects is acceptable.</p>
+
+    <p>Thousands of users rely on our service every year for accurate DV Lottery submissions. Try our DV Photo Checker and DV Photo Tool today to ensure your application photo meets 100% compliance with DV Lottery requirements!</p>
+
+    <h3>Ready to Apply for the DV Lottery?</h3>
+    <p>If you’re ready to pursue a chance to live and work in the United States, the Diversity Visa Lottery may be your ticket. Follow the official guidelines at <a href="https://dvprogram.state.gov">DV Lottery Program</a> and submit a compliant photo using our DV Photo Tool. Give yourself the best chance for success—try our DV Photo Checker now!</p>
 </section>
 {% endblock %}

@@ -394,7 +394,7 @@ footer a:hover {
 #svgInput:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Subtle hover effect */
 }
-#convertSVGBtn, #downloadPNGBtn {
+#convertSVGBtn, #downloadPNGBtn,#downloadBtn {
     background-color: var(--primary-btn);
     border: none;
     color: #fff;
@@ -407,7 +407,7 @@ footer a:hover {
     max-width: 200px;
 }
 
-#convertSVGBtn:hover, #downloadSVGBtn:hover {
+#convertSVGBtn:hover, #downloadSVGBtn:hover,#downloadBtn:hover {
     background-color: #e64a19;
 }
 
