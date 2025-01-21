@@ -16,28 +16,37 @@
 
 <!-- Enhanced Photo Upload Section -->
 <section class="photo-tool">
-    <form id="photoForm" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="upload-section">
-            <label for="photoInput" class="upload-label">Select Photo:</label>
-            <input type="file" name="photo" id="photoInput" class="input-file" required aria-label="Upload your photo">
-            <button type="submit" class="btn">Check Photo</button>
-        </div>
-    </form>
-
     <div id="feedbackContainer" class="feedback-container">
         {% for message in messages %}
-            <div id="photoFeedback" class="feedback-message">Checking photo...</div>
+            <div class="feedback-message success">
+                <i class="fas fa-check-circle"></i> {{message}}
+            </div>
         {% endfor %}
         
+        {% for error in errors %}
+            <div class="feedback-message error">
+                <i class="fas fa-exclamation-circle"></i> {{error}}
+            </div>
+        {% endfor %}
+
         {% if image %}
         <div id="adjustedPhotoContainer" class="adjusted-photo-container">
-            <h3>Adjusted Photo:</h3>
+            <h3>Your Adjusted Photo</h3>
             <img id="adjustedPhoto" src="{{image}}" alt="Adjusted photo for DV requirements" class="adjusted-photo">
-            <a href="{{ image }}" download id="downloadBtn">Download Photo</a>
+            <a href="{{ image }}" download class="btn" id="downloadBtn">
+                <i class="fas fa-download"></i> Download Adjusted Photo
+            </a>
         </div>
         {% endif %}
     </div>
+    <form id="photoForm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="upload-section">
+            <label for="photoInput" class="upload-label">Upload your photo for DV requirements check</label>
+            <input type="file" name="photo" id="photoInput" class="input-file" required accept="image/*" aria-label="Upload your photo">
+            <button type="submit" class="btn">Check Photo</button>
+        </div>
+    </form>
 </section>
 
 <!-- Requirements and Blog Section -->
@@ -95,6 +104,6 @@
     <p>Thousands of users rely on our service every year for accurate DV Lottery submissions. Try our DV Photo Checker and DV Photo Tool today to ensure your application photo meets 100% compliance with DV Lottery requirements!</p>
 
     <h3>Ready to Apply for the DV Lottery?</h3>
-    <p>If you’re ready to pursue a chance to live and work in the United States, the Diversity Visa Lottery may be your ticket. Follow the official guidelines at <a href="https://dvprogram.state.gov">DV Lottery Program</a> and submit a compliant photo using our DV Photo Tool. Give yourself the best chance for success—try our DV Photo Checker now!</p>
+    <p>If you’re ready to pursue a chance to live and work in the United States, the Diversity Visa Lottery may be your ticket. Follow the official guidelines at <a href="https://dvprogram.state.gov">DV Lottery Program</a> and submit a compliant photo using our DV Photo Tool. Give yourself the best chance for success try our DV Photo Checker now.</p>
 </section>
 {% endblock %}

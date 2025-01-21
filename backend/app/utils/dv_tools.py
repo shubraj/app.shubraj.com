@@ -4,7 +4,6 @@ import numpy as np
 import os
 import time
 from pathlib import Path
-from django.conf import settings
 
 def process_dv_image(media_dir,image_path):
     errors = []  # List to accumulate all errors

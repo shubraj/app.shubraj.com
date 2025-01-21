@@ -949,26 +949,81 @@ padding: 0.5rem 1.25rem;
     text-align: center;
 }
 
+/* Enhanced Message and Error Styling */
 .feedback-container {
-    margin-top: 2rem;
-    text-align: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 0 1rem;
 }
 
 .feedback-message {
-    font-size: 1.1rem;
-    font-weight: 600;
-    padding: 1rem;
+    padding: 1rem 1.5rem;
+    margin: 1rem 0;
     border-radius: 8px;
-    margin-top: 1rem;
+    font-weight: 500;
+    animation: fadeIn 0.3s ease-in;
+    border-left: 4px solid;
 }
 
+.feedback-message.success {
+    background-color: rgba(72, 187, 120, 0.1);
+    color: #2F855A;
+    border-color: #48BB78;
+}
+
+.feedback-message.error {
+    background-color: rgba(245, 101, 101, 0.1);
+    color: #C53030;
+    border-color: #F56565;
+}
+
+/* Enhanced Photo Tool Section */
+.photo-tool {
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Improved Upload Section */
+.upload-section {
+    padding: 2rem;
+    border: 2px dashed var(--secondary-accent);
+    border-radius: 12px;
+    text-align: center;
+    background-color: rgba(113, 128, 150, 0.05);
+    transition: all 0.3s ease;
+}
+
+.upload-section:hover {
+    border-color: var(--primary-btn);
+    background-color: rgba(113, 128, 150, 0.08);
+}
+
+/* Enhanced Adjusted Photo Container */
 .adjusted-photo-container {
-    margin-top: 1.5rem;
+    margin-top: 2.5rem;
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.adjusted-photo-container h3 {
+    color: var(--accent-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
 }
 
 .adjusted-photo {
-    max-width: 100%;
+    max-width: 400px;
+    width: 100%;
+    height: auto;
     border-radius: 8px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    margin-bottom: 1.5rem;
 }
-

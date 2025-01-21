@@ -127,8 +127,10 @@ class PrivacyPolicy(TemplateView):
 class DVPhotoTool(View):
     template_name = "app/dv-photo-tool.html"
     media_dir = Path(settings.MEDIA_ROOT).resolve()
+    
     def get(self,request):
         return render(request,self.template_name)
+    
     def post(self,request,*args,**kwargs):
         context = {}
         image_file = request.FILES["photo"]
@@ -147,5 +149,4 @@ class DVPhotoTool(View):
                 "messages":result[0],
                 "image":f'{settings.MEDIA_URL}{result[-1]}',
             }
-        print(result,success)
         return render(request,self.template_name,context)
