@@ -1,0 +1,47 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Case Converter - Convert Text Case Online{% endblock %}
+{% block description %}Convert text to camelCase, PascalCase, snake_case, kebab-case, Title Case, Sentence case, and CONSTANT_CASE.{% endblock %}
+{% block keywords %}case converter, camelcase, snake case, title case, kebab case{% endblock %}
+{% block og_title %}Case Converter - Free Online Tool{% endblock %}
+{% block og_description %}One-click conversion between common text case styles.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">Case Converter</li>
+{% endblock %}
+
+{% block content %}
+<section class="hash-section">
+  <h2>Case Converter</h2>
+  <p>Paste text and convert to popular case styles with one click.</p>
+
+  <div class="card">
+    <label for="caseInput">Input</label>
+    <textarea id="caseInput" class="input-text" rows="8" placeholder="Paste your text here..."></textarea>
+
+    <div class="action-buttons" style="flex-wrap:wrap; gap:0.5rem;">
+      <button class="btn" id="toCamel">camelCase</button>
+      <button class="btn" id="toPascal">PascalCase</button>
+      <button class="btn" id="toSnake">snake_case</button>
+      <button class="btn" id="toKebab">kebab-case</button>
+      <button class="btn" id="toTitle">Title Case</button>
+      <button class="btn" id="toSentence">Sentence case</button>
+      <button class="btn" id="toConstant">CONSTANT_CASE</button>
+      <button class="btn" id="clearCase">Clear</button>
+    </div>
+
+    <label class="output-label" for="caseOutput">Output</label>
+    <textarea id="caseOutput" class="output-text" rows="6" readonly placeholder="Converted result..."></textarea>
+    <div class="action-buttons">
+      <button class="btn" id="copyCase">Copy Output</button>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/caseConverter.js' %}"></script>
+{% endblock %}
+
+

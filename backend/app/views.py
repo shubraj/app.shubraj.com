@@ -322,3 +322,9 @@ class ImageBackgroundRemover(View):
 
 class CSVJSONConverter(TemplateView):
     template_name = "app/csv-json-converter.html"
+
+class CaseConverter(TemplateView):
+    template_name = "app/case-converter.html"
+
+class PasswordEntropy(TemplateView):
+    template_name = "app/password-entropy.html"

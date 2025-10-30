@@ -4,7 +4,7 @@ from .views import (
     Base64Encoder,BcryptGenerator,CloudflareEmailDecoder,ColorConverter,CSSBeautifier,
     EmailChecker,ImageColorPicker,IPaddressLookup,JSONBeautifier,MarkdownEditor,
     MD5Generator,RandomPasswordGenerator,SHAGenerator,SVGtoJPG,SVGtoPNG,
-    WhatIsMyHeaders,WordCounter,PrivacyPolicy,TermsAndConditions,DVPhotoTool,ImageCompressor,ImageResizer,URLEncoderDecoder,JWTDecoder,UUIDULIDGenerator,UnixTimestampConverter,RegexTester,TextDiffChecker,QRCodeGenerator,MarkdownHtmlConverter,ImageBackgroundRemover,CSVJSONConverter
+    WhatIsMyHeaders,WordCounter,PrivacyPolicy,TermsAndConditions,DVPhotoTool,ImageCompressor,ImageResizer,URLEncoderDecoder,JWTDecoder,UUIDULIDGenerator,UnixTimestampConverter,RegexTester,TextDiffChecker,QRCodeGenerator,MarkdownHtmlConverter,ImageBackgroundRemover,CSVJSONConverter,CaseConverter,PasswordEntropy
 )
 
 app_name = "app_app"
@@ -29,6 +29,8 @@ urlpatterns = [
     path("markdown-html-converter/",MarkdownHtmlConverter.as_view(),name="markdown_html_converter"),
     path("image-background-remover/",ImageBackgroundRemover.as_view(),name="image_background_remover"),
     path("csv-json-converter/",CSVJSONConverter.as_view(),name="csv_json_converter"),
+    path("case-converter/",CaseConverter.as_view(),name="case_converter"),
+    path("password-entropy/",PasswordEntropy.as_view(),name="password_entropy"),
     path("svg-to-jpg/",SVGtoJPG.as_view(),name="svg_to_jpg"),
     path("sha-generator/",SHAGenerator.as_view(),name="sha_generator"),
     path("random-password-generator/",RandomPasswordGenerator.as_view(),name="random_password_generator"),
