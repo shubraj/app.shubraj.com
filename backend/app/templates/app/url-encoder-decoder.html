@@ -1,0 +1,40 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}URL Encoder & Decoder - Encode or Decode URLs Online{% endblock %}
+{% block description %}Free URL encoder/decoder. Percent-encode or decode URLs and query strings safely. One-click copy/clear.{% endblock %}
+{% block keywords %}url encoder, url decoder, percent encode, percent decode, encode uri component{% endblock %}
+{% block og_title %}URL Encoder & Decoder - Free Online Tool{% endblock %}
+{% block og_description %}Encode/decode URLs and query strings instantly in your browser.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">URL Encoder/Decoder</li>
+{% endblock %}
+
+{% block content %}
+<section class="hash-section">
+    <h2>URL Encoder & Decoder</h2>
+    <p>Encode special characters for URLs or decode encoded URLs and query strings.</p>
+
+    <div class="card">
+        <label for="urlInput">Input</label>
+        <textarea id="urlInput" class="input-text" rows="8" placeholder="Paste URL or text here..."></textarea>
+
+        <div class="action-buttons">
+            <button class="btn" id="encodeBtn">Encode</button>
+            <button class="btn" id="decodeBtn">Decode</button>
+            <button class="btn" id="copyBtn">Copy Output</button>
+            <button class="btn" id="clearBtn">Clear</button>
+        </div>
+
+        <label for="urlOutput" class="output-label">Output</label>
+        <textarea id="urlOutput" class="output-text" rows="8" readonly placeholder="Result appears here..."></textarea>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/urlEncoderDecoder.js' %}"></script>
+{% endblock %}
+
+

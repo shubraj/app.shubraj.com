@@ -1,0 +1,49 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Text Diff Checker - Compare Two Texts Online{% endblock %}
+{% block description %}Compare two texts and see differences. Options to ignore case and whitespace; copy and clear buttons included.{% endblock %}
+{% block keywords %}text diff, diff checker, compare text online, difference checker{% endblock %}
+{% block og_title %}Text Diff Checker - Free Online Tool{% endblock %}
+{% block og_description %}Visualize added/removed lines between two texts in your browser.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">Text Diff Checker</li>
+{% endblock %}
+
+{% block content %}
+<section class="json-formatter">
+  <h2>Text Diff Checker</h2>
+  <p>Paste your original text on the left and the modified text on the right, then click Compare.</p>
+
+  <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+    <div style="flex:1 1 380px; min-width:300px;">
+      <label for="diffLeft">Original</label>
+      <textarea id="diffLeft" class="input-text" rows="14" placeholder="Original text..."></textarea>
+    </div>
+    <div style="flex:1 1 380px; min-width:300px;">
+      <label for="diffRight">Modified</label>
+      <textarea id="diffRight" class="input-text" rows="14" placeholder="Modified text..."></textarea>
+    </div>
+  </div>
+
+  <div class="action-buttons" style="justify-content:flex-start; gap:0.75rem;">
+    <label class="flag"><input type="checkbox" id="ignoreCase"><span>Ignore case</span></label>
+    <label class="flag"><input type="checkbox" id="ignoreWs"><span>Ignore whitespace</span></label>
+    <button class="btn" id="swapBtn">Swap</button>
+    <button class="btn" id="compareBtn">Compare</button>
+    <button class="btn" id="clearDiff">Clear</button>
+  </div>
+
+  <h3 style="color:var(--accent-color);">Results</h3>
+  <div id="diffResult" class="header-info">
+    <p>No comparison yet.</p>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/textDiffChecker.js' %}"></script>
+{% endblock %}
+
+

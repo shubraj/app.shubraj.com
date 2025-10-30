@@ -9,15 +9,26 @@
     <meta name="description" content="{% block description %}{% endblock description %}">
     <meta name="keywords" content="{% block keywords %}{% endblock keywords %}">
     <meta name="author" content="Shub Raj Lama">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="google-site-verification" content="{% block google_verification %}{% endblock google_verification %}">
+    <meta name="theme-color" content="#1f2937">
     
     <!-- Open Graph Meta Tags for Social Media Sharing -->
     <meta property="og:title" content="{% block og_title %}{% endblock og_title %}">
     <meta property="og:description" content="{% block og_description %}{% endblock og_description %}">
     <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://app.shubraj.com/assets/images/og-image.jpg">
-    <meta property="og:site_name" content="Shub Raj Apps">
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'app/img/android-chrome-512x512.png' %}">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="app.shubraj.com - Free Online Tools">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}{% endblock twitter_title %}">
+    <meta name="twitter:description" content="{% block twitter_description %}{% endblock twitter_description %}">
+    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'app/img/android-chrome-512x512.png' %}">
+    <meta name="twitter:creator" content="@shubrajlama">
+    <meta name="twitter:site" content="@shubrajlama">
 
     <!-- Canonical Link -->
     <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
@@ -28,26 +39,69 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'app/img/favicon-32x32.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'app/img/favicon-16x16.png' %}">
     <link rel="manifest" href="{% static 'app/site.webmanifest' %}">
+    
     <!-- Title -->
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %} | app.shubraj.com</title>
 
     <!-- Fonts and Stylesheets -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="{% static 'app/css/style.css' %}" rel="stylesheet">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "{% block schema_type %}WebPage{% endblock %}",
+        "name": "{% block schema_name %}{% endblock schema_name %}",
+        "description": "{% block schema_description %}{% endblock schema_description %}",
+        "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
+        "publisher": {
+            "@type": "Organization",
+            "name": "app.shubraj.com",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'app/img/apple-touch-icon.png' %}"
+            },
+            "founder": {
+                "@type": "Person",
+                "name": "Shub Raj Lama",
+                "url": "https://www.shubraj.com/"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
+        }
+        {% block additional_schema %}{% endblock %}
+    }
+    </script>
+    
+    <!-- Website Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "app.shubraj.com",
+        "url": "https://app.shubraj.com/",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://app.shubraj.com/?search={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
 </head>    
-    
-    
     
 <body>  
     {% include 'app/fragments/spinner.html' %}
     {% include 'app/fragments/header.html' %}
 
-   <main class="container">  
-    {% block content %} {% endblock content %}
-   </main>
-   {% include 'app/fragments/notification.html' %}
-   {% include 'app/fragments/footer.html' %}
-   <script src="{% static 'app/js/main.js' %}" defer></script>
-   {% block scripts %}{% endblock scripts %}
+    <main class="container">  
+        {% block content %} {% endblock content %}
+    </main>
+    {% include 'app/fragments/notification.html' %}
+    {% include 'app/fragments/footer.html' %}
+    <script src="{% static 'app/js/main.js' %}" defer></script>
+    {% block scripts %}{% endblock scripts %}
 </body>
 </html>

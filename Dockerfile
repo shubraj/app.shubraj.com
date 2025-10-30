@@ -2,11 +2,16 @@
 FROM python:3.11
 
 # Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+# Disable numba JIT to avoid llvmlite/numba compile issues in constrained envs
+ENV NUMBA_DISABLE_JIT=1
+# Hint pymatting to avoid numba usage
+ENV PYMATTING_NO_JIT=1
 
 RUN apt-get update && apt-get install -y \
-    libgl1-mesa-glx \
+    libgl1 \
+    libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory

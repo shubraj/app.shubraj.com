@@ -1,0 +1,65 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Regex Tester - Test Regular Expressions Online{% endblock %}
+{% block description %}Run JavaScript regular expressions with flags and see matches and groups. Fast and private in your browser.{% endblock %}
+{% block keywords %}regex tester, regular expression tester, test regex online, regex flags{% endblock %}
+{% block og_title %}Regex Tester - Free Online Tool{% endblock %}
+{% block og_description %}Test regex patterns with flags and view matches, groups, and indices.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">Regex Tester</li>
+{% endblock %}
+
+{% block content %}
+<section class="hash-section">
+  <h2>Regex Tester</h2>
+  <p>Test JavaScript regular expressions against your input string. Supports flags: g, i, m, s, u, y.</p>
+
+  <div class="card">
+    <label for="regexPattern">Pattern</label>
+    <input id="regexPattern" class="text-input" type="text" placeholder="e.g., ^hello(.*)$">
+
+    <div class="flag-group" style="margin:0.5rem 0 0.75rem;">
+      <label class="flag" title="g — Global: find all matches">
+        <input type="checkbox" id="flagG"><span>g - Global</span>
+      </label>
+      <label class="flag" title="i — Case-insensitive: ignore case" >
+        <input type="checkbox" id="flagI" checked><span>i - Ignore case</span>
+      </label>
+      <label class="flag" title="m — Multiline: ^ and $ match line boundaries">
+        <input type="checkbox" id="flagM"><span>m - Multiline</span>
+      </label>
+      <label class="flag" title="s — DotAll: . matches newline">
+        <input type="checkbox" id="flagS"><span>s - DotAll</span>
+      </label>
+      <label class="flag" title="u — Unicode: treat pattern as Unicode">
+        <input type="checkbox" id="flagU" checked><span>u - Unicode</span>
+      </label>
+      <label class="flag" title="y — Sticky: match from lastIndex only">
+        <input type="checkbox" id="flagY"><span>y - Sticky</span>
+      </label>
+      <div style="margin-left:auto; display:flex; gap:0.5rem;">
+        <button class="btn" id="runRegex">Run</button>
+        <button class="btn" id="clearRegex">Clear</button>
+      </div>
+    </div>
+
+    <label for="regexInput">Test String</label>
+    <textarea id="regexInput" class="input-text" rows="8" placeholder="Paste or type your test text..."></textarea>
+
+    <div id="regexError" class="feedback-message error" style="display:none;">Invalid pattern or flags.</div>
+
+    <h3 style="margin-top:1rem; color: var(--accent-color);">Matches</h3>
+    <div class="header-info" id="regexResults">
+      <p>No matches yet.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/regexTester.js' %}"></script>
+{% endblock %}
+
+

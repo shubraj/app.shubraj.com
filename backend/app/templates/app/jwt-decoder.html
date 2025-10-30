@@ -1,0 +1,47 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}JWT Decoder - Decode JWT Header & Payload Online{% endblock %}
+{% block description %}Free JWT decoder. Safely decode JWT header and payload (Base64URL) without sending data to a server.{% endblock %}
+{% block keywords %}jwt decoder, decode jwt, base64url decode, jwt header, jwt payload{% endblock %}
+{% block og_title %}JWT Decoder - Free Online Tool{% endblock %}
+{% block og_description %}Paste a JWT to view its header and payload JSON instantly.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">JWT Decoder</li>
+{% endblock %}
+
+{% block content %}
+<section class="hash-section">
+    <h2>JWT Decoder</h2>
+    <p>Paste a JSON Web Token to decode its header and payload. No verification is performed.</p>
+
+    <div class="card">
+        <label for="jwtInput">JWT</label>
+        <textarea id="jwtInput" class="input-text" rows="6" placeholder="Paste JWT here (header.payload.signature)"></textarea>
+
+        <div class="action-buttons">
+            <button class="btn" id="jwtDecodeBtn">Decode</button>
+            <button class="btn" id="jwtClearBtn">Clear</button>
+        </div>
+
+        <label class="output-label" for="jwtHeader">Header</label>
+        <textarea id="jwtHeader" class="output-text" rows="6" readonly placeholder="Header JSON"></textarea>
+
+        <label class="output-label" for="jwtPayload">Payload</label>
+        <textarea id="jwtPayload" class="output-text" rows="8" readonly placeholder="Payload JSON"></textarea>
+
+        <label class="output-label" for="jwtSignature">Signature</label>
+        <textarea id="jwtSignature" class="output-text" rows="4" readonly placeholder="Signature (base64url)"></textarea>
+    </div>
+    <p style="margin-top:1rem; font-size:0.9rem; opacity:0.8;">Note: This tool only decodes, it does not validate signatures.</p>
+    <noscript>Enable JavaScript to use the JWT decoder.</noscript>
+    <div id="jwtError" class="feedback-message error" style="display:none;">Invalid JWT.</div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/jwtDecoder.js' %}"></script>
+{% endblock %}
+
+

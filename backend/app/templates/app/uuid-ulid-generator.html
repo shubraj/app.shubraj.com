@@ -1,0 +1,46 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}UUID/ULID Generator - Generate UUID v4 and ULID{% endblock %}
+{% block description %}Generate UUID v4 and ULID identifiers instantly. Copy with one click; batch generate multiple IDs.{% endblock %}
+{% block keywords %}uuid generator, ulid generator, uuid v4, unique id, ulid online{% endblock %}
+{% block og_title %}UUID/ULID Generator - Free Online Tool{% endblock %}
+{% block og_description %}Create UUID v4 and ULIDs in your browser and copy them easily.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">UUID/ULID Generator</li>
+{% endblock %}
+
+{% block content %}
+<section class="hash-section">
+    <h2>UUID/ULID Generator</h2>
+    <p>Create random UUID v4 and lexicographically sortable ULID identifiers.</p>
+
+    <div class="card">
+        <div class="action-buttons">
+            <button class="btn" id="genUuid">Generate UUID v4</button>
+            <button class="btn" id="genUlid">Generate ULID</button>
+            <button class="btn" id="copyId">Copy</button>
+            <button class="btn" id="clearId">Clear</button>
+        </div>
+
+        <label class="output-label" for="idOutput">Output</label>
+        <textarea id="idOutput" class="output-text" rows="4" readonly placeholder="Your ID will appear here..."></textarea>
+
+        <div class="range-container" style="margin-top:1rem; text-align:center;">
+            <label for="batchCount">Batch generate: <strong id="batchCountLabel">1</strong></label>
+            <input type="range" id="batchCount" min="1" max="20" value="1" oninput="document.getElementById('batchCountLabel').textContent=this.value">
+            <button class="btn" id="genBatch">Generate Batch</button>
+            <button class="btn" id="copyBatch">Copy All</button>
+        </div>
+
+        <textarea id="batchOutput" class="output-text" rows="8" readonly placeholder="Batch output (one per line)"></textarea>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/uuidUlidGenerator.js' %}"></script>
+{% endblock %}
+
+

@@ -1,0 +1,51 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Markdown ↔ HTML Converter - Convert Both Ways{% endblock %}
+{% block description %}Convert Markdown to HTML and HTML back to Markdown instantly in your browser.{% endblock %}
+{% block keywords %}markdown to html, html to markdown, converter, markdown converter{% endblock %}
+{% block og_title %}Markdown ↔ HTML Converter{% endblock %}
+{% block og_description %}Bi-directional Markdown/HTML conversion with copy and clear.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">Markdown ↔ HTML Converter</li>
+{% endblock %}
+
+{% block content %}
+<section class="json-formatter">
+  <h2>Markdown ↔ HTML Converter</h2>
+  <p>Paste Markdown on the left to get HTML, or paste HTML on the right to get Markdown.</p>
+
+  <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+    <div style="flex:1 1 380px; min-width:300px;">
+      <label for="mdInput">Markdown</label>
+      <textarea id="mdInput" class="input-text" rows="12" placeholder="# Hello\n\nType Markdown here..."></textarea>
+      <div class="action-buttons" style="justify-content:flex-start; gap:0.5rem;">
+        <button class="btn" id="mdToHtml">Markdown → HTML</button>
+        <button class="btn" id="clearMd">Clear</button>
+      </div>
+    </div>
+    <div style="flex:1 1 380px; min-width:300px;">
+      <label for="htmlInput">HTML</label>
+      <textarea id="htmlInput" class="input-text" rows="12" placeholder="<h1>Hello</h1>\n<p>Type HTML here...</p>"></textarea>
+      <div class="action-buttons" style="justify-content:flex-start; gap:0.5rem;">
+        <button class="btn" id="htmlToMd">HTML → Markdown</button>
+        <button class="btn" id="clearHtml">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="color:var(--accent-color);">Output</h3>
+  <textarea id="convOutput" class="output-text" rows="10" readonly placeholder="Converted output will appear here..."></textarea>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<!-- Marked.js for Markdown → HTML -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<!-- Turndown for HTML → Markdown -->
+<script src="https://cdn.jsdelivr.net/npm/turndown/dist/turndown.min.js"></script>
+<script src="{% static 'app/js/markdownHtmlConverter.js' %}"></script>
+{% endblock %}
+
+

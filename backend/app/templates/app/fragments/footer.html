@@ -1,5 +1,17 @@
 <footer>
-    <div class="container">
-        <p>&copy;{% now "Y" %} <a href="{{ request.scheme }}://{{ request.get_host }}">Shub Raj Apps</a>. All rights reserved. <a href="#top">Back to top</a></p>
+    <div class="container footer-grid">
+        <div class="footer-brand">
+            <p>
+                &copy;{% now "Y" %} <a href="{{ request.scheme }}://{{ request.get_host }}" title="app.shubraj.com - Free Online Tools">app.shubraj.com</a>
+            </p>
+            <small>Free, privacy-friendly tools for everyday tasks.</small>
+        </div>
+        <nav aria-label="Footer">
+            <ul class="footer-links">
+                <li><a href="{% url 'app_app:privacy_policy' %}">Privacy Policy</a></li>
+                <li><a href="{% url 'app_app:terms' %}">Terms & Conditions</a></li>
+                <li><a href="{% url 'sitemap' %}" title="Sitemap">Sitemap</a></li>
+            </ul>
+        </nav>
     </div>
 </footer>

@@ -1,0 +1,69 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}QR Code Generator - Create QR from URL or Text{% endblock %}
+{% block description %}Generate QR codes for URLs or text. Choose error correction and size, and download PNG.{% endblock %}
+{% block keywords %}qr code generator, create qr code, qr for url, qr for text{% endblock %}
+{% block og_title %}QR Code Generator - Free Online Tool{% endblock %}
+{% block og_description %}Create and download QR codes for links or text strings in seconds.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">QR Code Generator</li>
+{% endblock %}
+
+{% block content %}
+<section class="image-base64-section">
+  <h2>QR Code Generator</h2>
+  <p>Enter a URL or any text, then generate a QR code you can download and share.</p>
+
+  {% if errors %}
+  <div class="feedback-container">
+    {% for err in errors %}
+    <div class="feedback-message error">{{ err }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <form method="post" class="card">
+    {% csrf_token %}
+    <label for="qrData">URL or Text</label>
+    <textarea id="qrData" name="data" class="input-text" rows="5" placeholder="https://... or any text" required>{{ data }}</textarea>
+
+    <div class="range-container" style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+      <div>
+        <label for="ec">Error Correction</label>
+        <select id="ec" name="ec">
+          <option value="L" {% if ec == 'L' %}selected{% endif %}>Low</option>
+          <option value="M" {% if ec == 'M' or not ec %}selected{% endif %}>Medium</option>
+          <option value="Q" {% if ec == 'Q' %}selected{% endif %}>Quartile</option>
+          <option value="H" {% if ec == 'H' %}selected{% endif %}>High</option>
+        </select>
+      </div>
+      <div>
+        <label for="box">Box Size</label>
+        <input type="number" id="box" name="box" min="2" max="20" value="{{ box|default:10 }}">
+      </div>
+      <div>
+        <label for="border">Border</label>
+        <input type="number" id="border" name="border" min="1" max="10" value="{{ border|default:4 }}">
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <button type="submit" class="btn">Generate QR</button>
+    </div>
+  </form>
+
+  {% if image_url %}
+  <div class="adjusted-photo-container" style="text-align:center;">
+    <h3>Your QR Code</h3>
+    <img src="{{ image_url }}" alt="Generated QR code" style="max-width:320px; width:100%; height:auto;"/>
+    <div class="action-buttons" style="margin-top:1rem;">
+      <a href="{{ image_url }}" download class="btn">Download PNG</a>
+    </div>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}
+
+

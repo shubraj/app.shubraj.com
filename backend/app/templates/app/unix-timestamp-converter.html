@@ -1,0 +1,61 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Unix Timestamp Converter - Convert Timestamp ↔ Date{% endblock %}
+{% block description %}Convert Unix timestamps to human-readable dates and back. Supports seconds and milliseconds; UTC/local toggle.{% endblock %}
+{% block keywords %}unix timestamp converter, epoch time, timestamp to date, date to timestamp{% endblock %}
+{% block og_title %}Unix Timestamp Converter - Free Online Tool{% endblock %}
+{% block og_description %}Convert between Unix epoch timestamps and formatted dates instantly.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">Unix Timestamp Converter</li>
+{% endblock %}
+
+{% block content %}
+<section class="hash-section">
+    <h2>Unix Timestamp Converter</h2>
+    <p>Convert between Unix epoch timestamp and human-readable date/time.</p>
+
+    <div class="card">
+        <div class="ts-toolbar" style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.75rem;">
+            <label for="tzMode" style="margin:0;">Timezone</label>
+            <select id="tzMode" style="max-width:220px;">
+                <option value="utc">UTC</option>
+                <option value="local" selected>Local</option>
+            </select>
+            <button class="btn" id="nowBtn" style="margin-left:auto;">Now</button>
+        </div>
+
+        <h3 style="margin:0.5rem 0; color: var(--accent-color);">Timestamp → Date</h3>
+        <label for="tsInput" class="sr-only">Timestamp</label>
+        <input id="tsInput" type="text" class="text-input" placeholder="e.g., 1700000000 or 1700000000000 (ms)">
+        <div class="action-buttons" style="justify-content:flex-start;">
+            <button class="btn" id="tsToDate">Convert</button>
+        </div>
+
+        <h3 style="margin:1rem 0 0.5rem; color: var(--accent-color);">Date → Timestamp</h3>
+        <label class="sr-only" for="dateInput">Date/Time</label>
+        <input id="dateInput" type="text" class="text-input" placeholder="YYYY-MM-DD HH:mm:ss or ISO">
+        <div class="action-buttons" style="justify-content:flex-start; gap:0.75rem;">
+            <button class="btn" id="dateToTs">Convert</button>
+            <button class="btn" id="clearTs">Clear</button>
+        </div>
+
+        <div class="header-info" style="margin-top:1.5rem;">
+            <h3>Result</h3>
+            <ul>
+                <li>ISO: <span id="isoOut">-</span></li>
+                <li>Readable: <span id="readableOut">-</span></li>
+                <li>Seconds: <span id="secOut">-</span></li>
+                <li>Milliseconds: <span id="msOut">-</span></li>
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/unixTimestampConverter.js' %}"></script>
+{% endblock %}
+
+

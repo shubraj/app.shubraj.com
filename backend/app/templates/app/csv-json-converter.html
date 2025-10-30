@@ -1,0 +1,49 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}CSV ↔ JSON Converter - Convert Both Ways{% endblock %}
+{% block description %}Convert CSV to JSON and JSON back to CSV quickly in your browser. Supports headers and delimiter selection.{% endblock %}
+{% block keywords %}csv to json, json to csv, csv converter, json converter{% endblock %}
+{% block og_title %}CSV ↔ JSON Converter{% endblock %}
+{% block og_description %}Bi-directional CSV/JSON conversion with delimiter and header options.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">CSV ↔ JSON Converter</li>
+{% endblock %}
+
+{% block content %}
+<section class="json-formatter">
+  <h2>CSV ↔ JSON Converter</h2>
+  <p>Paste CSV on the left to get JSON, or paste JSON on the right to get CSV.</p>
+
+  <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+    <div style="flex:1 1 380px; min-width:300px;">
+      <label for="csvInput">CSV</label>
+      <textarea id="csvInput" class="input-text" rows="12" placeholder="name,age\nAlice,30\nBob,28"></textarea>
+      <div class="action-buttons" style="justify-content:flex-start; gap:0.5rem; flex-wrap:wrap;">
+        <label class="flag" title="First row has column headers"><input type="checkbox" id="hasHeader" checked><span>Has header</span></label>
+        <label>Delimiter <input id="delimiter" class="text-input" type="text" value="," style="width:60px; display:inline-block;" maxlength="1"></label>
+        <button class="btn" id="csvToJson">CSV → JSON</button>
+        <button class="btn" id="clearCsv">Clear</button>
+      </div>
+    </div>
+    <div style="flex:1 1 380px; min-width:300px;">
+      <label for="jsonInput">JSON</label>
+      <textarea id="jsonInput" class="input-text" rows="12" placeholder='[{"name":"Alice","age":30},{"name":"Bob","age":28}]'></textarea>
+      <div class="action-buttons" style="justify-content:flex-start; gap:0.5rem;">
+        <button class="btn" id="jsonToCsv">JSON → CSV</button>
+        <button class="btn" id="clearJson">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="color:var(--accent-color);">Output</h3>
+  <textarea id="csvJsonOutput" class="output-text" rows="10" readonly placeholder="Converted output will appear here..."></textarea>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/csvJsonConverter.js' %}"></script>
+{% endblock %}
+
+

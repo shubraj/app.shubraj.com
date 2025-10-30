@@ -1,0 +1,77 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Image Resizer & Cropper - Resize or Center-Crop Online{% endblock %}
+{% block description %}Resize images to exact dimensions or center-crop to fill. Export as JPG/PNG/WebP with quality control.{% endblock %}
+{% block keywords %}image resizer, image cropper, resize image online, crop image online{% endblock %}
+{% block og_title %}Image Resizer & Cropper - Free Online Tool{% endblock %}
+{% block og_description %}Quickly resize or crop images to exact width and height. Choose fit or fill with export to JPG/PNG/WebP.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">Image Resizer</li>
+{% endblock %}
+
+{% block content %}
+<section class="image-base64-section">
+    <h2>Image Resizer & Cropper</h2>
+    <p>Resize to fit within a box or center-crop to fill exact width × height.</p>
+
+    {% if errors %}
+    <div class="feedback-container">
+        {% for err in errors %}
+        <div class="feedback-message error">{{ err }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" class="card">
+        {% csrf_token %}
+        <label for="image">Choose image</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
+
+        <div class="range-container" style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+            <div>
+                <label for="width">Width (px)</label>
+                <input id="width" name="width" type="number" min="1" value="600">
+            </div>
+            <div>
+                <label for="height">Height (px)</label>
+                <input id="height" name="height" type="number" min="1" value="600">
+            </div>
+            <div>
+                <label for="mode">Mode</label>
+                <select id="mode" name="mode">
+                    <option value="fit">Fit (contain)</option>
+                    <option value="fill">Fill (center-crop)</option>
+                </select>
+            </div>
+        </div>
+
+        <label for="quality">Quality: <strong id="rzQualityLabel">85</strong></label>
+        <input type="range" id="rzQuality" name="quality" min="10" max="100" step="1" value="85" oninput="document.getElementById('rzQualityLabel').textContent=this.value">
+
+        <label for="rzFormat">Output format</label>
+        <select id="rzFormat" name="format">
+            <option value="jpg">JPEG</option>
+            <option value="webp">WebP</option>
+            <option value="png">PNG</option>
+        </select>
+
+        <button type="submit" class="btn">Resize Image</button>
+    </form>
+
+    {% if image_url %}
+    <div class="header-info">
+        <h3>Result</h3>
+        <ul>
+            <li>Size: {{ width }} × {{ height }} ({{ mode }})</li>
+            <li>Format: {{ format }} (quality {{ quality }})</li>
+            <li>File size: {{ size_kb }} KB</li>
+        </ul>
+        <a class="btn" href="{{ image_url }}" download>Download Resized Image</a>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
+
+

@@ -4,7 +4,7 @@ from .views import (
     Base64Encoder,BcryptGenerator,CloudflareEmailDecoder,ColorConverter,CSSBeautifier,
     EmailChecker,ImageColorPicker,IPaddressLookup,JSONBeautifier,MarkdownEditor,
     MD5Generator,RandomPasswordGenerator,SHAGenerator,SVGtoJPG,SVGtoPNG,
-    WhatIsMyHeaders,WordCounter,PrivacyPolicy,DVPhotoTool
+    WhatIsMyHeaders,WordCounter,PrivacyPolicy,TermsAndConditions,DVPhotoTool,ImageCompressor,ImageResizer,URLEncoderDecoder,JWTDecoder,UUIDULIDGenerator,UnixTimestampConverter,RegexTester,TextDiffChecker,QRCodeGenerator,MarkdownHtmlConverter,ImageBackgroundRemover,CSVJSONConverter
 )
 
 app_name = "app_app"
@@ -12,10 +12,23 @@ app_name = "app_app"
 urlpatterns = [
 
     path("privacy-policy/",PrivacyPolicy.as_view(),name="privacy_policy"),
+    path("terms/",TermsAndConditions.as_view(),name="terms"),
     path("dv-photo-tool/",DVPhotoTool.as_view(),name="dv_photo_tool"),
     path("word-counter/",WordCounter.as_view(),name="word_counter"),
     path("what-is-my-headers/",WhatIsMyHeaders.as_view(),name="what_is_my_headers"),
     path("svg-to-png/",SVGtoPNG.as_view(),name="svg_to_png"),
+    path("image-compressor/",ImageCompressor.as_view(),name="image_compressor"),
+    path("image-resizer/",ImageResizer.as_view(),name="image_resizer"),
+    path("url-encoder-decoder/",URLEncoderDecoder.as_view(),name="url_encoder_decoder"),
+    path("jwt-decoder/",JWTDecoder.as_view(),name="jwt_decoder"),
+    path("uuid-ulid-generator/",UUIDULIDGenerator.as_view(),name="uuid_ulid_generator"),
+    path("unix-timestamp-converter/",UnixTimestampConverter.as_view(),name="unix_timestamp_converter"),
+    path("regex-tester/",RegexTester.as_view(),name="regex_tester"),
+    path("text-diff-checker/",TextDiffChecker.as_view(),name="text_diff_checker"),
+    path("qr-code-generator/",QRCodeGenerator.as_view(),name="qr_code_generator"),
+    path("markdown-html-converter/",MarkdownHtmlConverter.as_view(),name="markdown_html_converter"),
+    path("image-background-remover/",ImageBackgroundRemover.as_view(),name="image_background_remover"),
+    path("csv-json-converter/",CSVJSONConverter.as_view(),name="csv_json_converter"),
     path("svg-to-jpg/",SVGtoJPG.as_view(),name="svg_to_jpg"),
     path("sha-generator/",SHAGenerator.as_view(),name="sha_generator"),
     path("random-password-generator/",RandomPasswordGenerator.as_view(),name="random_password_generator"),

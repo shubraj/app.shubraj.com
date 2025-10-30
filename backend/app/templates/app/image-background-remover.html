@@ -1,0 +1,54 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Image Background Remover - Remove White Background Online{% endblock %}
+{% block description %}Remove near-white backgrounds from images and download a PNG with transparency. Adjust tolerance for better results.{% endblock %}
+{% block keywords %}background remover, remove background, transparent background, image background online{% endblock %}
+{% block og_title %}Image Background Remover - Free Online Tool{% endblock %}
+{% block og_description %}Make image backgrounds transparent with adjustable tolerance.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">Image Background Remover</li>
+{% endblock %}
+
+{% block content %}
+<section class="image-base64-section">
+  <h2>Image Background Remover</h2>
+  <p>Removes near-white backgrounds and outputs a transparent PNG. Increase tolerance to remove more background.</p>
+
+  {% if errors %}
+  <div class="feedback-container">
+    {% for err in errors %}
+    <div class="feedback-message error">{{ err }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <form method="post" enctype="multipart/form-data" class="card">
+    {% csrf_token %}
+    <label for="image">Choose image</label>
+    <input type="file" id="image" name="image" accept="image/*" required>
+
+    <label for="tolerance">Tolerance: <strong id="tolLabel">{{ tolerance|default:20 }}</strong></label>
+    <input type="range" id="tolerance" name="tolerance" min="0" max="100" step="1" value="{{ tolerance|default:20 }}" oninput="document.getElementById('tolLabel').textContent=this.value">
+
+    <label class="flag"><input type="checkbox" name="smooth" {% if smooth or smooth is not defined %}checked{% endif %}><span>Smooth edges</span></label>
+
+    <div class="action-buttons">
+      <button type="submit" class="btn">Remove Background</button>
+    </div>
+  </form>
+
+  {% if image_url %}
+  <div class="adjusted-photo-container" style="text-align:center;">
+    <h3>Result ({{ size_kb }} KB)</h3>
+    <img src="{{ image_url }}" alt="Background removed result" style="max-width:480px; width:100%; height:auto; background: repeating-conic-gradient(#eee 0% 25%, transparent 0% 50%) 50% / 20px 20px;"/>
+    <div class="action-buttons" style="margin-top:1rem;">
+      <a class="btn" href="{{ image_url }}" download>Download PNG</a>
+    </div>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}
+
+

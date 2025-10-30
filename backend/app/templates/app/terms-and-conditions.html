@@ -1,0 +1,34 @@
+{% extends "app/base.html" %}
+
+{% block title %}Terms & Conditions{% endblock %}
+{% block description %}Short terms and conditions for using app.shubraj.com free online tools.{% endblock %}
+{% block keywords %}terms, conditions, usage policy, app.shubraj.com{% endblock %}
+
+{% block og_title %}Terms & Conditions - app.shubraj.com{% endblock %}
+{% block og_description %}Read the short terms and conditions for using our free, browser-based tools.{% endblock %}
+
+{% block schema_type %}WebPage{% endblock %}
+{% block schema_name %}Terms & Conditions{% endblock %}
+{% block schema_description %}Short terms and conditions for using app.shubraj.com free online tools.{% endblock %}
+
+{% block breadcrumb_items %}
+    <li aria-current="page">Terms & Conditions</li>
+{% endblock %}
+
+{% block content %}
+<section class="privacy-policy-section">
+    <h2>Terms & Conditions</h2>
+    <p>Welcome to app.shubraj.com. By using our free tools, you agree to the following short terms:</p>
+    <ul>
+        <li>Our tools are provided “as is”, without warranties of any kind.</li>
+        <li>Your inputs are processed in your browser whenever possible; we do not sell personal data.</li>
+        <li>Do not use the tools for illegal, harmful, or abusive activities.</li>
+        <li>We may update or remove tools and content without prior notice.</li>
+        <li>Links to third-party sites are provided for convenience; we are not responsible for their content.</li>
+    </ul>
+    <p>If you do not agree with these terms, please discontinue use of the site.</p>
+    <p>For privacy details, see our <a href="{% url 'app_app:privacy_policy' %}">Privacy Policy</a>.</p>
+</section>
+{% endblock %}
+
+

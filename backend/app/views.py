@@ -7,6 +7,8 @@ from .utils.email_validator import EmailValidator,InvalidEmailSyntax,DomainDoesN
 from .utils.dv_tools import process_dv_image
 from django.conf import settings
 from pathlib import Path
+from .utils.image_tools import compress_image_to_target, resize_or_crop_image, remove_background_whiteish, remove_background_ai
+from .utils.qr_tools import generate_qr_png
 
 class HomePageView(TemplateView):
     
@@ -124,6 +126,9 @@ class WordCounter(TemplateView):
 class PrivacyPolicy(TemplateView):
     template_name = "app/privacy-policy.html"
 
+class TermsAndConditions(TemplateView):
+    template_name = "app/terms-and-conditions.html"
+
 class DVPhotoTool(View):
     template_name = "app/dv-photo-tool.html"
     media_dir = Path(settings.MEDIA_ROOT).resolve()
@@ -140,13 +145,180 @@ class DVPhotoTool(View):
                 f.write(chunk)
         result, success = process_dv_image(self.media_dir,image_path)
         context["success"] = success
+
+        def _dedupe_preserve(seq):
+            seen = set()
+            out = []
+            for s in seq:
+                if s not in seen:
+                    seen.add(s)
+                    out.append(s)
+            return out
+
         if not success:
-            context = {
-                "errors":result,
-            }
+            # result is a list of mixed issue strings; filter out auto-fix notes if any
+            raw_issues = [s.strip() for s in result if s]
+            issues = [s for s in raw_issues if "Converted" not in s]
+            context.update({
+                "dv_issues": _dedupe_preserve(issues),
+            })
         else:
-            context = {
-                "messages":result[0],
-                "image":f'{settings.MEDIA_URL}{result[-1]}',
-            }
+            # result is (errors_fixed_list, output_filename)
+            fixed = [s.strip() for s in (result[0] or [])]
+            context.update({
+                "dv_actions": _dedupe_preserve(fixed),
+                "image": f'{settings.MEDIA_URL}{result[-1]}',
+            })
         return render(request,self.template_name,context)
+
+class ImageCompressor(View):
+    template_name = "app/image-compressor.html"
+    media_dir = Path(settings.MEDIA_ROOT).resolve()
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request, *args, **kwargs):
+        context = {}
+        image_file = request.FILES.get("image")
+        quality = int(request.POST.get("quality", 75))
+        out_fmt = request.POST.get("format", "jpg").lower()
+        if not image_file:
+            return render(request, self.template_name, {"errors": ["Please select an image to compress."]})
+
+        tmp_path = f"/tmp/{image_file.name}"
+        with open(tmp_path, 'wb') as f:
+            for chunk in image_file.chunks():
+                f.write(chunk)
+
+        result, success = compress_image_to_target(self.media_dir, tmp_path, quality=quality, output_format=out_fmt)
+        if not success:
+            context["errors"] = result.get("errors", ["Compression failed."])
+        else:
+            context.update({
+                "original_kb": f"{result['original_size_kb']:.2f}",
+                "compressed_kb": f"{result['compressed_size_kb']:.2f}",
+                "saved_percent": f"{result['saved_percent']:.1f}",
+                "image_url": f"{settings.MEDIA_URL}{result['output_name']}",
+                "format": out_fmt.upper(),
+                "quality": quality,
+            })
+        return render(request, self.template_name, context)
+
+class ImageResizer(View):
+    template_name = "app/image-resizer.html"
+    media_dir = Path(settings.MEDIA_ROOT).resolve()
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request, *args, **kwargs):
+        image_file = request.FILES.get("image")
+        if not image_file:
+            return render(request, self.template_name, {"errors": ["Please select an image."]})
+
+        try:
+            width = int(request.POST.get("width", 0))
+            height = int(request.POST.get("height", 0))
+        except ValueError:
+            return render(request, self.template_name, {"errors": ["Width and height must be integers."]})
+
+        mode = request.POST.get("mode", "fit")
+        fmt = request.POST.get("format", "jpg")
+        quality = int(request.POST.get("quality", 85))
+
+        tmp_path = f"/tmp/{image_file.name}"
+        with open(tmp_path, 'wb') as f:
+            for chunk in image_file.chunks():
+                f.write(chunk)
+
+        result, success = resize_or_crop_image(self.media_dir, tmp_path, width, height, mode=mode, output_format=fmt, quality=quality)
+        if not success:
+            return render(request, self.template_name, {"errors": result.get("errors", ["Resize failed."])})
+
+        return render(request, self.template_name, {
+            "image_url": f"{settings.MEDIA_URL}{result['output_name']}",
+            "width": result["width"],
+            "height": result["height"],
+            "mode": result["mode"],
+            "format": result["format"].upper(),
+            "size_kb": f"{result['size_kb']:.2f}",
+            "quality": quality,
+        })
+
+class URLEncoderDecoder(TemplateView):
+    template_name = "app/url-encoder-decoder.html"
+
+class JWTDecoder(TemplateView):
+    template_name = "app/jwt-decoder.html"
+
+class UUIDULIDGenerator(TemplateView):
+    template_name = "app/uuid-ulid-generator.html"
+
+class UnixTimestampConverter(TemplateView):
+    template_name = "app/unix-timestamp-converter.html"
+
+class RegexTester(TemplateView):
+    template_name = "app/regex-tester.html"
+
+class TextDiffChecker(TemplateView):
+    template_name = "app/text-diff-checker.html"
+
+class QRCodeGenerator(View):
+    template_name = "app/qr-code-generator.html"
+    media_dir = Path(settings.MEDIA_ROOT).resolve()
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request, *args, **kwargs):
+        data = request.POST.get('data', '')
+        ec = request.POST.get('ec', 'M')
+        box = int(request.POST.get('box', '10') or 10)
+        border = int(request.POST.get('border', '4') or 4)
+        result, success = generate_qr_png(self.media_dir, data, error_correction=ec, box_size=box, border=border)
+        if not success:
+            return render(request, self.template_name, {"errors": result.get("errors", ["Failed to generate QR code."])})
+        return render(request, self.template_name, {
+            "image_url": f"{settings.MEDIA_URL}{result['output_name']}",
+            "data": data,
+            "ec": ec,
+            "box": box,
+            "border": border,
+        })
+
+class MarkdownHtmlConverter(TemplateView):
+    template_name = "app/markdown-html-converter.html"
+
+class ImageBackgroundRemover(View):
+    template_name = "app/image-background-remover.html"
+    media_dir = Path(settings.MEDIA_ROOT).resolve()
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request, *args, **kwargs):
+        imgf = request.FILES.get('image')
+        tol = int(request.POST.get('tolerance', '20') or 20)
+        smooth = request.POST.get('smooth', 'on') == 'on'
+        if not imgf:
+            return render(request, self.template_name, {"errors": ["Please select an image."]})
+        tmp_path = f"/tmp/{imgf.name}"
+        with open(tmp_path, 'wb') as f:
+            for chunk in imgf.chunks():
+                f.write(chunk)
+        # Try AI remover first; fallback to near-white remover if unavailable or failed
+        result, success = remove_background_ai(self.media_dir, tmp_path)
+        if not success:
+            result, success = remove_background_whiteish(self.media_dir, tmp_path, tolerance=tol, smooth=smooth)
+        if not success:
+            return render(request, self.template_name, {"errors": result.get('errors', ["Background removal failed."])})
+        return render(request, self.template_name, {
+            "image_url": f"{settings.MEDIA_URL}{result['output_name']}",
+            "tolerance": tol,
+            "smooth": smooth,
+            "size_kb": f"{result.get('size_kb', 0):.2f}",
+        })
+
+class CSVJSONConverter(TemplateView):
+    template_name = "app/csv-json-converter.html"

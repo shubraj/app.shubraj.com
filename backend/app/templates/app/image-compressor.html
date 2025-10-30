@@ -1,0 +1,60 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Image Compressor - Compress JPG/PNG/WebP Online{% endblock %}
+{% block description %}Free online image compressor. Reduce image size by quality and convert to JPEG or WebP. Fast, secure, and browser-friendly.{% endblock %}
+{% block keywords %}image compressor, compress image online, jpg compressor, png compressor, webp compressor{% endblock %}
+{% block og_title %}Image Compressor - Free Online JPG/PNG/WebP Compressor{% endblock %}
+{% block og_description %}Compress images and convert to JPEG or WebP with a single click. Get smaller files without noticeable quality loss.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">Image Compressor</li>
+{% endblock %}
+
+{% block content %}
+<section class="image-base64-section">
+    <h2>Image Compressor</h2>
+    <p>Upload an image, choose quality and format, and get a smaller file instantly.</p>
+
+    {% if errors %}
+    <div class="feedback-container">
+        {% for err in errors %}
+        <div class="feedback-message error">{{ err }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" class="card">
+        {% csrf_token %}
+        <label for="image">Choose image (JPG/PNG/WebP)</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
+
+        <label for="quality">Quality: <strong id="qualityLabel">75</strong></label>
+        <input type="range" id="quality" name="quality" min="10" max="100" step="1" value="75" oninput="document.getElementById('qualityLabel').textContent=this.value">
+
+        <label for="format">Output format</label>
+        <select id="format" name="format">
+            <option value="jpg">JPEG</option>
+            <option value="webp">WebP</option>
+            <option value="png">PNG</option>
+        </select>
+
+        <button type="submit" class="btn">Compress Image</button>
+    </form>
+
+    {% if image_url %}
+    <div class="header-info">
+        <h3>Compression Result</h3>
+        <ul>
+            <li>Original size: {{ original_kb }} KB</li>
+            <li>Compressed size: {{ compressed_kb }} KB</li>
+            <li>Saved: {{ saved_percent }}%</li>
+            <li>Format: {{ format }} (quality {{ quality }})</li>
+        </ul>
+        <a class="btn" href="{{ image_url }}" download>Download Compressed Image</a>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
+
+

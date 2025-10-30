@@ -1,14 +1,14 @@
-<header>  
-    <nav class="container">  
-       <h1><a href="{% url 'app_app:home' %}">app.shubraj.com</a></h1>  
+<header id="top">  
+    <nav class="container" aria-label="Primary">  
+       <h1><a href="{% url 'app_app:home' %}" title="app.shubraj.com - Free Online Tools">app.shubraj.com</a></h1>  
        <button class="nav-toggle" role="button" aria-label="Toggle navigation">☰</button>  
        <ul>  
-          <li><a href="{% url 'app_app:base64_decoder' %}">Base64 Decoder</a></li>  
-          <li><a href="{% url 'app_app:json_beautifier' %}">JSON Beautifier</a></li>  
-          <li><a href="{% url 'app_app:svg_to_png' %}">SVG to PNG</a></li>  
-          <li><a href="{% url 'app_app:email_checker' %}">Email Checker</a></li>  
-          <li><a href="{% url 'app_app:privacy_policy' %}">Privacy Policy</a></li>  
-          <li><a href="https://www.shubraj.com/">About Me</a></li>
+          <li><a href="{% url 'app_app:base64_decoder' %}" title="Free Base64 Decoder">Base64 Decoder</a></li>  
+          <li><a href="{% url 'app_app:json_beautifier' %}" title="Free JSON Beautifier Tool">JSON Beautifier</a></li>  
+          <li><a href="{% url 'app_app:svg_to_png' %}" title="Free SVG to PNG Converter">SVG to PNG</a></li>  
+            <li><a href="{% url 'app_app:email_checker' %}" title="Free Email Address Checker">Email Checker</a></li>  
+            <li><a href="{% url 'app_app:dv_photo_tool' %}" title="Free EDV Photo Tool">EDV Photo Tool</a></li>  
+            <li><a href="https://www.shubraj.com/" rel="author noopener noreferrer" target="_blank">About Me</a></li>
        </ul>  
        <button id="darkModeToggle" role="button" aria-label="Toggle dark mode">🌓</button>  
     </nav>  
