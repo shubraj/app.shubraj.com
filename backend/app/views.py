@@ -8,7 +8,7 @@ from .utils.dv_tools import process_dv_image
 from django.conf import settings
 from pathlib import Path
 from .utils.image_tools import compress_image_to_target, resize_or_crop_image, remove_background_whiteish, remove_background_ai
-from .utils.qr_tools import generate_qr_png
+from .utils.qr_tools import generate_qr_png, decode_qr_image
 
 class HomePageView(TemplateView):
     
@@ -328,3 +328,23 @@ class CaseConverter(TemplateView):
 
 class PasswordEntropy(TemplateView):
     template_name = "app/password-entropy.html"
+
+class QRCodeScanner(View):
+    template_name = "app/qr-code-scanner.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request, *args, **kwargs):
+        image_file = request.FILES.get('image')
+        if not image_file:
+            return render(request, self.template_name, {"errors": ["Please select an image with a QR code."]})
+        tmp_path = f"/tmp/{image_file.name}"
+        with open(tmp_path, 'wb') as f:
+            for chunk in image_file.chunks():
+                f.write(chunk)
+        result, success = decode_qr_image(tmp_path)
+        if not success:
+            return render(request, self.template_name, {"errors": result.get('errors', ["Failed to decode QR code."])})
+        decoded = result.get('results', [])
+        return render(request, self.template_name, {"results": decoded})
