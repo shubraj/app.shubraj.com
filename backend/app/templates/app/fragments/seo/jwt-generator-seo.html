@@ -1,0 +1,63 @@
+<section class="seo-blog">
+  <h2>Generate JWTs Safely with a Practical, Developer‑Friendly Tool</h2>
+  <p>When you need to create a JSON Web Token for local testing, prototypes, or internal tooling, you want a fast, predictable workflow. This JWT Generator focuses on the HS256 algorithm and keeps the process simple: provide a shared secret, define your claims, and optionally set an expiration. Nothing is uploaded to a backend—generation happens in your session so you stay in control.</p>
+
+  <h3>What This JWT Generator Is Best At</h3>
+  <ul>
+    <li><strong>Quick iteration:</strong> Paste a claims JSON, add a <code>ttl</code>, and get a token in seconds.</li>
+    <li><strong>Realistic payloads:</strong> Include standard fields like <code>iss</code>, <code>sub</code>, <code>aud</code>, <code>iat</code>, and <code>exp</code>.</li>
+    <li><strong>Deterministic outputs:</strong> When you set the same inputs, you can reproduce tokens for tests and docs.</li>
+  </ul>
+
+  <h3>Common Use Cases</h3>
+  <ul>
+    <li><strong>API stubs and demos:</strong> Hand a valid token to a teammate or a mock server.</li>
+    <li><strong>End‑to‑end tests:</strong> Seed tokens with known claims for automated suites.</li>
+    <li><strong>Local debugging:</strong> Verify how your middleware or gateway parses headers and claims.</li>
+  </ul>
+
+  <h3>Tips for Reliable Tokens</h3>
+  <ul>
+    <li>Use a sufficiently long secret for HS256 in any non‑trivial environment.</li>
+    <li>Include <code>iat</code> and a short <code>exp</code> while testing time‑based flows.</li>
+    <li>Keep environments separate. Never reuse production secrets in local tools.</li>
+  </ul>
+
+  <h3>Security Notes</h3>
+  <p>HS256 uses a shared secret. If you need asymmetric signing (public/private keys), use RS256/ES256 in your main stack. This tool aims to speed up day‑to‑day developer tasks—not to replace your production signing service or key management.</p>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does this JWT Generator upload my secret or token?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Token creation happens in your browser session. Do not reuse production secrets here."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which algorithm does it use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "HS256 (HMAC with SHA‑256). For RS256/ES256, use your normal signing pipeline."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I set custom claims and expiration?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Provide any JSON claims, optionally include iat, and set a TTL to derive exp."
+      }
+    }
+  ]
+}
+</script>
+
+

@@ -1,0 +1,30 @@
+<section class="seo-blog">
+  <h2>Make IPv4 Subnetting Less Error‑Prone</h2>
+  <p>Calculate network, broadcast, host range, and usable hosts from a CIDR or IP/mask quickly. It’s a lightweight helper for network planning, lab setups, and exam practice.</p>
+
+  <h3>What You Can Check</h3>
+  <ul>
+    <li>Network and broadcast addresses for a given CIDR.</li>
+    <li>Wildcard mask and dotted‑decimal netmask equivalents.</li>
+    <li>First and last usable host addresses and total host count.</li>
+  </ul>
+
+  <h3>Tips</h3>
+  <ul>
+    <li>Remember that /31 and /32 have special semantics for point‑to‑point and hosts.</li>
+    <li>Document subnets alongside VLANs to avoid overlap and confusion.</li>
+  </ul>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"How many usable hosts per /24?","acceptedAnswer":{"@type":"Answer","text":"254 usable hosts (256 total minus network and broadcast)."}},
+    {"@type":"Question","name":"What is a wildcard mask?","acceptedAnswer":{"@type":"Answer","text":"It’s the inverse of the subnet mask, common in ACLs and some router configs."}}
+  ]
+}
+</script>
+
+

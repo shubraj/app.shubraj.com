@@ -1,0 +1,36 @@
+<section class="seo-blog">
+  <h2>Check Email Syntax and Common Pitfalls Before Sending</h2>
+  <p>Quickly validate address formatting and catch issues that cause bounces. This tool focuses on pragmatic checks—structure, allowed characters, and obvious typos in domains.</p>
+
+  <h3>What It Catches</h3>
+  <ul>
+    <li><strong>Syntax errors:</strong> Missing @, misplaced dots, invalid characters.</li>
+    <li><strong>Suspicious domains:</strong> Frequent misspellings of popular providers.</li>
+    <li><strong>Edge cases:</strong> Quoted local parts or long TLDs handled conservatively.</li>
+  </ul>
+
+  <h3>What It Doesn’t Do</h3>
+  <ul>
+    <li>No SMTP verification. Use your ESP or a backend service for inbox existence checks.</li>
+    <li>No deliverability scoring—it’s a fast pre‑flight, not a full audit.</li>
+  </ul>
+
+  <h3>Tips</h3>
+  <ul>
+    <li>Use double opt‑in to confirm ownership.</li>
+    <li>Keep a suppression list to avoid repeat bounces.</li>
+  </ul>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"Does this guarantee deliverability?","acceptedAnswer":{"@type":"Answer","text":"No. It checks syntax and obvious issues. Use your ESP for deeper checks."}},
+    {"@type":"Question","name":"Do you send emails to verify?","acceptedAnswer":{"@type":"Answer","text":"No. This is a client‑side syntax checker."}}
+  ]
+}
+</script>
+
+

@@ -1,0 +1,31 @@
+<section class="seo-blog">
+  <h2>Extract Images from Base64 Data URLs</h2>
+  <p>Paste a Base64 data URL to recover the original image. This is useful when assets are stored inline in JSON fixtures or copied from design tools and you need the file back.</p>
+
+  <h3>Typical Reasons to Decode</h3>
+  <ul>
+    <li><strong>Clean up repositories:</strong> Replace long strings with proper image files.</li>
+    <li><strong>Inspect assets:</strong> Confirm format, dimensions, and size before committing.</li>
+    <li><strong>Regression checks:</strong> Verify that an inline asset wasn’t altered in transit.</li>
+  </ul>
+
+  <h3>Notes</h3>
+  <ul>
+    <li>Data URLs include a MIME type prefix; keep it with the content when saving.</li>
+    <li>If decoding fails, ensure the string is complete and hasn’t been truncated.</li>
+  </ul>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Which formats are supported?","acceptedAnswer":{"@type":"Answer","text":"Common types like PNG, JPEG, GIF, and SVG data URLs are supported."}},
+    {"@type":"Question","name":"Why is the image corrupted?","acceptedAnswer":{"@type":"Answer","text":"The Base64 may be incomplete or not match the declared MIME type."}},
+    {"@type":"Question","name":"Is any data uploaded?","acceptedAnswer":{"@type":"Answer","text":"No. Decoding happens in your browser session."}}
+  ]
+}
+</script>
+
+

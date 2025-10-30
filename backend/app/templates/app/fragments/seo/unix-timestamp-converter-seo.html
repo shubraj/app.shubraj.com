@@ -1,0 +1,30 @@
+<section class="seo-blog">
+  <h2>Convert Unix Timestamps and Human‑Readable Dates</h2>
+  <p>Translate between epoch seconds/milliseconds and formatted dates for logs, APIs, and databases. Quick conversions help when correlating events or debugging time math.</p>
+
+  <h3>Common Tasks</h3>
+  <ul>
+    <li>Convert timestamps from logs to readable dates.</li>
+    <li>Generate epoch values for API requests and fixtures.</li>
+    <li>Toggle UTC vs local to match how your app displays time.</li>
+  </ul>
+
+  <h3>Tips</h3>
+  <ul>
+    <li>Check whether values are in seconds or milliseconds—mix‑ups are common.</li>
+    <li>Normalize to UTC in storage; convert to local time at the UI layer.</li>
+  </ul>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"What is a Unix timestamp?","acceptedAnswer":{"@type":"Answer","text":"Number of seconds (or ms) since 1970‑01‑01T00:00:00Z, excluding leap seconds."}},
+    {"@type":"Question","name":"Why are my dates off by hours?","acceptedAnswer":{"@type":"Answer","text":"Likely a timezone mismatch. Confirm UTC vs local mode and DST."}}
+  ]
+}
+</script>
+
+

@@ -1,0 +1,57 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Barcode Generator - Code128 / EAN-13 / QR{% endblock %}
+{% block description %}Generate Code128, EAN-13, or QR codes as PNG images. EAN-13 requires 12 digits; checksum is auto-added.{% endblock %}
+{% block keywords %}barcode generator, code128, ean-13, qr code{% endblock %}
+{% block og_title %}Barcode Generator{% endblock %}
+{% block og_description %}Create Code128, EAN-13, or QR barcodes.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">Barcode Generator</li>
+{% endblock %}
+
+{% block content %}
+<section class="image-base64-section">
+  <h2>Barcode Generator</h2>
+  <p>Create Code128, EAN-13, or QR codes and download as PNG.</p>
+
+  {% if errors %}
+  <div class="feedback-container">
+    {% for err in errors %}
+    <div class="feedback-message error">{{ err }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <form method="post" class="card">
+    {% csrf_token %}
+    <label for="kind">Type</label>
+    <select id="kind" name="kind">
+      <option value="code128" {% if kind == 'code128' or not kind %}selected{% endif %}>Code128</option>
+      <option value="ean13" {% if kind == 'ean13' %}selected{% endif %}>EAN-13</option>
+      <option value="qr" {% if kind == 'qr' %}selected{% endif %}>QR Code</option>
+    </select>
+
+    <label for="data">Data</label>
+    <input id="data" name="data" class="text-input" type="text" value="{{ data }}" placeholder="Enter data (12 digits for EAN-13)">
+
+    <div class="action-buttons">
+      <button class="btn" type="submit">Generate</button>
+    </div>
+  </form>
+
+  {% if image_url %}
+  <div class="adjusted-photo-container" style="text-align:center;">
+    <h3>Result</h3>
+    <img src="{{ image_url }}" alt="Generated barcode" style="max-width:480px; width:100%; height:auto; background:#fff;" />
+    <div class="action-buttons" style="margin-top:1rem;">
+      <a class="btn" href="{{ image_url }}" download>Download PNG</a>
+    </div>
+  </div>
+  {% endif %}
+</section>
+{% include 'app/fragments/seo/barcode-generator-seo.html' %}
+{% endblock %}
+
+

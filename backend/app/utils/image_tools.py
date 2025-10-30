@@ -5,6 +5,8 @@ import time
 import numpy as np
 import cv2
 from rembg import remove
+import piexif
+from PIL.ExifTags import TAGS
 
 
 def compress_image_to_target(media_dir: Path, image_path: str, quality: int = 75, output_format: str = "jpg"):
@@ -214,4 +216,77 @@ def remove_background_ai(media_dir: Path, image_path: str):
         out_kb = 0.0
 
     return ({"output_name": name, "size_kb": out_kb}, True)
+
+
+def extract_exif(image_path: str):
+    """Extract EXIF metadata as a dict of tag -> value (strings where possible)."""
+    try:
+        img = Image.open(image_path)
+        exif = getattr(img, "_getexif", lambda: None)()
+        if not exif:
+            return ({"exif": {}}, True)
+        # Best-effort stringify with binary handling
+        out = {}
+        for tag, value in exif.items():
+            try:
+                name = TAGS.get(tag, str(tag))
+            except Exception:
+                name = str(tag)
+            try:
+                if isinstance(value, bytes):
+                    if name == 'ComponentsConfiguration' and len(value) == 4:
+                        comp_map = {0: 'None', 1: 'Y', 2: 'Cb', 3: 'Cr', 4: 'R', 5: 'G', 6: 'B'}
+                        out[name] = ' '.join(comp_map.get(b, str(b)) for b in value)
+                    elif name in ('ExifVersion', 'FlashPixVersion') and len(value) == 4:
+                        # Versions are ASCII digits like b'0100' → '1.00'
+                        try:
+                            s = value.decode('ascii', errors='ignore')
+                            if s.isdigit() and len(s) == 4:
+                                out[name] = f"{s[0]}.{s[1:]}"
+                            else:
+                                out[name] = s or f"bytes[{len(value)}]"
+                        except Exception:
+                            out[name] = f"bytes[{len(value)}]: {value.hex()}"
+                    else:
+                        # If all printable ASCII, show as string; otherwise compact hex
+                        if all(32 <= b < 127 for b in value):
+                            out[name] = value.decode('ascii', errors='replace')
+                        else:
+                            out[name] = f"bytes[{len(value)}]: {value.hex()}"
+                elif isinstance(value, (list, tuple)):
+                    out[name] = ', '.join(str(v) for v in value)
+                else:
+                    out[name] = str(value)
+            except Exception:
+                out[name] = repr(value)
+        return ({"exif": out}, True)
+    except Exception as e:
+        return ({"errors": [f"Failed to read EXIF: {e}"]}, False)
+
+
+def remove_exif(media_dir: Path, image_path: str):
+    """Remove EXIF metadata and save a new image (prefer PNG to avoid residual metadata)."""
+    try:
+        img = Image.open(image_path)
+        stem = Path(image_path).stem
+        out_name = f"app-shubraj-com-noexif-{time.time_ns()}.png"
+        out_path = media_dir / out_name
+        if piexif and img.format == 'JPEG':
+            try:
+                piexif.remove(image_path)
+                # After removal, reopen and save as PNG to be consistent
+                img2 = Image.open(image_path)
+                img2.save(out_path, format='PNG')
+                return ({"output_name": out_name}, True)
+            except Exception:
+                pass
+        # Generic approach: drop info/exif and save as PNG
+        data = list(img.getdata())
+        mode = img.mode
+        img_clean = Image.new(mode, img.size)
+        img_clean.putdata(data)
+        img_clean.save(out_path, format='PNG')
+        return ({"output_name": out_name}, True)
+    except Exception as e:
+        return ({"errors": [f"Failed to remove EXIF: {e}"]}, False)
 

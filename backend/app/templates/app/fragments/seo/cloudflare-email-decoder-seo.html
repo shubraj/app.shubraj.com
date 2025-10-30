@@ -1,0 +1,30 @@
+<section class="seo-blog">
+  <h2>Decode Cloudflare‑Protected Email Addresses</h2>
+  <p>Cloudflare obfuscates emails in HTML to reduce scraping. Paste the encoded snippet to reveal the original address so you can contact site owners or audit your own pages.</p>
+
+  <h3>When It’s Useful</h3>
+  <ul>
+    <li><strong>Customer support:</strong> Recover an address when the page hides it behind JavaScript.</li>
+    <li><strong>QA and audits:</strong> Confirm that your site’s obfuscation works and decodes correctly.</li>
+    <li><strong>Migrations:</strong> Extract addresses before moving content between platforms.</li>
+  </ul>
+
+  <h3>Notes</h3>
+  <ul>
+    <li>Only decode content you’re authorized to use; respect site terms.</li>
+    <li>Obfuscation is not encryption—treat decoded emails as personal data.</li>
+  </ul>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"Is this breaking encryption?","acceptedAnswer":{"@type":"Answer","text":"No. Cloudflare email obfuscation is a reversible protection against scraping."}},
+    {"@type":"Question","name":"Is any data uploaded?","acceptedAnswer":{"@type":"Answer","text":"Decoding runs locally in your browser session."}}
+  ]
+}
+</script>
+
+

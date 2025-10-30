@@ -1,0 +1,60 @@
+<section class="seo-blog">
+  <h2>Encode and Decode URLs the Way Browsers Expect</h2>
+  <p>Whether you’re cleaning up query strings, generating shareable links, or troubleshooting redirects, correct percent‑encoding matters. This tool encodes reserved characters and decodes already‑encoded text so your URLs behave consistently across browsers, servers, and proxies.</p>
+
+  <h3>When to Use URL Encoding</h3>
+  <ul>
+    <li><strong>Query parameters:</strong> Encode values that may contain spaces, quotes, or special characters.</li>
+    <li><strong>Path segments:</strong> Avoid breaking routes when user‑generated text becomes part of the path.</li>
+    <li><strong>Interoperability:</strong> Ensure third‑party APIs and webhooks receive exactly what you intend.</li>
+  </ul>
+
+  <h3>Practical Guidelines</h3>
+  <ul>
+    <li>Prefer encoding values, not entire URLs, unless you know the consumer expects it.</li>
+    <li>Double encoding is a common bug. If text already contains <code>%</code> sequences, decode before re‑encoding.</li>
+    <li>Be mindful of character sets. UTF‑8 is standard; mixing encodings leads to subtle issues.</li>
+  </ul>
+
+  <h3>Typical Workflows</h3>
+  <ul>
+    <li>Transform raw input into a safe query value for an API call.</li>
+    <li>Decode a redirect target to confirm it matches your allow‑list logic.</li>
+    <li>Normalize user‑generated links before storing or displaying them.</li>
+  </ul>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does URL encoding do?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It converts characters to percent‑encoded representations so they can be safely transmitted in URLs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I encode the whole URL or just parameters?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Encode parameter values and path segments as needed. Encoding the entire URL is rarely correct."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does decoding not change some characters?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Only valid percent‑escape sequences are decoded. Plain text remains unchanged."
+      }
+    }
+  ]
+}
+</script>
+
+

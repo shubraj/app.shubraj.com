@@ -1,0 +1,68 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}JWT Generator (HS256) - Custom Claims{% endblock %}
+{% block description %}Create HS256 JWTs with your own claims, optional TTL, and iat. Secret never leaves the server logs or UI beyond this request.{% endblock %}
+{% block keywords %}jwt generator, hs256, json web token, custom claims{% endblock %}
+{% block og_title %}JWT Generator (HS256){% endblock %}
+{% block og_description %}Build a JWT by providing a secret and claims JSON.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">JWT Generator</li>
+{% endblock %}
+
+{% block content %}
+<section class="hash-section">
+  <h2>JWT Generator (HS256)</h2>
+  <p>Provide a secret and claims JSON. Optionally include <code>iat</code> and an expiration TTL in minutes.</p>
+
+  {% if errors %}
+  <div class="feedback-container">
+    {% for err in errors %}
+    <div class="feedback-message error">{{ err }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <form method="post" class="card">
+    {% csrf_token %}
+    <label for="secret">Secret (HS256)</label>
+    <input id="secret" name="secret" type="password" class="text-input" placeholder="Enter secret" required>
+
+    <label for="claims">Claims (JSON object)</label>
+    <textarea id="claims" name="claims" class="input-text" rows="10" placeholder='{"sub":"123","name":"John","admin":true}'>{{ claims }}</textarea>
+
+    <div class="range-container" style="display:flex; gap:1rem; flex-wrap:wrap;">
+      <div>
+        <label for="ttl">TTL (minutes)</label>
+        <input id="ttl" name="ttl" type="number" class="text-input" min="0" placeholder="e.g., 60" value="{{ ttl }}">
+      </div>
+      <div>
+        <label for="kid">Header kid (optional)</label>
+        <input id="kid" name="kid" type="text" class="text-input" placeholder="key-id" value="{{ kid }}">
+      </div>
+      <label class="flag" title="Include issued-at (iat)"><input type="checkbox" name="include_iat" {% if not ttl or 1 %}checked{% endif %}><span>Include iat</span></label>
+    </div>
+
+    <div class="action-buttons">
+      <button class="btn" type="submit">Generate JWT</button>
+    </div>
+  </form>
+
+  {% if token %}
+  <div class="header-info">
+    <h3>Token</h3>
+    <textarea class="output-text" rows="5" readonly>{{ token }}</textarea>
+  </div>
+  <div class="header-info">
+    <h3>Header</h3>
+    <pre style="white-space:pre-wrap; word-break:break-word;">{{ header|safe }}</pre>
+    <h3>Payload</h3>
+    <pre style="white-space:pre-wrap; word-break:break-word;">{{ payload|safe }}</pre>
+  </div>
+  {% endif %}
+</section>
+{% include 'app/fragments/seo/jwt-generator-seo.html' %}
+{% endblock %}
+
+

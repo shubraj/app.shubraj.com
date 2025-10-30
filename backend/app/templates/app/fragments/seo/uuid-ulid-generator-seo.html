@@ -1,0 +1,29 @@
+<section class="seo-blog">
+  <h2>Generate UUIDs and ULIDs for Unique Identifiers</h2>
+  <p>Create random UUIDs (v4) or time‑sortable ULIDs for database keys, test data, and distributed systems. ULIDs are lexicographically sortable, which helps with indexing and logs.</p>
+
+  <h3>Choosing an ID Type</h3>
+  <ul>
+    <li><strong>UUID v4:</strong> Simple, widely supported, good general default.</li>
+    <li><strong>ULID:</strong> Sorts by time, base32 output, friendly for logs and URLs.</li>
+  </ul>
+
+  <h3>Guidance</h3>
+  <ul>
+    <li>Avoid guessable identifiers for sensitive resources.</li>
+    <li>Let databases generate IDs when possible to avoid collisions.</li>
+  </ul>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"Are ULIDs unique enough?","acceptedAnswer":{"@type":"Answer","text":"Yes for typical app use. They combine time with randomness to reduce collisions."}},
+    {"@type":"Question","name":"When should I prefer UUIDs?","acceptedAnswer":{"@type":"Answer","text":"Use UUIDs when standards or libraries expect them explicitly."}}
+  ]
+}
+</script>
+
+

@@ -44,6 +44,10 @@
                 <h3>JWT Decoder</h3>
                 <p>View JWT header and payload (Base64URL decode).</p>
             </a>
+            <a href="{% url 'app_app:jwt_generator' %}" class="tool-card" title="Free JWT Generator (HS256)">
+                <h3>JWT Generator</h3>
+                <p>Create HS256 JWTs with custom claims.</p>
+            </a>
             <a href="{% url "app_app:base64_decode_image" %}" class="tool-card" title="Free Base64 to Image Converter">  
                 <h3>Base64 to Image</h3>  
                 <p>Convert Base64 strings back to viewable images.</p>  
@@ -164,6 +168,14 @@
                 <h3>QR Code Scanner</h3>
                 <p>Upload image and decode QR code(s).</p>
             </a>
+            <a href="{% url 'app_app:barcode_generator' %}" class="tool-card" title="Free Barcode Generator (Code128/EAN/QR)">
+                <h3>Barcode Generator</h3>
+                <p>Create Code128, EAN-13, or QR barcodes.</p>
+            </a>
+            <a href="{% url 'app_app:exif_tool' %}" class="tool-card" title="Free EXIF Viewer & Remover">
+                <h3>EXIF Viewer & Remover</h3>
+                <p>View and strip image EXIF metadata.</p>
+            </a>
             <a href="{% url 'app_app:image_background_remover' %}" class="tool-card" title="Free Image Background Remover">
                 <h3>Background Remover</h3>
                 <p>Make white backgrounds transparent (PNG).</p>
@@ -185,6 +197,10 @@
             <a href="{% url "app_app:what_is_my_headers" %}" class="tool-card" title="Free HTTP Headers Checker Tool">
                 <h3>HTTP Headers Checker</h3>
                 <p>View and analyze your browser's HTTP request headers.</p>
+            </a>
+            <a href="{% url 'app_app:subnet_calculator' %}" class="tool-card" title="Free Subnet/CIDR Calculator">
+                <h3>Subnet/CIDR Calculator</h3>
+                <p>Compute network, mask, broadcast, and host range.</p>
             </a>
         </div>
     </section>

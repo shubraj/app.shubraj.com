@@ -7,8 +7,10 @@ from .utils.email_validator import EmailValidator,InvalidEmailSyntax,DomainDoesN
 from .utils.dv_tools import process_dv_image
 from django.conf import settings
 from pathlib import Path
-from .utils.image_tools import compress_image_to_target, resize_or_crop_image, remove_background_whiteish, remove_background_ai
-from .utils.qr_tools import generate_qr_png, decode_qr_image
+from .utils.image_tools import compress_image_to_target, resize_or_crop_image, remove_background_whiteish, remove_background_ai, extract_exif, remove_exif
+from .utils.qr_tools import generate_qr_png, decode_qr_image, generate_barcode_png
+import json, time
+import jwt
 
 class HomePageView(TemplateView):
     
@@ -348,3 +350,109 @@ class QRCodeScanner(View):
             return render(request, self.template_name, {"errors": result.get('errors', ["Failed to decode QR code."])})
         decoded = result.get('results', [])
         return render(request, self.template_name, {"results": decoded})
+
+class BarcodeGenerator(View):
+    template_name = "app/barcode-generator.html"
+    media_dir = Path(settings.MEDIA_ROOT).resolve()
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request, *args, **kwargs):
+        data = request.POST.get('data', '').strip()
+        kind = request.POST.get('kind', 'code128')
+        if not data:
+            return render(request, self.template_name, {"errors": ["Please enter data to encode."]})
+        if kind == 'qr':
+            result, success = generate_qr_png(self.media_dir, data)
+        else:
+            result, success = generate_barcode_png(self.media_dir, data, kind=kind)
+        if not success:
+            return render(request, self.template_name, {"errors": result.get('errors', ["Failed to generate barcode."]), "kind": kind, "data": data})
+        return render(request, self.template_name, {"image_url": f"{settings.MEDIA_URL}{result['output_name']}", "kind": kind, "data": data})
+
+class SubnetCalculator(TemplateView):
+    template_name = "app/subnet-calculator.html"
+
+class ExifTool(View):
+    template_name = "app/exif-tool.html"
+    media_dir = Path(settings.MEDIA_ROOT).resolve()
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request, *args, **kwargs):
+        action = request.POST.get('action', 'view')
+        image_file = request.FILES.get('image')
+        if not image_file:
+            return render(request, self.template_name, {"errors": ["Please select an image."]})
+        tmp_path = f"/tmp/{image_file.name}"
+        with open(tmp_path, 'wb') as f:
+            for chunk in image_file.chunks():
+                f.write(chunk)
+        if action == 'remove':
+            result, success = remove_exif(self.media_dir, tmp_path)
+            if not success:
+                return render(request, self.template_name, {"errors": result.get('errors', ["Failed to remove EXIF"])})
+            return render(request, self.template_name, {"removed": True, "image_url": f"{settings.MEDIA_URL}{result['output_name']}"})
+        else:
+            result, success = extract_exif(tmp_path)
+            if not success:
+                return render(request, self.template_name, {"errors": result.get('errors', ["Failed to extract EXIF"])})
+            return render(request, self.template_name, {"exif_checked": True, "exif": result.get('exif', {})})
+
+class JWTGenerator(View):
+    template_name = "app/jwt-generator.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request, *args, **kwargs):
+
+        secret = request.POST.get('secret', '')
+        claims_text = request.POST.get('claims', '').strip()
+        ttl = request.POST.get('ttl', '').strip()
+        include_iat = request.POST.get('include_iat', 'on') == 'on'
+        kid = request.POST.get('kid', '').strip()
+
+        if not secret:
+            return render(request, self.template_name, {"errors": ["Secret is required."], "claims": claims_text, "ttl": ttl, "kid": kid})
+        try:
+            claims = json.loads(claims_text or '{}')
+            if not isinstance(claims, dict):
+                raise ValueError('Claims must be a JSON object')
+        except Exception as e:
+            return render(request, self.template_name, {"errors": [f"Invalid claims JSON: {e}"], "claims": claims_text, "ttl": ttl, "kid": kid})
+
+        now = int(time.time())
+        if include_iat:
+            claims.setdefault('iat', now)
+        if ttl:
+            try:
+                seconds = int(ttl) * 60
+                claims['exp'] = now + max(0, seconds)
+            except Exception:
+                return render(request, self.template_name, {"errors": ["TTL must be an integer (minutes)."], "claims": claims_text, "ttl": ttl, "kid": kid})
+
+        headers = {"alg": "HS256", "typ": "JWT"}
+        if kid:
+            headers["kid"] = kid
+        try:
+            token = jwt.encode(claims, secret, algorithm="HS256", headers=headers)
+        except Exception as e:
+            return render(request, self.template_name, {"errors": [f"Failed to generate JWT: {e}"], "claims": claims_text, "ttl": ttl, "kid": kid})
+
+        # Decode header/payload for display (without verifying)
+        try:
+            header = jwt.get_unverified_header(token)
+            payload = jwt.decode(token, options={"verify_signature": False})
+        except Exception:
+            header, payload = {}, {}
+        return render(request, self.template_name, {
+            "token": token,
+            "header": header,
+            "payload": payload,
+            "claims": claims_text or '{}',
+            "ttl": ttl,
+            "kid": kid,
+        })

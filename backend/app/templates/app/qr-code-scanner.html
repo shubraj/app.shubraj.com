@@ -1,0 +1,54 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}QR Code Scanner - Decode from Image{% endblock %}
+{% block description %}Upload an image and decode embedded QR code(s) on the server. Supports multiple codes per image.{% endblock %}
+{% block keywords %}qr code scanner, decode qr from image, read qr code{% endblock %}
+{% block og_title %}QR Code Scanner{% endblock %}
+{% block og_description %}Upload an image and decode QR codes instantly.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">QR Code Scanner</li>
+{% endblock %}
+
+{% block content %}
+<section class="image-base64-section">
+  <h2>QR Code Scanner</h2>
+  <p>Upload a photo or screenshot that contains a QR code. Decoding runs on the server.</p>
+
+  {% if errors %}
+  <div class="feedback-container">
+    {% for err in errors %}
+    <div class="feedback-message error">{{ err }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <form method="post" enctype="multipart/form-data" class="card">
+    {% csrf_token %}
+    <label for="qrImage">Choose image</label>
+    <input type="file" id="qrImage" name="image" accept="image/*" required>
+    <div class="action-buttons">
+      <button type="submit" class="btn">Decode QR</button>
+    </div>
+  </form>
+
+  {% if results is not None %}
+  <div class="header-info">
+    <h3>Result</h3>
+    {% if results and results|length > 0 %}
+      <ul>
+        {% for item in results %}
+          <li><code>{{ item }}</code></li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No QR code found.</p>
+    {% endif %}
+  </div>
+  {% endif %}
+</section>
+{% include 'app/fragments/seo/qr-code-scanner-seo.html' %}
+{% endblock %}
+
+

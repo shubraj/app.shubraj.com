@@ -1,0 +1,63 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}EXIF Viewer & Remover - Image Metadata{% endblock %}
+{% block description %}View EXIF metadata from images and remove it to create a privacy-friendly PNG.{% endblock %}
+{% block keywords %}exif viewer, remove exif, image metadata, strip exif{% endblock %}
+{% block og_title %}EXIF Viewer & Remover{% endblock %}
+{% block og_description %}Upload an image to view or remove EXIF metadata.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">EXIF Viewer & Remover</li>
+{% endblock %}
+
+{% block content %}
+<section class="image-base64-section">
+  <h2>EXIF Viewer & Remover</h2>
+  <p>Upload an image to view its EXIF metadata or remove it. Removal creates a new PNG without EXIF.</p>
+
+  {% if errors %}
+  <div class="feedback-container">
+    {% for err in errors %}
+    <div class="feedback-message error">{{ err }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <form method="post" enctype="multipart/form-data" class="card">
+    {% csrf_token %}
+    <label for="exifImage">Choose image</label>
+    <input type="file" id="exifImage" name="image" accept="image/*" required>
+    <div class="action-buttons" style="justify-content:flex-start; gap:0.5rem; flex-wrap:wrap;">
+      <button class="btn" type="submit" name="action" value="view">View EXIF</button>
+      <button class="btn" type="submit" name="action" value="remove">Remove EXIF</button>
+    </div>
+  </form>
+
+  {% if exif_checked %}
+  <div class="header-info">
+    <h3>EXIF Data</h3>
+    {% if exif|length > 0 %}
+      <ul>
+        {% for k, v in exif.items %}
+          <li><strong>{{ k }}:</strong> {{ v }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No EXIF metadata found.</p>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  {% if removed %}
+  <div class="header-info" style="text-align:center;">
+    <h3>EXIF removed</h3>
+    <p>Download the EXIF-free image:</p>
+    <a class="btn" href="{{ image_url }}" download>Download PNG</a>
+  </div>
+  {% endif %}
+</section>
+{% include 'app/fragments/seo/exif-tool-seo.html' %}
+{% endblock %}
+
+

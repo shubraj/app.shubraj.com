@@ -1,0 +1,60 @@
+<section class="seo-blog">
+  <h2>Understand What’s Inside a JWT Without Guesswork</h2>
+  <p>JWTs are compact and convenient, but they’re not opaque. This decoder lets you see the header and payload exactly as your application will parse them—Base64URL decoded, formatted, and readable. It’s useful for debugging claims, testing middleware behavior, and validating that upstream systems are setting fields as expected.</p>
+
+  <h3>Why Decode a JWT?</h3>
+  <ul>
+    <li><strong>Sanity‑check claims:</strong> Inspect <code>iss</code>, <code>sub</code>, <code>aud</code>, <code>exp</code>, and custom fields.</li>
+    <li><strong>Troubleshoot auth flows:</strong> Confirm what a gateway or identity provider actually issued.</li>
+    <li><strong>Developer onboarding:</strong> Teach teammates what each claim means in your system.</li>
+  </ul>
+
+  <h3>What This Tool Does (and Doesn’t)</h3>
+  <ul>
+    <li><strong>Decodes only:</strong> It does not verify signatures or check key material.</li>
+    <li><strong>Shows structure:</strong> Header, payload, and signature are displayed separately for clarity.</li>
+    <li><strong>Stays local:</strong> Decoding happens in your browser session.</li>
+  </ul>
+
+  <h3>Practical Tips</h3>
+  <ul>
+    <li>If <code>exp</code> looks valid but the app still fails, confirm time skew and clock sync.</li>
+    <li>Check <code>aud</code> and <code>iss</code> values match what your resource server expects.</li>
+    <li>Use a separate tool (or your backend) when you need cryptographic verification.</li>
+  </ul>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does this JWT Decoder validate signatures?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It only decodes Base64URL sections. Use your backend or a signing library to verify."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my token sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Decoding runs in your browser session."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if my JWT is malformed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You’ll see an error. Ensure the token has three dot‑separated parts and valid Base64URL."
+      }
+    }
+  ]
+}
+</script>
+
+

@@ -1,0 +1,27 @@
+<section class="seo-blog">
+  <h2>Generate MD5 Checksums for Files and Text</h2>
+  <p>MD5 is a fast, widely available hash function useful for checksums and integrity checks in non‑security contexts. Create an MD5 digest to verify that content hasn’t changed during transfer.</p>
+
+  <h3>Appropriate Uses</h3>
+  <ul>
+    <li><strong>Integrity checks:</strong> Confirm two files are identical after download.</li>
+    <li><strong>De‑duplication:</strong> Quickly spot identical payloads in datasets.</li>
+    <li><strong>Debugging:</strong> Fingerprint inputs when tracing code paths.</li>
+  </ul>
+
+  <h3>Security Note</h3>
+  <p>MD5 is not suitable for passwords or signatures. Use modern algorithms (e.g., bcrypt/Argon2 for passwords, SHA‑256/512 for cryptographic hashing) for security‑sensitive tasks.</p>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"Is MD5 secure?","acceptedAnswer":{"@type":"Answer","text":"No. Use it for checksums only, not for protecting secrets."}},
+    {"@type":"Question","name":"What’s the output length?","acceptedAnswer":{"@type":"Answer","text":"32 hexadecimal characters (128‑bit digest)."}}
+  ]
+}
+</script>
+
+

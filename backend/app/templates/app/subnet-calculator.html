@@ -1,0 +1,59 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Subnet/CIDR Calculator - IPv4{% endblock %}
+{% block description %}Compute IPv4 network, mask, broadcast, host range, and total hosts from a CIDR or IP + mask.{% endblock %}
+{% block keywords %}subnet calculator, cidr calculator, ipv4 subnet, network mask{% endblock %}
+{% block og_title %}Subnet/CIDR Calculator{% endblock %}
+{% block og_description %}Enter a CIDR or IP/mask to get network details instantly.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">Subnet/CIDR Calculator</li>
+{% endblock %}
+
+{% block content %}
+<section class="hash-section">
+  <h2>Subnet/CIDR Calculator (IPv4)</h2>
+  <p>Type a CIDR (e.g., 192.168.1.10/24) or IP and mask.</p>
+
+  <div class="card">
+    <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+      <div style="flex:1 1 280px; min-width:240px;">
+        <label for="cidrInput">CIDR</label>
+        <input id="cidrInput" type="text" class="text-input" placeholder="e.g., 10.0.1.5/23">
+      </div>
+      <div style="flex:1 1 280px; min-width:240px;">
+        <label for="ipInput">IP Address</label>
+        <input id="ipInput" type="text" class="text-input" placeholder="e.g., 10.0.1.5">
+      </div>
+      <div style="flex:1 1 280px; min-width:240px;">
+        <label for="maskInput">Mask length</label>
+        <input id="maskInput" type="number" class="text-input" placeholder="e.g., 24" min="0" max="32">
+      </div>
+    </div>
+    <div class="action-buttons" style="justify-content:flex-start; gap:0.5rem;">
+      <button class="btn" id="calcBtn">Calculate</button>
+      <button class="btn" id="clearCidr">Clear</button>
+    </div>
+
+    <div class="header-info" id="cidrResult">
+      <h3>Result</h3>
+      <ul>
+        <li>Network: <strong id="netOut">-</strong></li>
+        <li>Netmask: <strong id="maskOut">-</strong> (<span id="wildOut">-</span> wildcard)</li>
+        <li>Broadcast: <strong id="bcastOut">-</strong></li>
+        <li>First Host: <strong id="firstOut">-</strong></li>
+        <li>Last Host: <strong id="lastOut">-</strong></li>
+        <li>Total Hosts: <strong id="hostsOut">-</strong></li>
+      </ul>
+    </div>
+  </div>
+</section>
+{% include 'app/fragments/seo/subnet-calculator-seo.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/subnetCalculator.js' %}"></script>
+{% endblock %}
+
+

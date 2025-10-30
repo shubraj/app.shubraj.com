@@ -1,0 +1,30 @@
+<section class="seo-blog">
+  <h2>Inspect Your HTTP Request Headers</h2>
+  <p>Headers describe how your browser talks to servers—accepted formats, languages, compression, and more. Seeing them helps troubleshoot caching, redirects, and content negotiation.</p>
+
+  <h3>What to Look For</h3>
+  <ul>
+    <li><strong>User‑Agent:</strong> Identify browser and platform when debugging compatibility.</li>
+    <li><strong>Accept/Encoding:</strong> Confirm gzip/brotli and content types supported.</li>
+    <li><strong>Authorization/Cookies:</strong> Ensure sensitive headers are sent only when intended.</li>
+  </ul>
+
+  <h3>Notes</h3>
+  <ul>
+    <li>Proxies and extensions may alter headers. Test in a clean profile when isolating issues.</li>
+    <li>Be careful when sharing headers—redact tokens or session IDs.</li>
+  </ul>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"Why do headers differ between tabs?","acceptedAnswer":{"@type":"Answer","text":"Different origins, extensions, or authentication states can change sent headers."}},
+    {"@type":"Question","name":"How do I test without cookies?","acceptedAnswer":{"@type":"Answer","text":"Use a private window or clear site data to send a request without stored cookies."}}
+  ]
+}
+</script>
+
+

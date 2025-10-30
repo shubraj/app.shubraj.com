@@ -1,0 +1,32 @@
+<section class="seo-blog">
+  <h2>Hash Passwords with bcrypt for Safer Storage</h2>
+  <p>bcrypt is a password hashing function designed to be slow and resistant to brute‑force attacks. Use it to derive a hash from a password before storing credentials in a database.</p>
+
+  <h3>What Matters with bcrypt</h3>
+  <ul>
+    <li><strong>Cost factor:</strong> Higher cost increases CPU work; choose a value your servers can handle.</li>
+    <li><strong>Unique salts:</strong> bcrypt generates a salt per hash to protect against rainbow tables.</li>
+    <li><strong>No plain text:</strong> Never store or log raw passwords—only the bcrypt hash.</li>
+  </ul>
+
+  <h3>Operational Tips</h3>
+  <ul>
+    <li>Benchmark cost values on your actual infrastructure.</li>
+    <li>Rotate credentials and enforce strong password policies.</li>
+    <li>Pair hashing with rate limiting and MFA for real defenses.</li>
+  </ul>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Is bcrypt reversible?","acceptedAnswer":{"@type":"Answer","text":"No. Passwords are verified by hashing the input and comparing to the stored hash."}},
+    {"@type":"Question","name":"What cost should I use?","acceptedAnswer":{"@type":"Answer","text":"Pick the highest cost that keeps logins responsive on your hardware."}},
+    {"@type":"Question","name":"Should I add my own salt?","acceptedAnswer":{"@type":"Answer","text":"bcrypt includes a per‑hash salt internally. You don’t need to manage it separately."}}
+  ]
+}
+</script>
+
+

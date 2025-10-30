@@ -1,0 +1,32 @@
+<section class="seo-blog">
+  <h2>Turn Small Images into Base64 for Inlining</h2>
+  <p>Inlining images as Base64 can simplify quick demos and single‑file prototypes. Drop an image here to generate a data URL you can paste into HTML, CSS, or JSON fixtures.</p>
+
+  <h3>When Inlining Makes Sense</h3>
+  <ul>
+    <li><strong>Design previews:</strong> Share a minimal HTML file without external assets.</li>
+    <li><strong>Component docs:</strong> Keep example code self‑contained and easy to copy.</li>
+    <li><strong>Prototyping:</strong> Skip asset pipelines while exploring ideas.</li>
+  </ul>
+
+  <h3>Trade‑offs</h3>
+  <ul>
+    <li>Base64 increases size; prefer normal image files in production.</li>
+    <li>Long data URLs can be unwieldy in code reviews and diffs.</li>
+    <li>CDNs cache images better than inline strings for real apps.</li>
+  </ul>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Where can I use the data URL?","acceptedAnswer":{"@type":"Answer","text":"In HTML <img>, CSS backgrounds, or JSON used by demos and tests."}},
+    {"@type":"Question","name":"Will this speed up my site?","acceptedAnswer":{"@type":"Answer","text":"Not generally. Use real assets and caching for production performance."}},
+    {"@type":"Question","name":"Is the image uploaded?","acceptedAnswer":{"@type":"Answer","text":"Processing runs in your browser session."}}
+  ]
+}
+</script>
+
+

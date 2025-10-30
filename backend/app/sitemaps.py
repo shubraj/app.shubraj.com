@@ -36,13 +36,12 @@ class ToolsSitemap(Sitemap):
     
     def items(self):
         tool_patterns = []
-        # Find all tool-related URL patterns
+        # Include all named app routes except static/utility pages
+        exclude = {'privacy_policy', 'terms', 'home', 'sitemap', 'robots.txt'}
         for pattern in urlpatterns:
             if isinstance(pattern, URLPattern) and pattern.name:
-                if (not pattern.pattern.converters and 
-                    pattern.name not in ['privacy_policy', 'home', 'sitemap']):
+                if pattern.name not in exclude:
                     tool_patterns.append(f"{app_name}:{pattern.name}")
-        
         return tool_patterns
 
     def location(self, item):
