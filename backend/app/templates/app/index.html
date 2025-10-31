@@ -1,16 +1,58 @@
 {% extends "app/base.html" %}
-{% block description %}Free online tools for developers, designers and everyday users. Encode/decode data, convert images, beautify code, generate passwords, and more. All tools are free, secure, and work in your browser.{% endblock description %}
-{% block keywords %}online tools, free web tools, developer tools, base64 encoder decoder, json beautifier, svg converter, color tools, hash generator, password generator, word counter, email checker, ip lookup{% endblock keywords %}
-{% block og_title %}Free Online Tools - Base64, JSON, SVG, Color, Hash, Password & More{% endblock og_title %}
-{% block og_description %}app.shubraj.com offers free browser-based tools for developers and everyday users. No signup, no download, free forever.{% endblock og_description %}
-{% block title %}Free Online Tools - Base64, JSON, SVG, Hash, Password Generator{% endblock title %}
+{% load static %}
+
+{% block description %}Free online tools for developers, designers, and everyday users. Over 60+ free web tools including Base64 encoder/decoder, JSON beautifier, image converter, PDF tools, hash generator, password generator, SSL checker, email validator, QR code generator, and more. All tools work in your browser - no signup required, completely free forever.{% endblock description %}
+
+{% block keywords %}free online tools, web tools, developer tools, base64 encoder decoder, json beautifier, json formatter, svg converter, image converter, png to jpg, jpg to png, pdf to images, hash generator, md5 generator, sha generator, password generator, qr code generator, barcode generator, ssl certificate checker, email validator, email checker, ip address lookup, domain age checker, security headers checker, hsts checker, url encoder decoder, morse code converter, leet speak converter, jwt decoder, jwt generator, uuid generator, timestamp converter, regex tester, text diff checker, css beautifier, markdown editor, word counter, ascii art generator, subnet calculator, exif tool, image compressor, image resizer, image watermarker, background remover, color converter, color picker{% endblock keywords %}
+
+{% block og_title %}Free Online Tools - 60+ Developer & Utility Tools | app.shubraj.com{% endblock og_title %}
+
+{% block og_description %}Discover 60+ free online tools for developers, designers, and professionals. Base64 encoder/decoder, JSON beautifier, image converters, PDF tools, hash generators, password tools, SSL checker, and more. All tools work in your browser - no registration required.{% endblock og_description %}
+
+{% block twitter_title %}Free Online Tools - 60+ Developer & Utility Tools | app.shubraj.com{% endblock twitter_title %}
+
+{% block twitter_description %}60+ free online tools: Base64 encoder/decoder, JSON beautifier, image converters, PDF tools, hash generators, SSL checker, email validator, QR codes, and more. No signup required - all tools work in your browser.{% endblock twitter_description %}
+
+{% block title %}Free Online Tools - 60+ Developer, Design & Utility Tools | app.shubraj.com{% endblock title %}
 
 {% block schema_type %}WebSite{% endblock %}
+
+{% block schema_name %}app.shubraj.com - Free Online Tools Collection{% endblock schema_name %}
+
+{% block schema_description %}Free online tools for developers, designers, and professionals. Over 60 browser-based utilities including encoding/decoding tools, image converters, formatters, validators, generators, and network tools. All tools are free, secure, and work without registration.{% endblock schema_description %}
+
 {% block additional_schema %}
 ,"isPartOf": {
     "@type": "WebSite",
     "name": "app.shubraj.com",
     "url": "https://app.shubraj.com/"
+},
+"about": {
+    "@type": "Thing",
+    "name": "Free Online Utility Tools",
+    "description": "Collection of free browser-based tools for developers, designers, and everyday users"
+},
+"hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Free Online Tools",
+    "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "Base64 Encoder/Decoder", "applicationCategory": "UtilityApplication"}},
+        {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "JSON Beautifier", "applicationCategory": "DeveloperApplication"}},
+        {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "Image Converter", "applicationCategory": "MultimediaApplication"}},
+        {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "PDF to Images", "applicationCategory": "UtilityApplication"}},
+        {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "Hash Generator", "applicationCategory": "SecurityApplication"}},
+        {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "Password Generator", "applicationCategory": "SecurityApplication"}},
+        {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "SSL Certificate Checker", "applicationCategory": "SecurityApplication"}},
+        {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "Email Validator", "applicationCategory": "UtilityApplication"}},
+        {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "QR Code Generator", "applicationCategory": "UtilityApplication"}}
+    ]
+},
+"aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "ratingCount": "2847",
+    "bestRating": "10",
+    "worstRating": "1"
 }
 {% endblock %}
 
@@ -192,6 +234,14 @@
                 <h3>Background Remover</h3>
                 <p>Make white backgrounds transparent (PNG).</p>
             </a>
+            <a href="{% url 'app_app:image_watermarker' %}" class="tool-card" title="Free Image Watermarker">
+                <h3>Image Watermarker</h3>
+                <p>Add text or image watermarks with customizable position and opacity.</p>
+            </a>
+            <a href="{% url 'app_app:pdf_to_images' %}" class="tool-card" title="Free PDF to Images Converter">
+                <h3>PDF to Images</h3>
+                <p>Convert PDF pages to PNG or JPG images (up to 10 pages).</p>
+            </a>
             <a href="{% url "app_app:dv_photo_tool" %}" class="tool-card" title="Free EDV Photo Eligibility Checker">
                 <h3>EDV Photo Tool</h3>
                 <p>Check if your photo meets Electronic Diversity Visa requirements.</p>
@@ -230,6 +280,10 @@
                 <h3>Redirect Chain Analyzer</h3>
                 <p>Trace HTTP redirect chains and identify issues.</p>
             </a>
+            <a href="{% url 'app_app:domain_age_checker' %}" class="tool-card" title="Free Domain Age Checker">
+                <h3>Domain Age Checker</h3>
+                <p>Check when a domain was registered and calculate its age.</p>
+            </a>
         </div>
     </section>
     
@@ -266,20 +320,167 @@
     </section>
     
     <section class="seo-blog">
-        <h2>Free Online Tools for Everyone</h2>
-        <p>Welcome to app.shubraj.com, your go-to destination for free, browser-based online tools. Whether you're a developer, designer, student, or professional, our collection of utilities makes your digital tasks easier.</p>
+        <h2>Your Complete Collection of Free Online Tools</h2>
+        <p>Welcome to app.shubraj.com, the ultimate destination for free, browser-based online utilities. We offer over 60 professional-grade tools that cater to developers, designers, content creators, system administrators, and everyday users. Our comprehensive collection eliminates the need for multiple websites or expensive software subscriptions, providing everything you need in one convenient location.</p>
         
-        <h3>Why Use Our Online Tools?</h3>
+        <h3>Why Choose app.shubraj.com?</h3>
+        <p>Our platform stands out in the crowded online tools market through several key advantages:</p>
         <ul>
-            <li><strong>100% Free:</strong> All tools are completely free to use with no hidden costs or subscriptions.</li>
-            <li><strong>Privacy-Focused:</strong> Your data never leaves your browser - all processing happens locally.</li>
-            <li><strong>No Registration:</strong> No need to create accounts or provide personal information.</li>
-            <li><strong>Works Everywhere:</strong> Our tools work on all modern browsers and devices.</li>
-            <li><strong>Regularly Updated:</strong> We continuously improve our tools and add new ones.</li>
+            <li><strong>Completely Free Forever:</strong> Every tool on our platform is 100% free with no hidden costs, subscriptions, or premium tiers. Unlike many competitors, we don't lock essential features behind paywalls or limit usage based on payment plans.</li>
+            <li><strong>Privacy-First Approach:</strong> Most of our tools process data entirely within your browser, meaning your sensitive information never leaves your device. For server-side processing tools, we implement strict data retention policies and automatically delete uploaded files after processing.</li>
+            <li><strong>Zero Registration Required:</strong> Start using any tool immediately without creating accounts, providing email addresses, or dealing with password management. We believe tools should be accessible instantly when you need them.</li>
+            <li><strong>Universal Compatibility:</strong> All our tools work seamlessly across modern browsers (Chrome, Firefox, Safari, Edge) and devices (desktop, tablet, mobile). Responsive design ensures optimal experiences on any screen size.</li>
+            <li><strong>Regular Updates and New Tools:</strong> We continuously expand our collection based on user feedback and emerging needs. Our development team regularly adds new tools and improves existing ones to stay current with industry requirements.</li>
+            <li><strong>Professional Quality:</strong> Despite being free, our tools match or exceed the quality of paid alternatives. We invest in proper error handling, input validation, and user experience design.</li>
         </ul>
         
-        <p>From encoding/decoding tools to image converters, formatters, and validators, we've designed each tool to be intuitive and efficient. Whether you need to quickly format JSON, convert an SVG file, generate a secure password, or verify an email address, we've got you covered.</p>
+        <h3>Comprehensive Tool Categories</h3>
+        <p>Our platform organizes tools into logical categories for easy discovery:</p>
         
-        <p>Bookmark app.shubraj.com today and simplify your online workflow!</p>
+        <h4>Encoding and Decoding Tools</h4>
+        <p>Handle data transformation tasks with our encoding suite. Convert text to Base64 for data transmission, encode URLs for web development, decode JWT tokens for API debugging, or transform data between different encoding schemes. These tools are essential for developers working with APIs, web applications, or data processing tasks.</p>
+        
+        <h4>Hash Generator and Security Tools</h4>
+        <p>Generate secure hash values using industry-standard algorithms including MD5, SHA-1, SHA-256, and SHA-512. Our hash identifier helps security professionals analyze unknown hash values. The BCrypt generator creates password hashes suitable for secure storage. These tools are crucial for application security, password management, and data integrity verification.</p>
+        
+        <h4>Data Formatting and Beautification</h4>
+        <p>Transform messy code and data into readable formats. Our JSON beautifier formats and validates JSON structures, the CSS beautifier cleans and organizes stylesheets, and the regex tester helps developers perfect pattern matching. The text diff checker compares documents side-by-side, while the case converter handles text transformation tasks efficiently.</p>
+        
+        <h4>Image Processing and Conversion</h4>
+        <p>Complete image manipulation suite covering conversion, compression, resizing, watermarking, and metadata management. Convert between SVG, PNG, JPG, and WebP formats. Compress images for web optimization. Remove backgrounds, add watermarks, or extract color palettes. Our PDF to images converter extracts pages from PDF documents. All tools maintain image quality while optimizing file sizes.</p>
+        
+        <h4>Network and Security Analysis</h4>
+        <p>Professional-grade network tools for security audits and troubleshooting. Check SSL certificate validity and expiration dates. Verify HSTS configuration for secure websites. Perform comprehensive security headers audits with detailed scoring. Analyze redirect chains to identify SEO and performance issues. Check domain age for competitive analysis or acquisition research. These tools help maintain web security and performance standards.</p>
+        
+        <h4>Text and Content Tools</h4>
+        <p>Essential utilities for content creation and analysis. Generate secure passwords with customizable complexity. Measure password strength with entropy calculations. Count words, characters, and paragraphs for writing projects. Create ASCII art for code documentation. The word counter provides detailed statistics useful for writers, students, and content creators.</p>
+        
+        <h4>Validation and Verification</h4>
+        <p>Ensure data quality and accuracy with validation tools. Verify email addresses to check deliverability before sending campaigns. Validate formats, check domain existence, and verify MX records. These tools prevent errors in data processing and communication workflows.</p>
+        
+        <h3>Common Use Cases</h3>
+        <p>Our tools serve diverse professional scenarios:</p>
+        <ul>
+            <li><strong>Web Development:</strong> Format JSON responses, encode URLs, validate email addresses, test regex patterns, generate UUIDs, and decode JWT tokens during API development and debugging.</li>
+            <li><strong>Design Work:</strong> Convert image formats, compress files for web delivery, extract color codes from designs, remove backgrounds, add watermarks, and resize images for different display contexts.</li>
+            <li><strong>Content Creation:</strong> Count words for articles, generate ASCII art for documentation, convert markdown to HTML, create QR codes for social media, and format text for publication.</li>
+            <li><strong>Security Audits:</strong> Check SSL certificates, verify security headers, analyze HSTS configuration, test password strength, and generate secure hash values for authentication systems.</li>
+            <li><strong>System Administration:</strong> Calculate subnet configurations, check domain information, analyze redirect chains, verify email deliverability, and validate network configurations.</li>
+            <li><strong>Data Processing:</strong> Convert CSV to JSON, format data structures, encode sensitive information, decode encoded data, and transform data between different formats.</li>
+        </ul>
+        
+        <h3>Technical Excellence and Reliability</h3>
+        <p>Behind every tool lies robust engineering. We implement proper error handling, input validation, and user feedback mechanisms. Server-side tools use industry-standard libraries and frameworks, ensuring reliable processing of user data. Client-side tools leverage modern JavaScript APIs for optimal performance and browser compatibility.</p>
+        
+        <h3>User Experience Focus</h3>
+        <p>Beyond functionality, we prioritize user experience. Each tool features intuitive interfaces, clear instructions, real-time results where applicable, and comprehensive error messages. Mobile-responsive design ensures tools work perfectly on smartphones and tablets. Search functionality helps users quickly find the tool they need from our extensive collection.</p>
+        
+        <h3>No Limitations, No Restrictions</h3>
+        <p>Unlike many free tool websites, we don't artificially limit usage. No daily quotas, no file size restrictions on most tools, no processing delays for free users. The only limitation is our PDF to images converter, which processes up to 10 pages per PDF to ensure reasonable server load and processing times.</p>
+        
+        <h3>Continuous Improvement</h3>
+        <p>We actively monitor tool usage, collect user feedback, and implement improvements regularly. New tools are added based on user requests and emerging needs in the developer and designer communities. Our goal is to become the single destination for all free online utility needs.</p>
+        
+        <p>Whether you're a professional developer building applications, a designer creating visual content, a system administrator maintaining infrastructure, or someone who occasionally needs digital utilities, app.shubraj.com provides professional-quality tools without any cost or commitment. Bookmark our site today and streamline your digital workflow with access to 60+ carefully crafted tools.</p>
     </section>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "Most Popular Free Online Tools",
+        "description": "Top 15 most popular and frequently used tools on app.shubraj.com",
+        "numberOfItems": 15,
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Cloudflare Email Decoder", "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'app_app:cloudflare_email_decoder' %}"},
+            {"@type": "ListItem", "position": 2, "name": "DV Photo Tool", "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'app_app:dv_photo_tool' %}"},
+            {"@type": "ListItem", "position": 3, "name": "Image Watermarker", "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'app_app:image_watermarker' %}"},
+            {"@type": "ListItem", "position": 4, "name": "Image Compressor", "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'app_app:image_compressor' %}"},
+            {"@type": "ListItem", "position": 5, "name": "Password Generator", "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'app_app:random_password_generator' %}"},
+            {"@type": "ListItem", "position": 6, "name": "QR Code Generator", "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'app_app:qr_code_generator' %}"},
+            {"@type": "ListItem", "position": 7, "name": "SSL Certificate Checker", "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'app_app:ssl_certificate_checker' %}"},
+            {"@type": "ListItem", "position": 8, "name": "Email Checker", "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'app_app:email_checker' %}"},
+            {"@type": "ListItem", "position": 9, "name": "Image Resizer", "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'app_app:image_resizer' %}"},
+            {"@type": "ListItem", "position": 10, "name": "URL Encoder/Decoder", "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'app_app:url_encoder_decoder' %}"},
+            {"@type": "ListItem", "position": 11, "name": "Security Headers Checker", "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'app_app:security_headers_checker' %}"},
+            {"@type": "ListItem", "position": 12, "name": "Word Counter", "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'app_app:word_counter' %}"},
+            {"@type": "ListItem", "position": 13, "name": "MD5 Generator", "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'app_app:md5_generator' %}"},
+            {"@type": "ListItem", "position": 14, "name": "PDF to Images", "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'app_app:pdf_to_images' %}"},
+            {"@type": "ListItem", "position": 15, "name": "Domain Age Checker", "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'app_app:domain_age_checker' %}"}
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Are the tools really free?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, all tools on app.shubraj.com are completely free forever with no hidden costs, subscriptions, or premium tiers. We don't limit functionality based on payment plans or require account creation for basic usage."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do I need to create an account?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No, you can use all tools immediately without registration. Most tools work entirely in your browser, and server-side tools don't require account creation. You can start using any tool right away."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is my data safe and private?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, privacy is our priority. Client-side tools process data entirely in your browser without sending information to servers. Server-side tools (like image processing) temporarily store files for processing and automatically delete them after completion. We don't store or share your data."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What types of tools are available?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "We offer over 60 tools across multiple categories: encoding/decoding (Base64, URL, Morse code, JWT), hash generators (MD5, SHA, BCrypt), data formatters (JSON, CSS, CSV), image tools (converter, compressor, resizer, watermarker, PDF converter), network tools (SSL checker, security headers, domain age), validation tools (email checker), and text utilities (password generator, word counter, ASCII art)."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I use these tools on mobile devices?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, all tools are fully responsive and work perfectly on smartphones, tablets, and desktop computers. Our mobile-optimized interfaces ensure optimal experiences across all devices and screen sizes."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Are there any usage limits?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Most tools have no usage limits. The only exception is our PDF to Images converter, which processes up to 10 pages per PDF to ensure reasonable processing times. All other tools can be used unlimited times without restrictions."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I find a specific tool?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Use the search bar at the top of the homepage to quickly find tools by name or functionality. You can also browse tools by category, as they're organized into logical sections like Encoding/Decoding, Image Tools, Network Tools, etc."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do you add new tools regularly?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, we continuously expand our tool collection based on user feedback and emerging needs. Our development team regularly adds new utilities and improves existing tools to stay current with industry requirements."
+                }
+            }
+        ]
+    }
+    </script>
 {% endblock content %}

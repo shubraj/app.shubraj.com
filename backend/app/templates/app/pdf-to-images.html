@@ -1,0 +1,93 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}PDF to Images - Convert PDF Pages to PNG/JPG | Shub Raj Apps{% endblock %}
+
+{% block description %}Convert PDF pages to images (PNG or JPG format). Extract up to 10 pages from PDFs as high-quality images. Free online PDF to image converter.{% endblock %}
+
+{% block keywords %}pdf to images, pdf to png, pdf to jpg, convert pdf pages, pdf converter, extract pdf pages{% endblock %}
+
+{% block og_title %}PDF to Images - Free Online Converter{% endblock %}
+
+{% block og_description %}Convert PDF pages to PNG or JPG images. Supports up to 10 pages with adjustable DPI for quality control. Free and secure conversion.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">PDF to Images</li>
+{% endblock %}
+
+{% block content %}
+<section class="image-base64-section">
+    <h2>PDF to Images</h2>
+    <p>Convert PDF pages to images (PNG or JPG). Maximum 10 pages per PDF. Choose your preferred image format and DPI for quality control.</p>
+
+    {% if errors %}
+    <div class="feedback-container">
+        {% for err in errors %}
+        <div class="feedback-message error">{{ err }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if warnings %}
+    <div class="feedback-container">
+        {% for warn in warnings %}
+        <div class="feedback-message info">{{ warn }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" class="card pdf-to-images-form">
+        {% csrf_token %}
+        <label for="pdf_file">Choose PDF File</label>
+        <input type="file" id="pdf_file" name="pdf_file" accept=".pdf,application/pdf" required>
+        <p class="pdf-hint">Maximum 10 pages will be converted. Files larger than 10 pages will only convert the first 10 pages.</p>
+
+        <div class="pdf-settings">
+            <label for="format">Output Format</label>
+            <select id="format" name="format" class="text-input">
+                <option value="png" {% if format == 'png' or not format %}selected{% endif %}>PNG (Better quality, supports transparency)</option>
+                <option value="jpg" {% if format == 'jpg' %}selected{% endif %}>JPEG (Smaller file size)</option>
+            </select>
+
+            <label for="dpi">DPI (Resolution): <strong id="dpiLabel">200</strong></label>
+            <input type="range" id="dpi" name="dpi" min="72" max="300" step="1" value="{{ dpi|default:200 }}" oninput="document.getElementById('dpiLabel').textContent=this.value">
+            <p class="pdf-hint">Higher DPI = better quality but larger files. 200 DPI is recommended for most use cases.</p>
+        </div>
+
+        <button type="submit" class="btn pdf-submit-btn">Convert PDF to Images</button>
+    </form>
+
+    {% if image_urls %}
+    <div class="header-info pdf-results">
+        <h3>Converted Images</h3>
+        <div class="pdf-summary">
+            <ul class="pdf-summary-list">
+                <li>Total pages in PDF: <strong>{{ total_pages }}</strong></li>
+                <li>Pages converted: <strong>{{ converted_pages }}</strong></li>
+                <li>Output format: <strong>{{ format }}</strong></li>
+                <li>DPI: <strong>{{ dpi }}</strong></li>
+                <li>Total size: <strong>{{ total_size_kb }} KB</strong></li>
+            </ul>
+        </div>
+
+        <div class="pdf-images-grid">
+            {% for img in image_urls %}
+            <div class="pdf-image-item">
+                <h4 class="pdf-image-title">Page {{ img.page }}</h4>
+                <div class="pdf-image-container">
+                    <img src="{{ img.url }}" alt="Page {{ img.page }}" class="pdf-converted-image">
+                </div>
+                <div class="pdf-image-actions">
+                    <a href="{{ img.url }}" download class="btn pdf-download-btn">Download Page {{ img.page }}</a>
+                    <span class="pdf-image-size">{{ img.size_kb }} KB</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</section>
+
+{% include 'app/fragments/seo/pdf-to-images-seo.html' %}
+{% endblock %}
+

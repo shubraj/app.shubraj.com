@@ -4,7 +4,7 @@ from .views import (
     Base64Encoder,BcryptGenerator,CloudflareEmailDecoder,ColorConverter,CSSBeautifier,
     EmailChecker,ImageColorPicker,IPaddressLookup,JSONBeautifier,MarkdownEditor,
     MD5Generator,RandomPasswordGenerator,SHAGenerator,SVGtoJPG,SVGtoPNG,
-    WhatIsMyHeaders,WordCounter,PrivacyPolicy,TermsAndConditions,DVPhotoTool,ImageCompressor,ImageResizer,URLEncoderDecoder,JWTDecoder,UUIDULIDGenerator,UnixTimestampConverter,RegexTester,TextDiffChecker,QRCodeGenerator,MarkdownHtmlConverter,ImageBackgroundRemover,CSVJSONConverter,CaseConverter,PasswordEntropy,QRCodeScanner,BarcodeGenerator,SubnetCalculator,ExifTool,JWTGenerator,ASCIIArtGenerator,SSLCertificateChecker,HashIdentifier,HSTSChecker,SecurityHeadersChecker,RedirectChainAnalyzer,MorseCodeEncoderDecoder,LeetSpeakConverter
+    WhatIsMyHeaders,WordCounter,PrivacyPolicy,TermsAndConditions,DVPhotoTool,ImageCompressor,ImageResizer,URLEncoderDecoder,JWTDecoder,UUIDULIDGenerator,UnixTimestampConverter,RegexTester,TextDiffChecker,QRCodeGenerator,MarkdownHtmlConverter,ImageBackgroundRemover,ImageWatermarker,CSVJSONConverter,CaseConverter,PasswordEntropy,QRCodeScanner,BarcodeGenerator,SubnetCalculator,ExifTool,JWTGenerator,ASCIIArtGenerator,SSLCertificateChecker,HashIdentifier,HSTSChecker,SecurityHeadersChecker,RedirectChainAnalyzer,MorseCodeEncoderDecoder,LeetSpeakConverter,DomainAgeChecker,PDFtoImages
 )
 
 app_name = "app_app"
@@ -28,6 +28,7 @@ urlpatterns = [
     path("qr-code-generator/",QRCodeGenerator.as_view(),name="qr_code_generator"),
     path("markdown-html-converter/",MarkdownHtmlConverter.as_view(),name="markdown_html_converter"),
     path("image-background-remover/",ImageBackgroundRemover.as_view(),name="image_background_remover"),
+    path("image-watermarker/",ImageWatermarker.as_view(),name="image_watermarker"),
     path("csv-json-converter/",CSVJSONConverter.as_view(),name="csv_json_converter"),
     path("case-converter/",CaseConverter.as_view(),name="case_converter"),
     path("password-entropy/",PasswordEntropy.as_view(),name="password_entropy"),
@@ -42,6 +43,8 @@ urlpatterns = [
     path("hsts-checker/",HSTSChecker.as_view(),name="hsts_checker"),
     path("security-headers-checker/",SecurityHeadersChecker.as_view(),name="security_headers_checker"),
     path("redirect-chain-analyzer/",RedirectChainAnalyzer.as_view(),name="redirect_chain_analyzer"),
+    path("domain-age-checker/",DomainAgeChecker.as_view(),name="domain_age_checker"),
+    path("pdf-to-images/",PDFtoImages.as_view(),name="pdf_to_images"),
     path("morse-code-encoder-decoder/",MorseCodeEncoderDecoder.as_view(),name="morse_code_encoder_decoder"),
     path("leet-speak-converter/",LeetSpeakConverter.as_view(),name="leet_speak_converter"),
     path("svg-to-jpg/",SVGtoJPG.as_view(),name="svg_to_jpg"),

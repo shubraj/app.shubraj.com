@@ -2308,4 +2308,608 @@ section.hash-section {
     .base64-reference-section h4 {
         font-size: 1rem;
     }
+
+    /* Image Watermarker Mobile Styles */
+    .image-base64-section {
+        padding: 1rem !important;
+    }
+
+    .watermark-form {
+        padding: 1rem !important;
+    }
+
+    .watermark-controls-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+
+    .watermark-section {
+        margin-top: 1rem !important;
+    }
+
+    .watermark-section-title {
+        font-size: 1rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    .watermark-control-item label {
+        font-size: 0.9rem !important;
+    }
+
+    .watermark-control-item input[type="range"] {
+        width: 100%;
+        font-size: 0.9rem;
+        padding: 0.5rem 0;
+    }
+
+    .color-input {
+        height: 44px !important; /* Better touch target */
+        font-size: 0.9rem;
+    }
+
+    .watermark-hint {
+        font-size: 0.8rem !important;
+    }
+
+    .watermark-submit-btn {
+        width: 100%;
+        font-size: 0.9rem;
+        padding: 0.75rem 1rem;
+    }
+
+    .watermark-result {
+        padding: 1rem !important;
+    }
+
+    .watermark-result ul {
+        font-size: 0.85rem;
+        padding-left: 1.25rem;
+    }
+
+    .watermark-image-container {
+        margin-top: 1rem !important;
+    }
+
+    .watermarked-image {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    .watermark-download-btn {
+        width: 100%;
+        margin-top: 1rem !important;
+        display: block;
+        text-align: center;
+        font-size: 0.9rem;
+        padding: 0.75rem 1rem;
+    }
+
+    /* Domain Age Checker Mobile Styles */
+    .domain-age-result {
+        margin-top: 1rem !important;
+        padding: 1rem !important;
+    }
+
+    .domain-info-item {
+        margin-bottom: 0.75rem !important;
+    }
+
+    .domain-info-title {
+        font-size: 0.95rem !important;
+        margin-bottom: 0.4rem !important;
+    }
+
+    .domain-info-value {
+        font-size: 0.9rem !important;
+    }
+
+    .domain-info-list {
+        font-size: 0.85rem !important;
+        padding-left: 1.25rem !important;
+        margin: 0.4rem 0 !important;
+    }
+
+    .domain-age-display {
+        font-size: 1.1rem !important;
+        display: block;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .domain-success-badge {
+        padding: 0.6rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    .domain-success-text {
+        font-size: 0.9rem !important;
+    }
+
+    .domain-warning-expired,
+    .domain-warning-soon {
+        font-size: 0.85rem !important;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .domain-partial-badge {
+        padding: 0.6rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    .domain-partial-text {
+        font-size: 0.9rem !important;
+    }
+
+    .domain-partial-info {
+        font-size: 0.8rem !important;
+        margin-top: 0.4rem !important;
+    }
+
+    .domain-code {
+        font-size: 0.8rem !important;
+        padding: 0.2rem 0.4rem !important;
+        word-break: break-all;
+        overflow-wrap: anywhere;
+        max-width: 100%;
+        display: inline-block;
+    }
+
+    .domain-nameservers-list {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-left: 1.25rem !important;
+    }
+
+    .domain-nameservers-list li {
+        margin: 0.3rem 0 !important;
+        font-size: 0.85rem !important;
+        word-break: break-all;
+        overflow-wrap: anywhere;
+    }
+
+    /* PDF to Images Mobile Styles */
+    .pdf-to-images-form {
+        padding: 1rem !important;
+    }
+
+    .pdf-hint {
+        font-size: 0.8rem !important;
+    }
+
+    .pdf-settings {
+        margin-top: 1rem !important;
+    }
+
+    .pdf-submit-btn {
+        font-size: 0.9rem;
+        padding: 0.75rem 1rem;
+    }
+
+    .pdf-results {
+        padding: 1rem !important;
+        margin-top: 1rem !important;
+    }
+
+    .pdf-summary-list {
+        font-size: 0.85rem;
+    }
+
+    .pdf-summary-list li {
+        font-size: 0.85rem !important;
+        padding: 0.4rem 0 !important;
+    }
+
+    .pdf-images-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+        margin-top: 1rem !important;
+    }
+
+    .pdf-image-item {
+        padding: 0.75rem !important;
+    }
+
+    .pdf-image-title {
+        font-size: 0.95rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    .pdf-image-container {
+        margin-bottom: 0.5rem !important;
+    }
+
+    .pdf-converted-image {
+        border-radius: 4px;
+    }
+
+    .pdf-image-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem !important;
+    }
+
+    .pdf-download-btn {
+        width: 100%;
+        flex: 1 1 auto;
+        font-size: 0.85rem !important;
+        padding: 0.6rem 0.75rem !important;
+    }
+
+    .pdf-image-size {
+        font-size: 0.8rem !important;
+        text-align: center;
+        width: 100%;
+    }
+}
+
+/* Image Watermarker Styles */
+.watermark-form {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.watermark-section {
+    margin-top: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.watermark-section-title {
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+    font-size: 1.1rem;
+}
+
+.watermark-controls-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.watermark-control-item {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.color-input {
+    width: 100%;
+    height: 40px;
+    border: 1px solid var(--secondary-accent);
+    border-radius: 4px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.watermark-hint {
+    font-size: 0.85rem;
+    color: var(--secondary-text);
+    margin-top: 0.5rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.watermark-submit-btn {
+    margin-top: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.watermark-result {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.watermark-result ul {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.watermark-image-container {
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.watermarked-image {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: block;
+    box-sizing: border-box;
+}
+
+.watermark-download-btn {
+    margin-top: 1rem;
+    display: inline-block;
+    width: auto;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Domain Age Checker Styles */
+.domain-age-result {
+    margin-top: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.domain-info-item {
+    margin-bottom: 1rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.domain-info-title {
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.domain-info-value {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.domain-info-list {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.domain-age-display {
+    font-size: 1.2rem;
+    color: var(--primary-btn);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.domain-success-badge {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background: #064e3b;
+    border-radius: 0.5rem;
+    border-left: 4px solid #10b981;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.domain-success-text {
+    margin: 0;
+    color: #10b981;
+    font-weight: 600;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.domain-warning-expired {
+    color: #ef4444;
+    font-weight: 600;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.domain-warning-soon {
+    color: #f59e0b;
+    font-weight: 600;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.domain-partial-badge {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background: #78350f;
+    border-radius: 0.5rem;
+    border-left: 4px solid #f59e0b;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.domain-partial-text {
+    margin: 0;
+    color: #fbbf24;
+    font-weight: 600;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.domain-partial-info {
+    margin: 0.5rem 0 0 0;
+    color: #fbbf24;
+    font-size: 0.9rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.domain-code {
+    background: #1f2937;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-family: monospace;
+    font-size: 0.9rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    display: inline-block;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.domain-nameservers-list {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.domain-nameservers-list li {
+    word-break: break-all;
+    overflow-wrap: anywhere;
+}
+
+/* PDF to Images Styles */
+.pdf-to-images-form {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.pdf-hint {
+    font-size: 0.85rem;
+    color: var(--secondary-text);
+    margin-top: 0.5rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.pdf-settings {
+    margin-top: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.pdf-submit-btn {
+    margin-top: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.pdf-results {
+    margin-top: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.pdf-summary {
+    margin: 1rem 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.pdf-summary-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.pdf-summary-list li {
+    margin: 0.5rem 0;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--secondary-accent);
+}
+
+.pdf-images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.pdf-image-item {
+    background-color: var(--card-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.pdf-image-title {
+    color: var(--accent-color);
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.pdf-image-container {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 0.75rem;
+}
+
+.pdf-converted-image {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: block;
+    box-sizing: border-box;
+}
+
+.pdf-image-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.pdf-download-btn {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+    text-align: center;
+}
+
+.pdf-image-size {
+    font-size: 0.85rem;
+    color: var(--secondary-text);
+    white-space: nowrap;
 }

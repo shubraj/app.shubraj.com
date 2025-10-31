@@ -7,13 +7,15 @@ from .utils.email_validator import EmailValidator,InvalidEmailSyntax,DomainDoesN
 from .utils.dv_tools import process_dv_image
 from django.conf import settings
 from pathlib import Path
-from .utils.image_tools import compress_image_to_target, resize_or_crop_image, remove_background_whiteish, remove_background_ai, extract_exif, remove_exif
+from .utils.image_tools import compress_image_to_target, resize_or_crop_image, remove_background_whiteish, remove_background_ai, extract_exif, remove_exif, add_watermark
 from .utils.qr_tools import generate_qr_png, decode_qr_image, generate_barcode_png
 from .utils.ssl_checker import get_ssl_certificate_info
 from .utils.hash_identifier import identify_hash
 from .utils.hsts_checker import check_hsts
 from .utils.security_headers_checker import check_security_headers
 from .utils.redirect_analyzer import analyze_redirect_chain
+from .utils.domain_age_checker import get_domain_age
+from .utils.pdf_tools import pdf_to_images
 import json, time
 import jwt
 
@@ -327,6 +329,86 @@ class ImageBackgroundRemover(View):
             "size_kb": f"{result.get('size_kb', 0):.2f}",
         })
 
+class ImageWatermarker(View):
+    template_name = "app/image-watermarker.html"
+    media_dir = Path(settings.MEDIA_ROOT).resolve()
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request, *args, **kwargs):
+        image_file = request.FILES.get('image')
+        if not image_file:
+            return render(request, self.template_name, {"errors": ["Please select an image."]})
+        
+        watermark_text = request.POST.get('watermark_text', '').strip()
+        watermark_image_file = request.FILES.get('watermark_image')
+        position = request.POST.get('position', 'bottom-right')
+        opacity = float(request.POST.get('opacity', 0.7) or 0.7)
+        font_size = int(request.POST.get('font_size', 36) or 36)
+        output_format = request.POST.get('format', 'jpg').lower()
+        quality = int(request.POST.get('quality', 85) or 85)
+        
+        # Parse text color (hex format: #RRGGBB)
+        text_color_str = request.POST.get('text_color', '#ffffff').strip().lstrip('#')
+        try:
+            text_color = tuple(int(text_color_str[i:i+2], 16) for i in (0, 2, 4))
+        except:
+            text_color = (255, 255, 255)
+        
+        # Save uploaded files
+        tmp_image_path = f"/tmp/{image_file.name}"
+        with open(tmp_image_path, 'wb') as f:
+            for chunk in image_file.chunks():
+                f.write(chunk)
+        
+        watermark_image_path = None
+        if watermark_image_file:
+            watermark_image_path = f"/tmp/{watermark_image_file.name}"
+            with open(watermark_image_path, 'wb') as f:
+                for chunk in watermark_image_file.chunks():
+                    f.write(chunk)
+        
+        if not watermark_text and not watermark_image_path:
+            return render(request, self.template_name, {"errors": ["Please provide either watermark text or watermark image."]})
+        
+        result, success = add_watermark(
+            self.media_dir,
+            tmp_image_path,
+            watermark_text=watermark_text if watermark_text else None,
+            watermark_image_path=watermark_image_path,
+            position=position,
+            opacity=opacity,
+            font_size=font_size,
+            text_color=text_color,
+            output_format=output_format,
+            quality=quality
+        )
+        
+        if not success:
+            return render(request, self.template_name, {
+                "errors": result.get('errors', ["Failed to add watermark."]),
+                "watermark_text": watermark_text,
+                "position": position,
+                "opacity": opacity,
+                "font_size": font_size,
+                "text_color": f"#{text_color[0]:02x}{text_color[1]:02x}{text_color[2]:02x}",
+                "format": output_format,
+                "quality": quality,
+            })
+        
+        context = {
+            "image_url": f"{settings.MEDIA_URL}{result['output_name']}",
+            "size_kb": f"{result.get('size_kb', 0):.2f}",
+            "position": position,
+            "opacity": opacity,
+            "format": output_format,
+            "quality": quality,
+        }
+        if result.get('warnings'):
+            context['warnings'] = result['warnings']
+        return render(request, self.template_name, context)
+
 class CSVJSONConverter(TemplateView):
     template_name = "app/csv-json-converter.html"
 
@@ -615,3 +697,101 @@ class RedirectChainAnalyzer(View):
             'url': url,
             'redirect_info': redirect_info
         })
+
+class DomainAgeChecker(View):
+    template_name = "app/domain-age-checker.html"
+    
+    def get(self, request):
+        return render(request, self.template_name)
+    
+    def post(self, request, *args, **kwargs):
+        domain = request.POST.get('domain', '').strip()
+        
+        if not domain:
+            return render(request, self.template_name, {
+                'errors': ['Please enter a domain name'],
+                'domain': domain
+            })
+        
+        # Get domain age information
+        domain_info = get_domain_age(domain)
+        
+        if domain_info.get('status') == 'error' and domain_info.get('error'):
+            return render(request, self.template_name, {
+                'errors': [domain_info.get('error')],
+                'domain': domain
+            })
+        
+        return render(request, self.template_name, {
+            'domain': domain,
+            'domain_info': domain_info
+        })
+
+class PDFtoImages(View):
+    template_name = "app/pdf-to-images.html"
+    media_dir = Path(settings.MEDIA_ROOT).resolve()
+    MAX_PAGES = 10
+    
+    def get(self, request):
+        return render(request, self.template_name)
+    
+    def post(self, request, *args, **kwargs):
+        pdf_file = request.FILES.get('pdf_file')
+        if not pdf_file:
+            return render(request, self.template_name, {"errors": ["Please select a PDF file."]})
+        
+        # Validate file extension
+        if not pdf_file.name.lower().endswith('.pdf'):
+            return render(request, self.template_name, {"errors": ["Please upload a valid PDF file."]})
+        
+        # Get format and DPI
+        output_format = request.POST.get('format', 'png').lower()
+        dpi = int(request.POST.get('dpi', 200) or 200)
+        
+        # Validate DPI
+        if dpi < 72 or dpi > 300:
+            dpi = 200
+        
+        # Save uploaded PDF
+        tmp_path = f"/tmp/{pdf_file.name}"
+        with open(tmp_path, 'wb') as f:
+            for chunk in pdf_file.chunks():
+                f.write(chunk)
+        
+        # Convert PDF to images
+        result, success = pdf_to_images(
+            self.media_dir,
+            tmp_path,
+            max_pages=self.MAX_PAGES,
+            dpi=dpi,
+            output_format=output_format
+        )
+        
+        if not success:
+            return render(request, self.template_name, {
+                "errors": result.get('errors', ["Failed to convert PDF to images."])
+            })
+        
+        # Prepare image URLs
+        image_urls = []
+        for img_file in result['output_files']:
+            image_urls.append({
+                'url': f"{settings.MEDIA_URL}{img_file['filename']}",
+                'page': img_file['page'],
+                'size_kb': img_file['size_kb'],
+                'filename': img_file['filename']
+            })
+        
+        context = {
+            'total_pages': result['total_pages'],
+            'converted_pages': result['converted_pages'],
+            'image_urls': image_urls,
+            'total_size_kb': result['total_size_kb'],
+            'format': result['format'],
+            'dpi': result['dpi']
+        }
+        
+        if result.get('warnings'):
+            context['warnings'] = result['warnings']
+        
+        return render(request, self.template_name, context)

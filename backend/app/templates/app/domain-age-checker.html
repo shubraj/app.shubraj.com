@@ -1,0 +1,169 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Domain Age Checker - Check Domain Registration Date | Shub Raj Apps{% endblock %}
+
+{% block description %}Check how old a domain is. Find domain registration date, expiration date, registrar information, and calculate domain age in years, months, and days. Free domain age checker tool.{% endblock %}
+
+{% block keywords %}domain age checker, domain age, domain registration date, domain expiration, whois domain age, check domain age{% endblock %}
+
+{% block og_title %}Domain Age Checker - Free Online Tool{% endblock %}
+
+{% block og_description %}Find out when a domain was registered and calculate its age. Check registration date, expiration date, and registrar information.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">Domain Age Checker</li>
+{% endblock %}
+
+{% block content %}
+<section class="hash-section">
+    <h2>Domain Age Checker</h2>
+    <p>Find out when a domain was registered and calculate its age. Get detailed information about domain registration, expiration, and registrar.</p>
+
+    {% if errors %}
+    <div class="feedback-container">
+        {% for err in errors %}
+        <div class="feedback-message error">{{ err }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" class="card">
+        {% csrf_token %}
+        <label for="domainInput">Domain Name</label>
+        <input id="domainInput" name="domain" type="text" class="text-input" 
+               placeholder="example.com (with or without www)" 
+               value="{{ domain }}" required>
+        <div class="action-buttons">
+            <button class="btn" type="submit">Check Domain Age</button>
+            <button class="btn" type="button" id="clearDomainBtn">Clear</button>
+        </div>
+    </form>
+
+    {% if domain_info %}
+    <div class="header-info domain-age-result">
+        <h3>Domain Information</h3>
+        
+        <div class="domain-info-item">
+            <h4 class="domain-info-title">Domain</h4>
+            <p class="domain-info-value"><strong>{{ domain_info.domain }}</strong></p>
+        </div>
+
+        {% if domain_info.creation_date %}
+        <div class="domain-success-badge">
+            <p class="domain-success-text">
+                ✓ Registration Date Found
+            </p>
+        </div>
+
+        <div class="domain-info-item">
+            <h4 class="domain-info-title">Registration Date</h4>
+            <ul class="domain-info-list">
+                <li><strong>{{ domain_info.creation_date_formatted }}</strong></li>
+                <li>Date: <strong>{{ domain_info.creation_date }}</strong></li>
+            </ul>
+        </div>
+
+        {% if domain_info.age %}
+        <div class="domain-info-item">
+            <h4 class="domain-info-title">Domain Age</h4>
+            <ul class="domain-info-list">
+                <li><strong class="domain-age-display">{{ domain_info.age }}</strong></li>
+                {% if domain_info.age_days %}
+                <li>Total days: <strong>{{ domain_info.age_days }}</strong> days</li>
+                {% endif %}
+                {% if domain_info.age_years %}
+                <li>Approximate years: <strong>{{ domain_info.age_years }}</strong> years</li>
+                {% endif %}
+            </ul>
+        </div>
+        {% endif %}
+        {% endif %}
+
+        {% if domain_info.expiration_date %}
+        <div class="domain-info-item">
+            <h4 class="domain-info-title">Expiration Date</h4>
+            <ul class="domain-info-list">
+                <li><strong>{{ domain_info.expiration_date_formatted }}</strong></li>
+                <li>Date: <strong>{{ domain_info.expiration_date }}</strong></li>
+                {% if domain_info.expired %}
+                <li class="domain-warning-expired">⚠ Domain has expired ({{ domain_info.days_since_expiry }} days ago)</li>
+                {% elif domain_info.days_until_expiry %}
+                <li>Expires in: <strong>{{ domain_info.days_until_expiry }}</strong> days</li>
+                {% if domain_info.expiration_warning %}
+                <li class="domain-warning-soon">⚠ Domain expires soon (less than 30 days)</li>
+                {% endif %}
+                {% endif %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if domain_info.registrar %}
+        <div class="domain-info-item">
+            <h4 class="domain-info-title">Registrar</h4>
+            <p class="domain-info-value"><strong>{{ domain_info.registrar }}</strong></p>
+        </div>
+        {% endif %}
+
+        {% if domain_info.name_servers %}
+        <div class="domain-info-item">
+            <h4 class="domain-info-title">Name Servers</h4>
+            <ul class="domain-info-list domain-nameservers-list">
+                {% for ns in domain_info.name_servers %}
+                <li><code class="domain-code">{{ ns }}</code></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if domain_info.status_info %}
+        <div class="domain-info-item">
+            <h4 class="domain-info-title">Domain Status</h4>
+            <ul class="domain-info-list">
+                {% for status in domain_info.status_info %}
+                <li>{{ status }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if domain_info.status == 'partial' %}
+        <div class="domain-partial-badge">
+            <p class="domain-partial-text">
+                ⚠ Partial Information Available
+            </p>
+            {% if domain_info.available_info %}
+            <p class="domain-partial-info">
+                Available: {{ domain_info.available_info|join:", " }}
+            </p>
+            {% endif %}
+            {% if domain_info.error %}
+            <p class="domain-partial-info">
+                {{ domain_info.error }}
+            </p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+</section>
+
+{% include 'app/fragments/seo/domain-age-checker-seo.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const clearBtn = document.getElementById('clearDomainBtn');
+    const domainInput = document.getElementById('domainInput');
+    
+    if (clearBtn) {
+        clearBtn.addEventListener('click', function() {
+            domainInput.value = '';
+            domainInput.focus();
+        });
+    }
+});
+</script>
+{% endblock %}
+

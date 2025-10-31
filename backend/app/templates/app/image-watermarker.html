@@ -1,0 +1,111 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Image Watermarker - Add Text or Image Watermark Online{% endblock %}
+{% block description %}Free online image watermarker. Add text or image watermarks to your photos with customizable position, opacity, and style. Protect your images easily.{% endblock %}
+{% block keywords %}image watermarker, add watermark to image, text watermark, image watermark, protect images, watermark tool{% endblock %}
+{% block og_title %}Image Watermarker - Free Online Watermark Tool{% endblock %}
+{% block og_description %}Add professional watermarks to your images with text or logo. Customize position, opacity, and style. Fast, secure, and easy to use.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">Image Watermarker</li>
+{% endblock %}
+
+{% block content %}
+<section class="image-base64-section">
+    <h2>Image Watermarker</h2>
+    <p>Add text or image watermarks to your photos. Customize position, opacity, font size, and colors to protect your images.</p>
+
+    {% if errors %}
+    <div class="feedback-container">
+        {% for err in errors %}
+        <div class="feedback-message error">{{ err }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if warnings %}
+    <div class="feedback-container">
+        {% for warn in warnings %}
+        <div class="feedback-message info">{{ warn }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" class="card watermark-form">
+        {% csrf_token %}
+        <label for="image">Choose image (JPG/PNG/WebP)</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
+
+        <div class="watermark-section">
+            <h3 class="watermark-section-title">Text Watermark</h3>
+            <label for="watermark_text">Watermark Text</label>
+            <input type="text" id="watermark_text" name="watermark_text" class="text-input" placeholder="Enter watermark text (e.g., © Your Name)" value="{{ watermark_text|default:'' }}">
+
+            <div class="watermark-controls-grid">
+                <div class="watermark-control-item">
+                    <label for="font_size">Font Size: <strong id="fontSizeLabel">36</strong></label>
+                    <input type="range" id="font_size" name="font_size" min="12" max="200" step="1" value="{{ font_size|default:36 }}" oninput="document.getElementById('fontSizeLabel').textContent=this.value">
+                </div>
+                <div class="watermark-control-item">
+                    <label for="text_color">Text Color</label>
+                    <input type="color" id="text_color" name="text_color" value="{{ text_color|default:'#ffffff' }}" class="color-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="watermark-section">
+            <h3 class="watermark-section-title">Image Watermark (Optional)</h3>
+            <label for="watermark_image">Upload Watermark Image (PNG with transparency recommended)</label>
+            <input type="file" id="watermark_image" name="watermark_image" accept="image/*">
+            <p class="watermark-hint">If both text and image are provided, both will be added to the image.</p>
+        </div>
+
+        <div class="watermark-section">
+            <h3 class="watermark-section-title">Watermark Settings</h3>
+            
+            <label for="position">Position</label>
+            <select id="position" name="position" class="text-input">
+                <option value="top-left" {% if position == 'top-left' %}selected{% endif %}>Top Left</option>
+                <option value="top-right" {% if position == 'top-right' %}selected{% endif %}>Top Right</option>
+                <option value="bottom-left" {% if position == 'bottom-left' %}selected{% endif %}>Bottom Left</option>
+                <option value="bottom-right" {% if position == 'bottom-right' or not position %}selected{% endif %}>Bottom Right</option>
+                <option value="center" {% if position == 'center' %}selected{% endif %}>Center</option>
+            </select>
+
+            <label for="opacity">Opacity: <strong id="opacityLabel">70</strong>%</label>
+            <input type="range" id="opacity" name="opacity" min="0.1" max="1.0" step="0.1" value="{{ opacity|default:0.7 }}" oninput="document.getElementById('opacityLabel').textContent=Math.round(this.value*100)">
+
+            <label for="format">Output Format</label>
+            <select id="format" name="format" class="text-input">
+                <option value="jpg" {% if format == 'jpg' or not format %}selected{% endif %}>JPEG</option>
+                <option value="png" {% if format == 'png' %}selected{% endif %}>PNG</option>
+                <option value="webp" {% if format == 'webp' %}selected{% endif %}>WebP</option>
+            </select>
+
+            <label for="quality">Quality: <strong id="qualityLabel">85</strong></label>
+            <input type="range" id="quality" name="quality" min="10" max="100" step="1" value="{{ quality|default:85 }}" oninput="document.getElementById('qualityLabel').textContent=this.value">
+        </div>
+
+        <button type="submit" class="btn watermark-submit-btn">Add Watermark</button>
+    </form>
+
+    {% if image_url %}
+    <div class="header-info watermark-result">
+        <h3>Watermarked Image</h3>
+        <ul>
+            <li>Output size: {{ size_kb }} KB</li>
+            <li>Position: {{ position|title }}</li>
+            <li>Opacity: {{ opacity|floatformat:0 }}%</li>
+            <li>Format: {{ format|upper }} (quality {{ quality }})</li>
+        </ul>
+        <div class="watermark-image-container">
+            <img src="{{ image_url }}" alt="Watermarked image" class="watermarked-image">
+        </div>
+        <a class="btn watermark-download-btn" href="{{ image_url }}" download>Download Watermarked Image</a>
+    </div>
+    {% endif %}
+</section>
+{% include 'app/fragments/seo/image-watermarker-seo.html' %}
+{% endblock %}
+

@@ -290,3 +290,188 @@ def remove_exif(media_dir: Path, image_path: str):
     except Exception as e:
         return ({"errors": [f"Failed to remove EXIF: {e}"]}, False)
 
+
+def add_watermark(media_dir: Path, image_path: str, watermark_text: str = None, watermark_image_path: str = None,
+                 position: str = "bottom-right", opacity: float = 0.7, font_size: int = 36,
+                 text_color: tuple = (255, 255, 255), output_format: str = "jpg", quality: int = 85):
+    """Add text or image watermark to an image.
+    
+    position: 'top-left', 'top-right', 'bottom-left', 'bottom-right', 'center'
+    opacity: 0.0 to 1.0 (for image watermarks)
+    font_size: Size of text watermark
+    text_color: RGB tuple for text color
+    Returns (result: dict, success: bool)
+    """
+    errors = []
+    
+    if not watermark_text and not watermark_image_path:
+        return {"errors": ["Either watermark text or watermark image must be provided."]}, False
+    
+    try:
+        base_img = Image.open(image_path)
+        # Convert to RGB if needed (for JPG output)
+        if output_format.lower() in ('jpg', 'jpeg') and base_img.mode in ('RGBA', 'LA', 'P'):
+            # Create white background
+            bg = Image.new('RGB', base_img.size, (255, 255, 255))
+            if base_img.mode == 'P':
+                base_img = base_img.convert('RGBA')
+            bg.paste(base_img, mask=base_img.split()[-1] if base_img.mode in ('RGBA', 'LA') else None)
+            base_img = bg
+        elif base_img.mode != 'RGB' and output_format.lower() not in ('png', 'webp'):
+            base_img = base_img.convert('RGB')
+    except Exception as e:
+        return {"errors": [f"Failed to open base image: {e}"]}, False
+    
+    try:
+        from PIL import ImageDraw, ImageFont
+        import os
+        
+        # Calculate position
+        img_w, img_h = base_img.size
+        positions = {
+            'top-left': (10, 10),
+            'top-right': (img_w - 100, 10),
+            'bottom-left': (10, img_h - 50),
+            'bottom-right': (img_w - 100, img_h - 50),
+            'center': (img_w // 2 - 50, img_h // 2 - 25),
+        }
+        pos_x, pos_y = positions.get(position.lower(), positions['bottom-right'])
+        
+        # Add text watermark
+        if watermark_text:
+            # Create a transparent layer for the watermark
+            watermark_layer = Image.new('RGBA', base_img.size, (255, 255, 255, 0))
+            draw = ImageDraw.Draw(watermark_layer)
+            
+            # Try to load a font, fallback to default
+            try:
+                # Try to use a larger default font
+                font_paths = [
+                    '/System/Library/Fonts/Supplemental/Arial.ttf',
+                    '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',
+                    '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf',
+                ]
+                font = None
+                for fp in font_paths:
+                    if os.path.exists(fp):
+                        try:
+                            font = ImageFont.truetype(fp, font_size)
+                            break
+                        except:
+                            continue
+                if not font:
+                    font = ImageFont.load_default()
+            except:
+                font = ImageFont.load_default()
+            
+            # Calculate text bounding box
+            bbox = draw.textbbox((0, 0), watermark_text, font=font)
+            text_w = bbox[2] - bbox[0]
+            text_h = bbox[3] - bbox[1]
+            
+            # Adjust position based on text size
+            if 'right' in position.lower():
+                pos_x = img_w - text_w - 10
+            elif 'center' in position.lower():
+                pos_x = (img_w - text_w) // 2
+            else:
+                pos_x = 10
+            
+            if 'bottom' in position.lower():
+                pos_y = img_h - text_h - 10
+            elif 'center' in position.lower():
+                pos_y = (img_h - text_h) // 2
+            else:
+                pos_y = 10
+            
+            # Draw text with semi-transparency
+            draw.text((pos_x, pos_y), watermark_text, fill=(*text_color, int(255 * opacity)), font=font)
+            
+            # Composite watermark onto base image
+            if base_img.mode == 'RGB':
+                base_img = base_img.convert('RGBA')
+            base_img = Image.alpha_composite(base_img, watermark_layer)
+        
+        # Add image watermark
+        if watermark_image_path:
+            try:
+                watermark_img = Image.open(watermark_image_path)
+                if watermark_img.mode != 'RGBA':
+                    watermark_img = watermark_img.convert('RGBA')
+                
+                # Resize watermark if too large (max 30% of base image)
+                max_w = int(img_w * 0.3)
+                max_h = int(img_h * 0.3)
+                w_w, w_h = watermark_img.size
+                if w_w > max_w or w_h > max_h:
+                    scale = min(max_w / w_w, max_h / w_h)
+                    new_w = int(w_w * scale)
+                    new_h = int(w_h * scale)
+                    watermark_img = watermark_img.resize((new_w, new_h), Image.LANCZOS)
+                
+                # Apply opacity
+                alpha = watermark_img.split()[3]
+                alpha = alpha.point(lambda p: int(p * opacity))
+                watermark_img.putalpha(alpha)
+                
+                # Calculate position for image watermark
+                w_w, w_h = watermark_img.size
+                if 'right' in position.lower():
+                    pos_x = img_w - w_w - 10
+                elif 'center' in position.lower():
+                    pos_x = (img_w - w_w) // 2
+                else:
+                    pos_x = 10
+                
+                if 'bottom' in position.lower():
+                    pos_y = img_h - w_h - 10
+                elif 'center' in position.lower():
+                    pos_y = (img_h - w_h) // 2
+                else:
+                    pos_y = 10
+                
+                # Composite watermark image
+                if base_img.mode != 'RGBA':
+                    base_img = base_img.convert('RGBA')
+                base_img.paste(watermark_img, (pos_x, pos_y), watermark_img)
+            except Exception as e:
+                errors.append(f"Failed to add image watermark: {e}")
+        
+        # Save result
+        stem = Path(getattr(base_img, 'filename', image_path)).stem
+        fmt = (output_format or "jpg").lower()
+        if fmt not in ("jpg", "jpeg", "webp", "png"):
+            fmt = "jpg"
+        ext = 'webp' if fmt == 'webp' else ('png' if fmt == 'png' else 'jpg')
+        output_name = f"app-shubraj-com-{stem}-{time.time_ns()}-watermarked.{ext}"
+        output_path = media_dir / output_name
+        
+        # Prepare save
+        save_kwargs = {}
+        if fmt == 'webp':
+            save_kwargs.update({"format": "WEBP", "quality": quality, "method": 6})
+        elif fmt in ("jpg", "jpeg"):
+            if base_img.mode != 'RGB':
+                base_img = base_img.convert('RGB')
+            save_kwargs.update({"format": "JPEG", "quality": quality, "optimize": True})
+        else:
+            compress_level = max(0, min(9, 9 - round((quality - 10) / 90 * 9)))
+            save_kwargs.update({"format": "PNG", "optimize": True, "compress_level": compress_level})
+        
+        try:
+            base_img.save(output_path, **save_kwargs)
+        except Exception as e:
+            return {"errors": [f"Failed to save watermarked image: {e}"]}, False
+        
+        try:
+            out_kb = os.path.getsize(output_path) / 1024.0
+        except Exception:
+            out_kb = 0.0
+        
+        if errors:
+            return ({"output_name": output_name, "size_kb": out_kb, "warnings": errors}, True)
+        return ({"output_name": output_name, "size_kb": out_kb}, True)
+        
+    except Exception as e:
+        return {"errors": [f"Failed to add watermark: {e}"]}, False
+
