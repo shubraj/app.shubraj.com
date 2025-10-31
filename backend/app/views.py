@@ -9,6 +9,11 @@ from django.conf import settings
 from pathlib import Path
 from .utils.image_tools import compress_image_to_target, resize_or_crop_image, remove_background_whiteish, remove_background_ai, extract_exif, remove_exif
 from .utils.qr_tools import generate_qr_png, decode_qr_image, generate_barcode_png
+from .utils.ssl_checker import get_ssl_certificate_info
+from .utils.hash_identifier import identify_hash
+from .utils.hsts_checker import check_hsts
+from .utils.security_headers_checker import check_security_headers
+from .utils.redirect_analyzer import analyze_redirect_chain
 import json, time
 import jwt
 
@@ -455,4 +460,158 @@ class JWTGenerator(View):
             "claims": claims_text or '{}',
             "ttl": ttl,
             "kid": kid,
+        })
+
+class ASCIIArtGenerator(TemplateView):
+    template_name = "app/ascii-art-generator.html"
+
+class SSLCertificateChecker(View):
+    template_name = "app/ssl-certificate-checker.html"
+    
+    def get(self, request):
+        return render(request, self.template_name)
+    
+    def post(self, request, *args, **kwargs):
+        domain = request.POST.get('domain', '').strip()
+        
+        if not domain:
+            return render(request, self.template_name, {
+                'errors': ['Please enter a domain name'],
+                'domain': domain
+            })
+        
+        # Get SSL certificate information
+        cert_info = get_ssl_certificate_info(domain)
+        
+        if cert_info.get('status') == 'error':
+            return render(request, self.template_name, {
+                'errors': [cert_info.get('error', 'Unknown error occurred')],
+                'domain': domain
+            })
+        
+        return render(request, self.template_name, {
+            'domain': domain,
+            'certificate_info': cert_info
+        })
+
+class HashIdentifier(View):
+    template_name = "app/hash-identifier.html"
+    
+    def get(self, request):
+        return render(request, self.template_name)
+    
+    def post(self, request, *args, **kwargs):
+        hash_string = request.POST.get('hash', '').strip()
+        
+        if not hash_string:
+            return render(request, self.template_name, {
+                'errors': ['Please enter a hash string'],
+                'hash_string': hash_string
+            })
+        
+        # Identify the hash
+        hash_info = identify_hash(hash_string)
+        
+        if hash_info.get('error'):
+            return render(request, self.template_name, {
+                'errors': [hash_info.get('error')],
+                'hash_string': hash_string
+            })
+        
+        return render(request, self.template_name, {
+            'hash_string': hash_string,
+            'hash_info': hash_info
+        })
+
+class HSTSChecker(View):
+    template_name = "app/hsts-checker.html"
+    
+    def get(self, request):
+        return render(request, self.template_name)
+    
+    def post(self, request, *args, **kwargs):
+        domain = request.POST.get('domain', '').strip()
+        
+        if not domain:
+            return render(request, self.template_name, {
+                'errors': ['Please enter a domain name'],
+                'domain': domain
+            })
+        
+        # Check HSTS configuration
+        hsts_info = check_hsts(domain)
+        
+        if hsts_info.get('status') == 'error' and hsts_info.get('error'):
+            return render(request, self.template_name, {
+                'errors': [hsts_info.get('error')],
+                'domain': domain
+            })
+        
+        return render(request, self.template_name, {
+            'domain': domain,
+            'hsts_info': hsts_info
+        })
+
+class SecurityHeadersChecker(View):
+    template_name = "app/security-headers-checker.html"
+    
+    def get(self, request):
+        return render(request, self.template_name)
+    
+    def post(self, request, *args, **kwargs):
+        domain = request.POST.get('domain', '').strip()
+        
+        if not domain:
+            return render(request, self.template_name, {
+                'errors': ['Please enter a domain name'],
+                'domain': domain
+            })
+        
+        # Check security headers
+        headers_info = check_security_headers(domain)
+        
+        if headers_info.get('status') == 'error' and headers_info.get('error'):
+            return render(request, self.template_name, {
+                'errors': [headers_info.get('error')],
+                'domain': domain
+            })
+        
+        return render(request, self.template_name, {
+            'domain': domain,
+            'headers_info': headers_info
+        })
+
+class MorseCodeEncoderDecoder(TemplateView):
+    template_name = "app/morse-code-encoder-decoder.html"
+
+class LeetSpeakConverter(TemplateView):
+    template_name = "app/leet-speak-converter.html"
+
+class RedirectChainAnalyzer(View):
+    template_name = "app/redirect-chain-analyzer.html"
+    
+    def get(self, request):
+        return render(request, self.template_name)
+    
+    def post(self, request, *args, **kwargs):
+        url = request.POST.get('url', '').strip()
+        
+        if not url:
+            return render(request, self.template_name, {
+                'errors': ['Please enter a URL'],
+                'url': url
+            })
+        
+        # Analyze redirect chain
+        redirect_info = analyze_redirect_chain(url)
+        
+        if redirect_info.get('status') == 'error' and redirect_info.get('error'):
+            return render(request, self.template_name, {
+                'errors': [redirect_info.get('error')],
+                'url': url
+            })
+        
+        return render(request, self.template_name, {
+            'url': url,
+            'redirect_info': redirect_info
         })

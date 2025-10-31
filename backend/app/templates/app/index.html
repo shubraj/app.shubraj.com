@@ -40,6 +40,14 @@
                 <h3>URL Encoder/Decoder</h3>
                 <p>Percent-encode or decode URLs and query strings.</p>
             </a>
+            <a href="{% url 'app_app:morse_code_encoder_decoder' %}" class="tool-card" title="Free Morse Code Encoder & Decoder">
+                <h3>Morse Code Encoder/Decoder</h3>
+                <p>Convert text to Morse code and decode back with audio playback.</p>
+            </a>
+            <a href="{% url 'app_app:leet_speak_converter' %}" class="tool-card" title="Free Leet Speak Converter">
+                <h3>Leet Speak Converter</h3>
+                <p>Convert text to 1337 speak with multiple intensity levels.</p>
+            </a>
             <a href="{% url 'app_app:jwt_decoder' %}" class="tool-card" title="Free JWT Decoder - Header & Payload">
                 <h3>JWT Decoder</h3>
                 <p>View JWT header and payload (Base64URL decode).</p>
@@ -77,6 +85,10 @@
             <a href="{% url "app_app:bcrypt_generator" %}" class="tool-card" title="Free BCrypt Password Generator">
                 <h3>BCrypt Generator</h3>
                 <p>Securely hash passwords using the BCrypt algorithm.</p>
+            </a>
+            <a href="{% url 'app_app:hash_identifier' %}" class="tool-card" title="Free Hash Identifier">
+                <h3>Hash Identifier</h3>
+                <p>Identify hash algorithm types from hash strings.</p>
             </a>
         </div>
     </section>
@@ -202,6 +214,22 @@
                 <h3>Subnet/CIDR Calculator</h3>
                 <p>Compute network, mask, broadcast, and host range.</p>
             </a>
+            <a href="{% url 'app_app:ssl_certificate_checker' %}" class="tool-card" title="Free SSL Certificate Checker">
+                <h3>SSL Certificate Checker</h3>
+                <p>Check SSL certificate validity, expiration, and details.</p>
+            </a>
+            <a href="{% url 'app_app:hsts_checker' %}" class="tool-card" title="Free HSTS Checker">
+                <h3>HSTS Checker</h3>
+                <p>Verify HTTP Strict Transport Security configuration.</p>
+            </a>
+            <a href="{% url 'app_app:security_headers_checker' %}" class="tool-card" title="Free Security Headers Checker">
+                <h3>Security Headers Checker</h3>
+                <p>Comprehensive security headers audit with score.</p>
+            </a>
+            <a href="{% url 'app_app:redirect_chain_analyzer' %}" class="tool-card" title="Free Redirect Chain Analyzer">
+                <h3>Redirect Chain Analyzer</h3>
+                <p>Trace HTTP redirect chains and identify issues.</p>
+            </a>
         </div>
     </section>
     
@@ -229,6 +257,10 @@
             <a href="{% url "app_app:word_counter" %}" class="tool-card" title="Free Word, Character & Paragraph Counter">
                 <h3>Word Counter</h3>
                 <p>Count words, characters, spaces and paragraphs in any text.</p>
+            </a>
+            <a href="{% url 'app_app:ascii_art_generator' %}" class="tool-card" title="Free ASCII Art Generator">
+                <h3>ASCII Art Generator</h3>
+                <p>Create ASCII art from text for code comments and documentation.</p>
             </a>
         </div>
     </section>

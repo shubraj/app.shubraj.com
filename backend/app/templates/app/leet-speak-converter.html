@@ -1,0 +1,94 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Leet Speak Converter - Text to 1337 Converter | Shub Raj Apps{% endblock %}
+
+{% block description %}Convert text to leet speak (1337) and decode leet speak back to text. Multiple intensity levels available. Free online leet speak converter.{% endblock %}
+
+{% block keywords %}leet speak converter, 1337 converter, leet speak generator, leet decoder, text to leet{% endblock %}
+
+{% block og_title %}Leet Speak Converter - Free Online Tool{% endblock %}
+
+{% block og_description %}Convert normal text to leet speak (1337) with multiple intensity levels, or decode leet speak back to readable text.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">Leet Speak Converter</li>
+{% endblock %}
+
+{% block content %}
+<section class="hash-section">
+    <h2>Leet Speak Converter</h2>
+    <p>Convert text to leet speak (1337 speak) where letters are replaced with numbers and symbols. Choose from multiple intensity levels and decode leet speak back to normal text.</p>
+
+    <div class="card" style="width:100%; max-width:100%; box-sizing:border-box;">
+        <label for="leetTextInput">Text Input</label>
+        <textarea id="leetTextInput" class="input-text" rows="4" placeholder="Enter text to convert to leet speak..." style="width:100%; max-width:100%; box-sizing:border-box;"></textarea>
+
+        <div class="leet-controls">
+            <div class="leet-level-selector">
+                <label for="leetLevel">Leet Intensity</label>
+                <select id="leetLevel" class="text-input">
+                    <option value="low">Low - Subtle (some letters replaced)</option>
+                    <option value="medium" selected>Medium - Moderate (most letters replaced)</option>
+                    <option value="high">High - Heavy (maximum replacements)</option>
+                    <option value="extreme">Extreme - Maximum (most complex patterns)</option>
+                </select>
+            </div>
+            <div class="leet-action-buttons">
+                <button class="btn" id="leetEncodeBtn">Convert to Leet</button>
+                <button class="btn" id="leetDecodeBtn">Decode from Leet</button>
+                <button class="btn" id="leetClearBtn">Clear</button>
+            </div>
+        </div>
+
+        <label class="output-label" for="leetSpeakInput">Leet Speak</label>
+        <textarea id="leetSpeakInput" class="output-text" rows="6" placeholder="Leet speak will appear here... (e.g., H3||0 W0r|d!)" style="width:100%; max-width:100%; box-sizing:border-box;"></textarea>
+
+        <div class="leet-controls" style="margin-top:0.75rem;">
+            <div class="leet-action-buttons">
+                <button class="btn" id="copyTextBtn" disabled>Copy Text</button>
+                <button class="btn" id="copyLeetBtn" disabled>Copy Leet</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-info" style="margin-top:1rem;">
+        <h3>Common Leet Speak Patterns</h3>
+        <div class="leet-reference">
+            <div class="leet-reference-section">
+                <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Letter Replacements</h4>
+                <p class="leet-reference-text">
+                    A → 4, @ &nbsp; B → 8, |3 &nbsp; C → &lt;, { &nbsp; D → |) &nbsp; E → 3 &nbsp; F → |= &nbsp; G → 6, 9<br>
+                    H → #, /-/ &nbsp; I → 1, ! &nbsp; J → _| &nbsp; K → |&lt; &nbsp; L → 1, |_ &nbsp; M → |\/| &nbsp; N → |\|<br>
+                    O → 0, () &nbsp; P → |* &nbsp; Q → 0_ &nbsp; R → |2 &nbsp; S → 5, $ &nbsp; T → 7, +<br>
+                    U → |_|, (_) &nbsp; V → \/ &nbsp; W → \/\/ &nbsp; X → &gt;&lt; &nbsp; Y → `/ &nbsp; Z → 2
+                </p>
+            </div>
+            <div class="leet-reference-section" style="margin-top:1rem;">
+                <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Examples</h4>
+                <ul style="margin:0.5rem 0; padding-left:1.5rem;">
+                    <li>"HELLO" → "H3LL0" or "#3LL0"</li>
+                    <li>"WORLD" → "W0RLD" or "\/\/0|2|D"</li>
+                    <li>"LEET" → "1337" or "|337"</li>
+                </ul>
+            </div>
+            <div class="leet-reference-section" style="margin-top:1rem;">
+                <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Intensity Levels</h4>
+                <ul style="margin:0.5rem 0; padding-left:1.5rem;">
+                    <li><strong>Low:</strong> Only some letters are replaced</li>
+                    <li><strong>Medium:</strong> Most letters replaced with common patterns</li>
+                    <li><strong>High:</strong> Heavy use of replacements with variations</li>
+                    <li><strong>Extreme:</strong> Maximum complexity with multi-character patterns</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include 'app/fragments/seo/leet-speak-converter-seo.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/leetSpeak.js' %}"></script>
+{% endblock %}
+

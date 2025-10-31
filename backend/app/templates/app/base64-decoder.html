@@ -34,54 +34,34 @@
 {% endblock %}
 
 {% block content %}
-    <article>
-        <header>
-            <h1>Base64 Decoder</h1>
-            <p class="tool-description">Decode Base64 text as you type below. Paste or type your Base64 text in the left box to see the decoded output on the right. This tool works entirely in your browser - your data never leaves your device.</p>
-        </header>
-        
-        <div class="decoder-section">
-            <textarea id="textInput" class="input-text" placeholder="Paste your Base64 encoded text here..." aria-label="Input for Base64 encoded text"></textarea>
-            <div class="action-buttons">
-                <button id="clearBtn" class="btn" disabled aria-label="Clear input and output">Clear</button>
-            </div>
-            <div>
-                <p class="output-label">Decoded Output:</p>
-                <textarea id="textOutput" class="output-text" placeholder="Your decoded text will appear here..." readonly aria-label="Decoded output text"></textarea>
+<section class="hash-section">
+    <h2>Base64 Decoder</h2>
+    <p>Decode Base64 text as you type below. Paste or type your Base64 text in the input box to see the decoded output instantly. This tool works entirely in your browser - your data never leaves your device.</p>
+
+    <div class="card" style="width:100%; max-width:100%; box-sizing:border-box;">
+        <label for="textInput">Base64 Encoded Text</label>
+        <textarea id="textInput" class="input-text" rows="4" placeholder="Paste your Base64 encoded text here..." style="width:100%; max-width:100%; box-sizing:border-box;"></textarea>
+
+        <div class="base64-controls">
+            <div class="base64-action-buttons">
+                <button class="btn" id="clearBtn" disabled>Clear</button>
             </div>
         </div>
-        
-        <section class="seo-blog">
-            <h2>Why Use a Base64 Decoder?</h2>
-            <p>
-                Base64 encoding is widely used for data transmission, especially when dealing with text and images in web applications. However, sometimes you need to convert that encoded data back to its original format. That's where our <a href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">Base64 Decoder</a> comes into play!
-            </p>
-            <h3>Benefits of Our Base64 Decoder Tool</h3>
-            <ul>
-                <li><strong>100% Free</strong>: No subscriptions or hidden costs, ever.</li>
-                <li><strong>Privacy First</strong>: All decoding happens locally in your browser - we never see your data.</li>
-                <li><strong>Instant Results</strong>: See decoded output in real-time as you type.</li>
-                <li><strong>Works Offline</strong>: Once loaded, the page works without an internet connection.</li>
-            </ul>
-            <p>
-                At app.shubraj.com, our easy-to-use decoder allows you to quickly decode Base64 strings into their original text. Simply paste your encoded data in the input box, and watch as the decoded output appears instantly. It's an efficient tool designed for developers, designers, and anyone working with encoded data.
-            </p>
-            <h3>Common Uses for Base64 Decoding</h3>
-            <p>
-                Base64 decoding is useful in several scenarios:
-            </p>
-            <ul>
-                <li>Extracting data from data URIs (like image data embedded in CSS or HTML)</li>
-                <li>Reading encoded email attachments</li>
-                <li>Decoding API responses that use Base64 encoding</li>
-                <li>Debugging applications that use Base64 for data transmission</li>
-            </ul>
-            <p>
-                Whether you're troubleshooting issues with data encoding or simply curious about how Base64 works, our tool is here to help you navigate the process effortlessly. Try it out and experience how straightforward decoding can be!
-            </p>
-        </section>
-    </article>
-{% include 'app/fragments/seo/base64-decoder-seo.html' %}
+
+        <label class="output-label" for="textOutput">Decoded Output</label>
+        <textarea id="textOutput" class="output-text" rows="6" placeholder="Your decoded text will appear here..." readonly style="width:100%; max-width:100%; box-sizing:border-box;"></textarea>
+
+        <div class="base64-controls" style="margin-top:0.75rem;">
+            <div class="base64-action-buttons">
+                <button class="btn" id="copyInputBtn" disabled>Copy Base64</button>
+                <button class="btn" id="copyOutputBtn" disabled>Copy Decoded</button>
+            </div>
+        </div>
+    </div>
+    {% include 'app/fragments/seo/base64-decoder-seo.html' %}
+</section>
+
+
 {% endblock %}
 
 {% block scripts %}

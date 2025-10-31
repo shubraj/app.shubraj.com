@@ -4,7 +4,7 @@ from .views import (
     Base64Encoder,BcryptGenerator,CloudflareEmailDecoder,ColorConverter,CSSBeautifier,
     EmailChecker,ImageColorPicker,IPaddressLookup,JSONBeautifier,MarkdownEditor,
     MD5Generator,RandomPasswordGenerator,SHAGenerator,SVGtoJPG,SVGtoPNG,
-    WhatIsMyHeaders,WordCounter,PrivacyPolicy,TermsAndConditions,DVPhotoTool,ImageCompressor,ImageResizer,URLEncoderDecoder,JWTDecoder,UUIDULIDGenerator,UnixTimestampConverter,RegexTester,TextDiffChecker,QRCodeGenerator,MarkdownHtmlConverter,ImageBackgroundRemover,CSVJSONConverter,CaseConverter,PasswordEntropy,QRCodeScanner,BarcodeGenerator,SubnetCalculator,ExifTool,JWTGenerator
+    WhatIsMyHeaders,WordCounter,PrivacyPolicy,TermsAndConditions,DVPhotoTool,ImageCompressor,ImageResizer,URLEncoderDecoder,JWTDecoder,UUIDULIDGenerator,UnixTimestampConverter,RegexTester,TextDiffChecker,QRCodeGenerator,MarkdownHtmlConverter,ImageBackgroundRemover,CSVJSONConverter,CaseConverter,PasswordEntropy,QRCodeScanner,BarcodeGenerator,SubnetCalculator,ExifTool,JWTGenerator,ASCIIArtGenerator,SSLCertificateChecker,HashIdentifier,HSTSChecker,SecurityHeadersChecker,RedirectChainAnalyzer,MorseCodeEncoderDecoder,LeetSpeakConverter
 )
 
 app_name = "app_app"
@@ -36,6 +36,14 @@ urlpatterns = [
     path("subnet-calculator/",SubnetCalculator.as_view(),name="subnet_calculator"),
     path("exif-tool/",ExifTool.as_view(),name="exif_tool"),
     path("jwt-generator/",JWTGenerator.as_view(),name="jwt_generator"),
+    path("ascii-art-generator/",ASCIIArtGenerator.as_view(),name="ascii_art_generator"),
+    path("ssl-certificate-checker/",SSLCertificateChecker.as_view(),name="ssl_certificate_checker"),
+    path("hash-identifier/",HashIdentifier.as_view(),name="hash_identifier"),
+    path("hsts-checker/",HSTSChecker.as_view(),name="hsts_checker"),
+    path("security-headers-checker/",SecurityHeadersChecker.as_view(),name="security_headers_checker"),
+    path("redirect-chain-analyzer/",RedirectChainAnalyzer.as_view(),name="redirect_chain_analyzer"),
+    path("morse-code-encoder-decoder/",MorseCodeEncoderDecoder.as_view(),name="morse_code_encoder_decoder"),
+    path("leet-speak-converter/",LeetSpeakConverter.as_view(),name="leet_speak_converter"),
     path("svg-to-jpg/",SVGtoJPG.as_view(),name="svg_to_jpg"),
     path("sha-generator/",SHAGenerator.as_view(),name="sha_generator"),
     path("random-password-generator/",RandomPasswordGenerator.as_view(),name="random_password_generator"),

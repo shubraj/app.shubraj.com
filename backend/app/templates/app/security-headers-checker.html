@@ -1,0 +1,323 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Security Headers Checker - Verify HTTP Security Headers | Shub Raj Apps{% endblock %}
+
+{% block description %}Check security headers for any domain. Verify HSTS, CSP, X-Frame-Options, Content-Type-Options, and more. Free security audit tool.{% endblock %}
+
+{% block keywords %}security headers checker, http security headers, csp checker, security audit, headers validator{% endblock %}
+
+{% block og_title %}Security Headers Checker - Free Online Tool{% endblock %}
+
+{% block og_description %}Comprehensive security headers checker. Verify HSTS, CSP, X-Frame-Options, and other security configurations.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">Security Headers Checker</li>
+{% endblock %}
+
+{% block content %}
+<section class="hash-section">
+    <h2>Security Headers Checker</h2>
+    <p>Check security headers configuration for any domain. Get a comprehensive security audit with recommendations.</p>
+
+    {% if errors %}
+    <div class="feedback-container">
+        {% for err in errors %}
+        <div class="feedback-message error">{{ err }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" class="card">
+        {% csrf_token %}
+        <label for="domainInput">Domain Name</label>
+        <input id="domainInput" name="domain" type="text" class="text-input" 
+               placeholder="example.com (without https://)" 
+               value="{{ domain }}" required>
+        <div class="action-buttons">
+            <button class="btn" type="submit">Check Headers</button>
+            <button class="btn" type="button" id="clearHeadersBtn">Clear</button>
+        </div>
+    </form>
+
+    {% if headers_info %}
+    <div class="header-info" style="margin-top:1.5rem; overflow-x:hidden; width:100%; box-sizing:border-box;">
+        <h3>Security Headers Analysis</h3>
+        
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Domain</h4>
+            <p style="word-wrap:break-word; overflow-wrap:break-word;"><strong>{{ headers_info.domain }}</strong></p>
+        </div>
+
+        {% if headers_info.status == 'success' %}
+        <!-- Security Score -->
+        <div style="margin-bottom:1.5rem; padding:1rem; background:#1f2937; border-radius:0.5rem; width:100%; box-sizing:border-box; overflow-x:hidden;">
+            <div class="security-score-container" style="display:flex; justify-content:space-between; align-items:start; flex-wrap:wrap; gap:1rem; width:100%; box-sizing:border-box;">
+                <div style="flex:1; min-width:0; max-width:100%; word-wrap:break-word; overflow-wrap:break-word; box-sizing:border-box;">
+                    <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Security Score</h4>
+                    <p style="font-size:2rem; font-weight:bold; margin:0; color:var(--accent-color); word-wrap:break-word; overflow-wrap:break-word; max-width:100%;">
+                        {{ headers_info.security_score }} / {{ headers_info.max_score }}
+                    </p>
+                    <p style="margin:0.5rem 0 0 0; opacity:0.8; font-size:0.9rem; word-wrap:break-word; overflow-wrap:break-word; max-width:100%;">
+                        {{ headers_info.headers_found_count }} of {{ headers_info.total_headers_checked }} security headers found
+                    </p>
+                </div>
+                <div style="flex-shrink:0; align-self:flex-start; margin-top:0.25rem;">
+                    {% if headers_info.security_level == 'excellent' %}
+                    <span style="display:inline-block; padding:0.5rem 1rem; background:#064e3b; border-radius:0.5rem; color:#10b981; font-weight:600; white-space:nowrap;">
+                        ✓ {{ headers_info.security_level_text }}
+                    </span>
+                    {% elif headers_info.security_level == 'good' %}
+                    <span style="display:inline-block; padding:0.5rem 1rem; background:#1e3a8a; border-radius:0.5rem; color:#60a5fa; font-weight:600; white-space:nowrap;">
+                        {{ headers_info.security_level_text }}
+                    </span>
+                    {% elif headers_info.security_level == 'fair' %}
+                    <span style="display:inline-block; padding:0.5rem 1rem; background:#78350f; border-radius:0.5rem; color:#f59e0b; font-weight:600; white-space:nowrap;">
+                        {{ headers_info.security_level_text }}
+                    </span>
+                    {% else %}
+                    <span style="display:inline-block; padding:0.5rem 1rem; background:#7f1d1d; border-radius:0.5rem; color:#ef4444; font-weight:600; white-space:nowrap;">
+                        {{ headers_info.security_level_text }}
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Headers Details -->
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.75rem;">Security Headers</h4>
+            <div style="display:flex; flex-direction:column; gap:0.75rem;">
+                {% for header_name, header_data in headers_info.details.items %}
+                <div style="padding:0.75rem; background:#1f2937; border-radius:0.5rem; border-left:4px solid {% if header_data.present %}#10b981{% else %}#ef4444{% endif %};">
+                    <div class="security-header-item" style="display:flex; justify-content:space-between; align-items:start; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.5rem;">
+                        <div style="flex:1; min-width:0; max-width:100%; word-wrap:break-word; overflow-wrap:break-word; box-sizing:border-box;">
+                            <div style="display:flex; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.25rem; max-width:100%;">
+                                <strong style="color:var(--accent-color); font-size:1.1rem; word-wrap:break-word; overflow-wrap:break-word;">{{ header_data.name }}</strong>
+                                <span style="opacity:0.7; font-size:0.85rem; word-wrap:break-word; overflow-wrap:break-word;">({{ header_data.full_name }})</span>
+                            </div>
+                            {% if header_data.recommended %}
+                            <div style="display:inline-block; margin-top:0.25rem;">
+                                <span style="padding:0.15rem 0.5rem; background:#064e3b; border-radius:0.25rem; font-size:0.75rem; color:#10b981; white-space:nowrap;">
+                                    Recommended
+                                </span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div style="flex-shrink:0;">
+                            {% if header_data.present %}
+                            <span style="display:inline-block; padding:0.25rem 0.5rem; background:#064e3b; border-radius:0.25rem; font-size:0.85rem; color:#10b981; white-space:nowrap;">
+                                ✓ Present (Score: {{ header_data.score }})
+                            </span>
+                            {% else %}
+                            <span style="display:inline-block; padding:0.25rem 0.5rem; background:#7f1d1d; border-radius:0.25rem; font-size:0.85rem; color:#ef4444; white-space:nowrap;">
+                                ✗ Missing
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <p style="margin:0.25rem 0; opacity:0.9;">{{ header_data.description }}</p>
+                    {% if header_data.value %}
+                    <details style="margin-top:0.5rem;">
+                        <summary style="cursor:pointer; opacity:0.8; font-size:0.9rem;">View header value</summary>
+                        <pre style="font-family:monospace; font-size:0.8rem; background:#111827; padding:0.5rem; border-radius:0.25rem; margin-top:0.5rem; overflow-x:auto; word-break:break-all;">{{ header_data.value }}</pre>
+                    </details>
+                    {% endif %}
+                    {% if header_data.warning %}
+                    <p style="margin:0.5rem 0 0 0; padding:0.5rem; background:#78350f; border-radius:0.25rem; color:#f59e0b; font-size:0.85rem;">
+                        ⚠ {{ header_data.warning }}
+                    </p>
+                    {% endif %}
+                    {% if header_data.recommendation %}
+                    <p style="margin:0.5rem 0 0 0; padding:0.5rem; background:#1e3a8a; border-radius:0.25rem; color:#60a5fa; font-size:0.85rem;">
+                        💡 {{ header_data.recommendation }}
+                    </p>
+                    {% endif %}
+                    {% if header_data.note %}
+                    <p style="margin:0.5rem 0 0 0; opacity:0.7; font-size:0.85rem;">Note: {{ header_data.note }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% if headers_info.recommendations %}
+        <div style="margin-bottom:1rem; padding:1rem; background:#1e3a8a; border-radius:0.5rem;">
+            <h4 style="color:#60a5fa; margin-bottom:0.75rem;">Recommendations</h4>
+            <ul style="margin:0; padding-left:1.5rem;">
+                {% for rec in headers_info.recommendations %}
+                <li style="margin-bottom:0.5rem;">{{ rec }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <!-- Cookie Security Analysis -->
+        {% if headers_info.cookie_security %}
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Cookie Security Analysis</h4>
+            {% if headers_info.cookie_security.cookies_found %}
+            <div style="margin-bottom:0.75rem;">
+                <p><strong>Total Cookies:</strong> {{ headers_info.cookie_security.total_cookies }}</p>
+                <div class="cookie-stats" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:0.5rem; margin-top:0.5rem;">
+                    <div style="padding:0.5rem; background:#1f2937; border-radius:0.5rem; word-break:break-word;">
+                        <strong style="color:{% if headers_info.cookie_security.secure_cookies == headers_info.cookie_security.total_cookies %}#10b981{% else %}#f59e0b{% endif %}; display:block; margin-bottom:0.25rem;">Secure:</strong> 
+                        <span>{{ headers_info.cookie_security.secure_cookies }}/{{ headers_info.cookie_security.total_cookies }}</span>
+                    </div>
+                    <div style="padding:0.5rem; background:#1f2937; border-radius:0.5rem; word-break:break-word;">
+                        <strong style="color:{% if headers_info.cookie_security.httponly_cookies == headers_info.cookie_security.total_cookies %}#10b981{% else %}#f59e0b{% endif %}; display:block; margin-bottom:0.25rem;">HttpOnly:</strong> 
+                        <span>{{ headers_info.cookie_security.httponly_cookies }}/{{ headers_info.cookie_security.total_cookies }}</span>
+                    </div>
+                    <div style="padding:0.5rem; background:#1f2937; border-radius:0.5rem; word-break:break-word;">
+                        <strong style="color:{% if headers_info.cookie_security.samesite_cookies == headers_info.cookie_security.total_cookies %}#10b981{% else %}#f59e0b{% endif %}; display:block; margin-bottom:0.25rem;">SameSite:</strong> 
+                        <span>{{ headers_info.cookie_security.samesite_cookies }}/{{ headers_info.cookie_security.total_cookies }}</span>
+                    </div>
+                </div>
+            </div>
+            {% if headers_info.cookie_security.details %}
+            <details>
+                <summary style="cursor:pointer; opacity:0.8; font-size:0.9rem;">View cookie details</summary>
+                <div style="margin-top:0.5rem; display:flex; flex-direction:column; gap:0.5rem;">
+                    {% for cookie_detail in headers_info.cookie_security.details %}
+                    <div style="padding:0.75rem; background:#1f2937; border-radius:0.5rem; border-left:4px solid {% if cookie_detail.issues %}#f59e0b{% else %}#10b981{% endif %};">
+                        <p style="margin:0 0 0.5rem 0; font-family:monospace; font-size:0.85rem; word-break:break-all;">{{ cookie_detail.cookie }}</p>
+                        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.5rem;">
+                            {% if cookie_detail.has_secure %}<span style="padding:0.15rem 0.5rem; background:#064e3b; border-radius:0.25rem; font-size:0.75rem; color:#10b981;">✓ Secure</span>{% endif %}
+                            {% if cookie_detail.has_httponly %}<span style="padding:0.15rem 0.5rem; background:#064e3b; border-radius:0.25rem; font-size:0.75rem; color:#10b981;">✓ HttpOnly</span>{% endif %}
+                            {% if cookie_detail.has_samesite %}<span style="padding:0.15rem 0.5rem; background:#064e3b; border-radius:0.25rem; font-size:0.75rem; color:#10b981;">✓ SameSite={{ cookie_detail.samesite_value|upper }}</span>{% endif %}
+                        </div>
+                        {% if cookie_detail.issues %}
+                        <ul style="margin:0; padding-left:1.5rem; font-size:0.85rem; color:#f59e0b;">
+                            {% for issue in cookie_detail.issues %}
+                            <li>{{ issue }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </details>
+            {% endif %}
+            {% else %}
+            <p style="opacity:0.8;">No cookies found in response</p>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- TLS Version -->
+        {% if headers_info.tls_info %}
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">TLS/SSL Version</h4>
+            <div style="padding:0.75rem; background:#1f2937; border-radius:0.5rem; border-left:4px solid {% if headers_info.tls_info.security_level == 'excellent' %}#10b981{% elif headers_info.tls_info.security_level == 'good' %}#60a5fa{% elif headers_info.tls_info.security_level == 'weak' %}#f59e0b{% else %}#ef4444{% endif %};">
+                <p style="margin:0; font-weight:600;">
+                    {{ headers_info.tls_info.version_name }}
+                    {% if headers_info.tls_info.is_secure %}
+                    <span style="color:#10b981; margin-left:0.5rem;">✓ Secure</span>
+                    {% endif %}
+                </p>
+                {% if headers_info.tls_info.recommendation %}
+                <p style="margin:0.5rem 0 0 0; opacity:0.9; font-size:0.9rem; color:#f59e0b;">
+                    ⚠ {{ headers_info.tls_info.recommendation }}
+                </p>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- CORS Analysis -->
+        {% if headers_info.cors_info %}
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">CORS (Cross-Origin Resource Sharing)</h4>
+            <div style="padding:0.75rem; background:#1f2937; border-radius:0.5rem;">
+                {% if headers_info.cors_info.details.allow_origin %}
+                <p style="margin:0 0 0.5rem 0;"><strong>Allow-Origin:</strong> <code style="font-size:0.85rem;">{{ headers_info.cors_info.details.allow_origin }}</code></p>
+                {% endif %}
+                {% if headers_info.cors_info.details.allow_methods %}
+                <p style="margin:0 0 0.5rem 0;"><strong>Allow-Methods:</strong> <code style="font-size:0.85rem;">{{ headers_info.cors_info.details.allow_methods }}</code></p>
+                {% endif %}
+                {% if headers_info.cors_info.details.allow_credentials %}
+                <p style="margin:0 0 0.5rem 0;"><strong>Allow-Credentials:</strong> <code style="font-size:0.85rem;">{{ headers_info.cors_info.details.allow_credentials }}</code></p>
+                {% endif %}
+                {% if headers_info.cors_info.warnings %}
+                <div style="margin-top:0.5rem;">
+                    {% for warning in headers_info.cors_info.warnings %}
+                    <p style="margin:0.25rem 0; padding:0.5rem; background:#78350f; border-radius:0.25rem; color:#f59e0b; font-size:0.85rem;">⚠ {{ warning }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% if headers_info.cors_info.recommendations %}
+                <div style="margin-top:0.5rem;">
+                    {% for rec in headers_info.cors_info.recommendations %}
+                    <p style="margin:0.25rem 0; padding:0.5rem; background:#1e3a8a; border-radius:0.25rem; color:#60a5fa; font-size:0.85rem;">💡 {{ rec }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Information Disclosure -->
+        {% if headers_info.information_disclosure %}
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Information Disclosure</h4>
+            {% if headers_info.information_disclosure.has_issues %}
+            <div style="padding:0.75rem; background:#78350f; border-radius:0.5rem; border-left:4px solid #f59e0b;">
+                <p style="margin:0 0 0.5rem 0; color:#f59e0b; font-weight:600;">⚠ Information Disclosure Detected</p>
+                {% if headers_info.information_disclosure.details %}
+                <ul style="margin:0.5rem 0 0 0; padding-left:1.5rem; font-size:0.9rem;">
+                    {% for issue in headers_info.information_disclosure.issues_found %}
+                    <li>{{ issue }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            {% else %}
+            <div style="padding:0.75rem; background:#064e3b; border-radius:0.5rem; border-left:4px solid #10b981;">
+                <p style="margin:0; color:#10b981;">✓ No significant information disclosure detected</p>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if headers_info.additional_headers %}
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Additional Headers</h4>
+            <ul style="margin:0.5rem 0; padding-left:1.5rem;">
+                {% for header, value in headers_info.additional_headers.items %}
+                <li><strong>{{ header }}:</strong> <code style="font-size:0.85rem;">{{ value }}</code></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if headers_info.final_url %}
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Checked URL</h4>
+            <p style="font-family:monospace; font-size:0.9rem; word-break:break-all;">{{ headers_info.final_url }}</p>
+        </div>
+        {% endif %}
+
+        {% elif headers_info.error %}
+        <div style="margin-bottom:1rem; padding:0.75rem; background:#7f1d1d; border-radius:0.5rem; border-left:4px solid #ef4444;">
+            <p style="margin:0; color:#ef4444; font-weight:600;">
+                ✗ Error
+            </p>
+            <p style="margin:0.5rem 0 0 0; opacity:0.9;">{{ headers_info.error }}</p>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+</section>
+
+{% include 'app/fragments/seo/security-headers-checker-seo.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('clearHeadersBtn')?.addEventListener('click', () => {
+        document.getElementById('domainInput').value = '';
+        document.getElementById('domainInput').focus();
+    });
+</script>
+{% endblock %}
+

@@ -1,0 +1,158 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Redirect Chain Analyzer - Trace HTTP Redirects | Shub Raj Apps{% endblock %}
+
+{% block description %}Analyze HTTP redirect chains for any URL. Trace all redirects from initial URL to final destination. Free redirect analyzer tool.{% endblock %}
+
+{% block keywords %}redirect analyzer, redirect chain checker, http redirect tracer, url redirect analyzer, redirect chain tool{% endblock %}
+
+{% block og_title %}Redirect Chain Analyzer - Free Online Tool{% endblock %}
+
+{% block og_description %}Trace and analyze HTTP redirect chains. Identify redirect loops, inefficient chains, and optimize your URL structure.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">Redirect Chain Analyzer</li>
+{% endblock %}
+
+{% block content %}
+<section class="hash-section">
+    <h2>Redirect Chain Analyzer</h2>
+    <p>Analyze HTTP redirect chains for any URL. Trace all redirects from the initial URL to the final destination and identify potential issues.</p>
+
+    {% if errors %}
+    <div class="feedback-container">
+        {% for err in errors %}
+        <div class="feedback-message error">{{ err }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" class="card">
+        {% csrf_token %}
+        <label for="urlInput">URL</label>
+        <input id="urlInput" name="url" type="url" class="text-input" 
+               placeholder="https://example.com or example.com" 
+               value="{{ url }}" required>
+        <div class="action-buttons">
+            <button class="btn" type="submit">Analyze Redirects</button>
+            <button class="btn" type="button" id="clearRedirectBtn">Clear</button>
+        </div>
+    </form>
+
+    {% if redirect_info %}
+    <div class="header-info" style="margin-top:1.5rem;">
+        <h3>Redirect Chain Analysis</h3>
+        
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Original URL</h4>
+            <p class="redirect-url-text"><strong>{{ redirect_info.original_url }}</strong></p>
+        </div>
+
+        {% if redirect_info.status == 'success' or redirect_info.status == 'loop_detected' or redirect_info.status == 'max_redirects_reached' %}
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Summary</h4>
+            <div style="padding:0.75rem; background:#1f2937; border-radius:0.5rem;">
+                <p style="margin:0.25rem 0;"><strong>Total Redirects:</strong> {{ redirect_info.total_redirects }}</p>
+                {% if redirect_info.final_url %}
+                <p style="margin:0.25rem 0;"><strong>Final URL:</strong> <span class="redirect-url-text">{{ redirect_info.final_url }}</span></p>
+                {% endif %}
+                {% if redirect_info.redirect_types %}
+                <p style="margin:0.25rem 0;"><strong>Redirect Types:</strong> {{ redirect_info.redirect_types|join:", " }}</p>
+                {% endif %}
+                {% if redirect_info.has_redirects %}
+                <p style="margin:0.25rem 0; color:#10b981;">✓ Redirects detected</p>
+                {% else %}
+                <p style="margin:0.25rem 0; color:#f59e0b;">No redirects - URL is final destination</p>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if redirect_info.redirect_chain %}
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.75rem;">Redirect Chain</h4>
+            <div style="display:flex; flex-direction:column; gap:0.75rem;">
+                {% for step in redirect_info.redirect_chain %}
+                <div class="redirect-chain-item" style="padding:0.75rem; background:#1f2937; border-radius:0.5rem; border-left:4px solid {% if step.is_final %}#10b981{% elif step.status_code >= 400 %}#ef4444{% else %}#3b82f6{% endif %};">
+                    <div class="redirect-step-header" style="display:flex; justify-content:space-between; align-items:start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.5rem;">
+                        <div class="redirect-step-info" style="flex:1; min-width:0; max-width:100%; word-wrap:break-word; overflow-wrap:break-word; box-sizing:border-box;">
+                            <strong style="color:var(--accent-color);">Step {{ step.step }}</strong>
+                            {% if step.is_final %}
+                            <span style="margin-left:0.5rem; padding:0.15rem 0.5rem; background:#064e3b; border-radius:0.25rem; font-size:0.75rem; color:#10b981; white-space:nowrap;">Final Destination</span>
+                            {% endif %}
+                        </div>
+                        <div class="redirect-step-status" style="flex-shrink:0;">
+                            <span style="display:inline-block; padding:0.25rem 0.5rem; background:#374151; border-radius:0.25rem; font-size:0.85rem; color:{% if step.status_code >= 400 %}#ef4444{% elif step.status_code >= 300 %}#3b82f6{% else %}#10b981{% endif %}; white-space:nowrap;">
+                                {{ step.status_code }} {{ step.status_text }}
+                            </span>
+                        </div>
+                    </div>
+                    <p class="redirect-url-text" style="margin:0.25rem 0; opacity:0.9;">{{ step.url }}</p>
+                    {% if step.redirect_type %}
+                    <p style="margin:0.25rem 0; font-size:0.85rem; opacity:0.8;">Redirect Type: <strong>{{ step.redirect_type }}</strong></p>
+                    {% endif %}
+                    {% if step.location %}
+                    <p style="margin:0.25rem 0; font-size:0.85rem;">
+                        <span style="opacity:0.8;">Redirects to:</span> 
+                        <span class="redirect-url-text">{{ step.location }}</span>
+                    </p>
+                    {% endif %}
+                    {% if step.issues %}
+                    <div style="margin-top:0.5rem;">
+                        {% for issue in step.issues %}
+                        <p style="margin:0.25rem 0; padding:0.5rem; background:#7f1d1d; border-radius:0.25rem; color:#ef4444; font-size:0.85rem;">⚠ {{ issue }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if redirect_info.warnings %}
+        <div style="margin-bottom:1rem; padding:0.75rem; background:#78350f; border-radius:0.5rem;">
+            <h4 style="color:#f59e0b; margin-bottom:0.5rem;">⚠ Warnings</h4>
+            <ul style="margin:0; padding-left:1.5rem;">
+                {% for warning in redirect_info.warnings %}
+                <li style="margin-bottom:0.5rem;">{{ warning }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if redirect_info.issues %}
+        <div style="margin-bottom:1rem; padding:0.75rem; background:#7f1d1d; border-radius:0.5rem;">
+            <h4 style="color:#ef4444; margin-bottom:0.5rem;">⚠ Issues</h4>
+            <ul style="margin:0; padding-left:1.5rem;">
+                {% for issue in redirect_info.issues %}
+                <li style="margin-bottom:0.5rem;">{{ issue }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% elif redirect_info.error %}
+        <div style="margin-bottom:1rem; padding:0.75rem; background:#7f1d1d; border-radius:0.5rem; border-left:4px solid #ef4444;">
+            <p style="margin:0; color:#ef4444; font-weight:600;">
+                ✗ Error
+            </p>
+            <p style="margin:0.5rem 0 0 0; opacity:0.9;">{{ redirect_info.error }}</p>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+</section>
+
+{% include 'app/fragments/seo/redirect-chain-analyzer-seo.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('clearRedirectBtn')?.addEventListener('click', () => {
+        document.getElementById('urlInput').value = '';
+        document.getElementById('urlInput').focus();
+    });
+</script>
+{% endblock %}
+

@@ -1,0 +1,48 @@
+<section class="seo-blog">
+  <h2>Verify HSTS Configuration for Enhanced Security</h2>
+  <p>HTTP Strict Transport Security (HSTS) forces browsers to use HTTPS connections even if users type HTTP. This tool checks if a domain has HSTS enabled and shows the configuration details including max-age, subdomain coverage, and preload eligibility.</p>
+
+  <h3>Why HSTS Matters</h3>
+  <ul>
+    <li><strong>Prevents downgrade attacks:</strong> Browsers won't accept HTTP connections once HSTS is cached.</li>
+    <li><strong>Protects cookies:</strong> Reduces risk of session hijacking over insecure connections.</li>
+    <li><strong>First-visit protection:</strong> When combined with preload lists, provides security even on first visit.</li>
+  </ul>
+
+  <h3>What This Tool Checks</h3>
+  <ul>
+    <li><strong>HSTS header presence:</strong> Whether the Strict-Transport-Security header is sent.</li>
+    <li><strong>Max-age duration:</strong> How long browsers cache the HSTS policy (recommended: ≥31536000 seconds / 1 year).</li>
+    <li><strong>includeSubDomains:</strong> Whether the policy applies to all subdomains.</li>
+    <li><strong>preload directive:</strong> Whether the site is eligible for browser preload lists.</li>
+    <li><strong>Additional security headers:</strong> CSP, X-Frame-Options, and other security configurations.</li>
+  </ul>
+
+  <h3>Best Practices</h3>
+  <ul>
+    <li>Use max-age of at least 31536000 (1 year) for long-term protection.</li>
+    <li>Enable includeSubDomains to cover all subdomains.</li>
+    <li>Consider preload for sites that exclusively use HTTPS.</li>
+    <li>Test HSTS configuration before deploying to production.</li>
+  </ul>
+
+  <h3>Implementation Notes</h3>
+  <ul>
+    <li>HSTS is only effective after the first HTTPS connection.</li>
+    <li>Preload requires manual submission to browser vendor lists.</li>
+    <li>Once enabled, HSTS persists for the max-age duration even if removed.</li>
+  </ul>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"What is HSTS?","acceptedAnswer":{"@type":"Answer","text":"HTTP Strict Transport Security forces browsers to use HTTPS connections, preventing protocol downgrade attacks."}},
+    {"@type":"Question","name":"How long should max-age be?","acceptedAnswer":{"@type":"Answer","text":"Recommend at least 1 year (31536000 seconds) for effective protection."}},
+    {"@type":"Question","name":"What does includeSubDomains do?","acceptedAnswer":{"@type":"Answer","text":"It extends the HSTS policy to all subdomains, ensuring consistent security across your domain hierarchy."}}
+  ]
+}
+</script>
+

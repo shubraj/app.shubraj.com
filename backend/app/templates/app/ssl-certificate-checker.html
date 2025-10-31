@@ -1,0 +1,146 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}SSL Certificate Checker - Verify SSL/TLS Certificate Online | Shub Raj Apps{% endblock %}
+
+{% block description %}Check SSL certificate details for any domain. View issuer, validity dates, expiration status, and certificate chain information instantly.{% endblock %}
+
+{% block keywords %}ssl certificate checker, ssl checker, certificate checker, ssl validator, tls certificate, ssl expiry checker, certificate details{% endblock %}
+
+{% block og_title %}SSL Certificate Checker - Free Online Tool{% endblock %}
+
+{% block og_description %}Verify SSL/TLS certificate details including issuer, validity, expiration dates, and more for any domain.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">SSL Certificate Checker</li>
+{% endblock %}
+
+{% block content %}
+<section class="hash-section">
+    <h2>SSL Certificate Checker</h2>
+    <p>Enter a domain name to check its SSL certificate details, validity, and expiration information.</p>
+
+    {% if errors %}
+    <div class="feedback-container">
+        {% for err in errors %}
+        <div class="feedback-message error">{{ err }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" class="card">
+        {% csrf_token %}
+        <label for="domainInput">Domain Name</label>
+        <input id="domainInput" name="domain" type="text" class="text-input" 
+               placeholder="example.com (without https://)" 
+               value="{{ domain }}" required>
+        <div class="action-buttons">
+            <button class="btn" type="submit">Check Certificate</button>
+            <button class="btn" type="button" id="clearSslBtn">Clear</button>
+        </div>
+    </form>
+
+    {% if certificate_info %}
+    <div class="header-info" style="margin-top:1.5rem;">
+        <h3>Certificate Information</h3>
+        
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Domain</h4>
+            <p><strong>{{ domain }}</strong></p>
+        </div>
+
+        {% if certificate_info.status == 'valid' %}
+        <div style="margin-bottom:1rem; padding:0.75rem; background:#064e3b; border-radius:0.5rem; border-left:4px solid #10b981;">
+            <p style="margin:0; color:#10b981; font-weight:600;">
+                ✓ Valid Certificate
+                {% if certificate_info.days_until_expiry %}
+                <span style="display:block; margin-top:0.25rem; font-size:0.9rem; opacity:0.9;">
+                    Expires in {{ certificate_info.days_until_expiry }} days
+                </span>
+                {% endif %}
+            </p>
+        </div>
+        {% elif certificate_info.status == 'expired' %}
+        <div style="margin-bottom:1rem; padding:0.75rem; background:#7f1d1d; border-radius:0.5rem; border-left:4px solid #ef4444;">
+            <p style="margin:0; color:#ef4444; font-weight:600;">✗ Certificate Expired</p>
+        </div>
+        {% elif certificate_info.status == 'expiring_soon' %}
+        <div style="margin-bottom:1rem; padding:0.75rem; background:#78350f; border-radius:0.5rem; border-left:4px solid #f59e0b;">
+            <p style="margin:0; color:#f59e0b; font-weight:600;">
+                ⚠ Expiring Soon
+                {% if certificate_info.days_until_expiry %}
+                <span style="display:block; margin-top:0.25rem; font-size:0.9rem; opacity:0.9;">
+                    Expires in {{ certificate_info.days_until_expiry }} days
+                </span>
+                {% endif %}
+            </p>
+        </div>
+        {% endif %}
+
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Issuer</h4>
+            <p>{{ certificate_info.issuer|default:"N/A" }}</p>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Subject</h4>
+            <p>{{ certificate_info.subject|default:"N/A" }}</p>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Valid From</h4>
+            <p>{{ certificate_info.valid_from|default:"N/A" }}</p>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Valid Until</h4>
+            <p>{{ certificate_info.valid_until|default:"N/A" }}</p>
+        </div>
+
+        {% if certificate_info.serial_number %}
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Serial Number</h4>
+            <p style="font-family:monospace; font-size:0.9rem; word-break:break-all;">{{ certificate_info.serial_number }}</p>
+        </div>
+        {% endif %}
+
+        {% if certificate_info.signature_algorithm %}
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Signature Algorithm</h4>
+            <p>{{ certificate_info.signature_algorithm }}</p>
+        </div>
+        {% endif %}
+
+        {% if certificate_info.version %}
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Version</h4>
+            <p>{{ certificate_info.version }}</p>
+        </div>
+        {% endif %}
+
+        {% if certificate_info.sans %}
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Subject Alternative Names (SANs)</h4>
+            <ul style="margin:0.5rem 0; padding-left:1.5rem;">
+                {% for san in certificate_info.sans %}
+                <li>{{ san }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+</section>
+
+{% include 'app/fragments/seo/ssl-certificate-checker-seo.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('clearSslBtn')?.addEventListener('click', () => {
+        document.getElementById('domainInput').value = '';
+        document.getElementById('domainInput').focus();
+    });
+</script>
+{% endblock %}
+

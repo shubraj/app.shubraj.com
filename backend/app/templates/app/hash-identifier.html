@@ -1,0 +1,121 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Hash Identifier - Identify Hash Type Online | Shub Raj Apps{% endblock %}
+
+{% block description %}Identify hash algorithm types from hash strings. Supports MD5, SHA-1, SHA-256, SHA-512, bcrypt, Argon2, and more. Free online hash identifier tool.{% endblock %}
+
+{% block keywords %}hash identifier, identify hash type, hash type detector, md5 sha1 sha256 identifier, hash algorithm detector{% endblock %}
+
+{% block og_title %}Hash Identifier - Free Online Tool{% endblock %}
+
+{% block og_description %}Identify hash algorithm types by analyzing hash strings. Detects MD5, SHA variants, bcrypt, and more.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">Hash Identifier</li>
+{% endblock %}
+
+{% block content %}
+<section class="hash-section">
+    <h2>Hash Identifier</h2>
+    <p>Paste a hash string to identify its algorithm type. Detects MD5, SHA variants, bcrypt, Argon2, and more based on length and format.</p>
+
+    {% if errors %}
+    <div class="feedback-container">
+        {% for err in errors %}
+        <div class="feedback-message error">{{ err }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" class="card">
+        {% csrf_token %}
+        <label for="hashInput">Hash String</label>
+        <textarea id="hashInput" name="hash" class="input-text" rows="4" 
+                  placeholder="Paste hash here (e.g., 5d41402abc4b2a76b9719d911017c592)">{{ hash_string }}</textarea>
+        <div class="action-buttons">
+            <button class="btn" type="submit">Identify Hash</button>
+            <button class="btn" type="button" id="clearHashBtn">Clear</button>
+        </div>
+    </form>
+
+    {% if hash_info %}
+    <div class="header-info" style="margin-top:1.5rem;">
+        <h3>Identification Results</h3>
+        
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Hash Length</h4>
+            <p>{{ hash_info.length }} characters</p>
+        </div>
+
+        {% if hash_info.most_likely %}
+        <div style="margin-bottom:1rem; padding:0.75rem; background:#064e3b; border-radius:0.5rem; border-left:4px solid #10b981;">
+            <p style="margin:0; color:#10b981; font-weight:600;">
+                Most Likely: <strong>{{ hash_info.most_likely }}</strong>
+            </p>
+        </div>
+        {% endif %}
+
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Possible Hash Types</h4>
+            {% if hash_info.possible_types %}
+            <div style="display:flex; flex-direction:column; gap:0.75rem;">
+                {% for hash_type in hash_info.possible_types %}
+                <div style="padding:0.75rem; background:#1f2937; border-radius:0.5rem; border-left:4px solid var(--accent-color);">
+                    <div style="display:flex; justify-content:space-between; align-items:start; flex-wrap:wrap; gap:0.5rem;">
+                        <div>
+                            <strong style="color:var(--accent-color); font-size:1.1rem;">{{ hash_type.type }}</strong>
+                            <p style="margin:0.25rem 0 0 0; opacity:0.9;">{{ hash_type.description }}</p>
+                        </div>
+                        <span style="padding:0.25rem 0.5rem; background:#374151; border-radius:0.25rem; font-size:0.85rem; white-space:nowrap;">
+                            {{ hash_type.confidence }}
+                        </span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p>No hash types identified.</p>
+            {% endif %}
+        </div>
+
+        {% if hash_info.hash_string %}
+        <div style="margin-bottom:1rem;">
+            <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Input Hash</h4>
+            <pre style="font-family:monospace; font-size:0.85rem; word-break:break-all; background:#1f2937; padding:0.75rem; border-radius:0.5rem; overflow-x:auto;">{{ hash_info.hash_string }}</pre>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="header-info" style="margin-top:1rem;">
+        <h3>Supported Hash Types</h3>
+        <ul style="columns:2; column-gap:2rem;">
+            <li>MD5</li>
+            <li>SHA-1</li>
+            <li>SHA-224</li>
+            <li>SHA-256</li>
+            <li>SHA-384</li>
+            <li>SHA-512</li>
+            <li>bcrypt</li>
+            <li>Argon2</li>
+            <li>PBKDF2</li>
+            <li>scrypt</li>
+            <li>CRC32</li>
+            <li>NTLM</li>
+        </ul>
+    </div>
+</section>
+
+{% include 'app/fragments/seo/hash-identifier-seo.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('clearHashBtn')?.addEventListener('click', () => {
+        document.getElementById('hashInput').value = '';
+        document.getElementById('hashInput').focus();
+    });
+</script>
+{% endblock %}
+

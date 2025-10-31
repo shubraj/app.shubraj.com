@@ -4,8 +4,8 @@
     --card-bg: #ffffff;
     --accent-color: #4a5568;
     --secondary-accent: #718096;
-    --header-bg: #1f2937;
-    --footer-bg: #1a202c;
+    --header-bg: #ffffff;
+    --footer-bg: #f8f9fa;
     --primary-btn: #ff5722;
 }
 
@@ -60,13 +60,14 @@ body {
 
 header {
     background-color: var(--header-bg);
-    color: #fff;
+    color: var(--text-color);
     padding: 1rem 0;
     position: sticky;
     top: 0;
     z-index: 100;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 1rem; /* Add space below header */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 nav {
@@ -89,7 +90,7 @@ nav ul {
 }
 
 nav a {
-    color: #fff;
+    color: var(--text-color);
     text-decoration: none;
     font-weight: 600;
     transition: color 0.3s ease;
@@ -327,6 +328,33 @@ footer a:hover {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+article {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+article header {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.tool-description {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    margin: 1rem 0;
 }
 
 .input-text, .output-text {
@@ -337,12 +365,16 @@ footer a:hover {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     resize: none;
     width: 100%;
+    max-width: 100%;
     height: 200px;
     border: none;
     font-family: 'Inter', monospace;
     font-size: 1rem;
     color: var(--text-color);
     line-height: 1.5;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .input-text:focus, .output-text:focus {
@@ -1587,5 +1619,693 @@ main {
     
     .seo-blog {
         padding: 1.5rem;
+    }
+}
+
+/* Security Headers Checker Styles */
+.security-header-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.security-header-item > div:first-child {
+    min-width: 0;
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
+}
+
+.security-header-item > div:first-child > div {
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.security-header-item strong,
+.security-header-item span {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+.security-score-container {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.security-score-container > div:first-child {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.security-score-container p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+section.hash-section {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.hash-section .card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.hash-section textarea,
+.hash-section input[type="text"],
+.hash-section input[type="url"] {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.header-info {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.cookie-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .security-header-item {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+    
+    .security-header-item > div:first-child {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .security-score-container {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+    
+    .security-score-container > div:first-child {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .cookie-stats {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* ASCII Art Generator Styles */
+.ascii-controls {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 0.75rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.ascii-font-selector {
+    flex: 1 1 200px;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.ascii-action-buttons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.ascii-preview {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.ascii-preview-content {
+    font-family: 'Courier New', 'Consolas', 'Monaco', monospace;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    white-space: pre;
+    overflow-x: auto;
+    background: #1f2937;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    color: #10b981;
+    margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+#asciiOutput {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+    .ascii-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .ascii-font-selector {
+        flex: 1 1 auto;
+        min-width: 0;
+        width: 100%;
+    }
+    
+    .ascii-action-buttons {
+        width: 100%;
+        justify-content: stretch;
+    }
+    
+    .ascii-action-buttons .btn {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+    
+    .ascii-preview-content {
+        font-size: 0.65rem;
+        padding: 0.75rem;
+        overflow-x: auto;
+        word-break: break-all;
+    }
+    
+    #asciiOutput {
+        font-size: 0.85rem;
+    }
+    
+    #asciiTextInput {
+        font-size: 0.9rem;
+    }
+}
+
+/* Redirect Chain Analyzer Styles */
+.redirect-chain-item {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    overflow-x: hidden;
+}
+
+.redirect-step-header {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.redirect-step-info {
+    min-width: 0;
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.redirect-step-status {
+    flex-shrink: 0;
+}
+
+.redirect-url-text {
+    font-family: monospace;
+    font-size: 0.85rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    box-sizing: border-box;
+    display: block;
+}
+
+.redirect-chain-item p,
+.redirect-chain-item span {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    .redirect-chain-item {
+        padding: 0.75rem !important;
+    }
+    
+    .redirect-step-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+    
+    .redirect-step-info {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .redirect-step-status {
+        width: 100%;
+        align-self: flex-start;
+    }
+    
+    .redirect-url-text {
+        font-size: 0.75rem;
+        word-break: break-all;
+    }
+    
+    .header-info {
+        padding: 1rem !important;
+    }
+}
+
+/* Morse Code Encoder/Decoder Styles */
+.morse-controls {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-top: 0.75rem;
+}
+
+.morse-controls-bottom {
+    margin-top: 0.75rem;
+}
+
+.morse-action-buttons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.morse-reference {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.morse-reference-section {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.morse-reference-text {
+    font-family: monospace;
+    font-size: 0.85rem;
+    line-height: 1.8;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+}
+
+.morse-reference p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    .morse-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+    
+    .morse-action-buttons {
+        width: 100%;
+        justify-content: stretch;
+        gap: 0.5rem;
+    }
+    
+    .morse-action-buttons .btn {
+        flex: 1 1 auto;
+        min-width: 0;
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+    }
+    
+    #morseTextInput,
+    #morseCodeInput {
+        font-size: 0.9rem;
+        padding: 0.75rem;
+    }
+    
+    .morse-reference-text {
+        font-size: 0.7rem;
+        line-height: 1.6;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .morse-reference-section {
+        overflow-x: hidden;
+    }
+    
+    .morse-reference ul {
+        font-size: 0.85rem;
+        padding-left: 1.25rem;
+    }
+    
+    .morse-reference-section h4 {
+        font-size: 1rem;
+    }
+    
+    .morse-preview-content {
+        font-size: 0.65rem;
+        padding: 0.75rem;
+        overflow-x: auto;
+        word-break: break-all;
+    }
+    
+    .header-info {
+        padding: 1rem !important;
+        margin: 1rem 0 !important;
+    }
+}
+
+/* Base64 Decoder/Encoder Responsive Styles */
+@media (max-width: 768px) {
+    article {
+        padding: 1rem;
+    }
+    
+    article header {
+        padding: 0;
+    }
+    
+    article h1 {
+        font-size: 1.5rem;
+    }
+    
+    .tool-description {
+        font-size: 0.9rem;
+        line-height: 1.6;
+        padding: 0;
+    }
+    
+    .decoder-section,
+    .encoder-section {
+        gap: 1.5rem;
+    }
+    
+    .input-text,
+    .output-text {
+        padding: 1rem;
+        font-size: 0.9rem;
+        height: 150px;
+    }
+    
+    .action-buttons {
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+    
+    .action-buttons .btn {
+        flex: 1 1 auto;
+        min-width: 120px;
+        font-size: 0.95rem;
+        padding: 0.6rem 1rem;
+    }
+    
+    .output-label {
+        font-size: 0.95rem;
+    }
+}
+
+/* Leet Speak Converter Styles */
+.leet-controls {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 0.75rem;
+}
+
+.leet-level-selector {
+    flex: 1 1 250px;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.leet-action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+    flex: 1 1 auto;
+}
+
+.leet-reference {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.leet-reference-section {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.leet-reference-text {
+    font-family: monospace;
+    font-size: 0.85rem;
+    line-height: 1.8;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+}
+
+.leet-reference p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+#leetTextInput,
+#leetSpeakInput {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    resize: vertical;
+}
+
+/* Base64 Decoder Styles */
+.base64-controls {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 0.75rem;
+}
+
+.base64-action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+    flex: 1 1 auto;
+}
+
+.base64-reference {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.base64-reference-section {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.base64-reference-text {
+    font-family: inherit;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.base64-reference p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+#textInput,
+#textOutput {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    resize: vertical;
+}
+
+@media (max-width: 768px) {
+    .leet-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+    
+    .leet-level-selector {
+        width: 100%;
+        flex: 1 1 auto;
+    }
+    
+    .leet-level-selector select {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+    
+    .leet-action-buttons {
+        width: 100%;
+        justify-content: stretch;
+        gap: 0.5rem;
+    }
+    
+    .leet-action-buttons .btn {
+        flex: 1 1 auto;
+        min-width: 0;
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+    }
+    
+    #leetTextInput,
+    #leetSpeakInput {
+        font-size: 0.9rem;
+        padding: 0.75rem;
+    }
+    
+    .leet-reference-text {
+        font-size: 0.7rem;
+        line-height: 1.6;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .leet-reference-section {
+        overflow-x: hidden;
+    }
+    
+    .leet-reference ul {
+        font-size: 0.85rem;
+        padding-left: 1.25rem;
+    }
+    
+    .leet-reference-section h4 {
+        font-size: 1rem;
+    }
+    
+    .header-info {
+        padding: 1rem !important;
+        margin: 1rem 0 !important;
+    }
+
+    /* Base64 Decoder Mobile Styles */
+    .base64-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .base64-action-buttons {
+        width: 100%;
+        justify-content: stretch;
+        gap: 0.5rem;
+    }
+
+    .base64-action-buttons .btn {
+        flex: 1 1 auto;
+        min-width: 0;
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+    }
+
+    #textInput,
+    #textOutput {
+        font-size: 0.9rem;
+        padding: 0.75rem;
+    }
+
+    .base64-reference-text {
+        font-size: 0.85rem;
+        line-height: 1.5;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .base64-reference-section {
+        overflow-x: hidden;
+    }
+
+    .base64-reference ul {
+        font-size: 0.85rem;
+        padding-left: 1.25rem;
+    }
+
+    .base64-reference-section h4 {
+        font-size: 1rem;
     }
 }

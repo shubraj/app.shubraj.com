@@ -1,0 +1,84 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Morse Code Encoder & Decoder - Convert Text to Morse Code | Shub Raj Apps{% endblock %}
+
+{% block description %}Encode text to Morse code and decode Morse code back to text. Free online Morse code converter with audio playback support.{% endblock %}
+
+{% block keywords %}morse code encoder, morse code decoder, text to morse code, morse code converter, morse code translator{% endblock %}
+
+{% block og_title %}Morse Code Encoder & Decoder - Free Online Tool{% endblock %}
+
+{% block og_description %}Convert text to Morse code and decode Morse code back to text instantly. Includes audio playback for learning.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">Morse Code Encoder & Decoder</li>
+{% endblock %}
+
+{% block content %}
+<section class="hash-section">
+    <h2>Morse Code Encoder & Decoder</h2>
+    <p>Encode text to Morse code (dots and dashes) or decode Morse code back to text. Includes audio playback for learning Morse code.</p>
+
+    <div class="card" style="width:100%; max-width:100%; box-sizing:border-box;">
+        <label for="morseTextInput">Text Input</label>
+        <textarea id="morseTextInput" class="input-text" rows="4" placeholder="Enter text to encode to Morse code..." style="width:100%; max-width:100%; box-sizing:border-box;"></textarea>
+
+        <div class="morse-controls">
+            <div class="morse-action-buttons">
+                <button class="btn" id="morseEncodeBtn">Encode to Morse</button>
+                <button class="btn" id="morseDecodeBtn">Decode from Morse</button>
+                <button class="btn" id="morseClearBtn">Clear</button>
+            </div>
+        </div>
+
+        <label class="output-label" for="morseCodeInput">Morse Code</label>
+        <textarea id="morseCodeInput" class="output-text" rows="6" placeholder="Morse code will appear here... (e.g., .... . .-.. .-.. --- / .-- --- .-. .-.. -..)" style="width:100%; max-width:100%; box-sizing:border-box;"></textarea>
+
+        <div class="morse-controls morse-controls-bottom">
+            <div class="morse-action-buttons">
+                <button class="btn" id="copyTextBtn" disabled>Copy Text</button>
+                <button class="btn" id="copyMorseBtn" disabled>Copy Morse</button>
+                <button class="btn" id="playMorseBtn" disabled>🔊 Play Morse</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-info" style="margin-top:1rem;">
+        <h3>Morse Code Reference</h3>
+        <div class="morse-reference">
+            <div class="morse-reference-section">
+                <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Letters</h4>
+                <p class="morse-reference-text">
+                    A: .- &nbsp; B: -... &nbsp; C: -.-. &nbsp; D: -.. &nbsp; E: . &nbsp; F: ..-. &nbsp; G: --. &nbsp; H: ....<br>
+                    I: .. &nbsp; J: .--- &nbsp; K: -.- &nbsp; L: .-.. &nbsp; M: -- &nbsp; N: -. &nbsp; O: --- &nbsp; P: .--.<br>
+                    Q: --.- &nbsp; R: .-. &nbsp; S: ... &nbsp; T: - &nbsp; U: ..- &nbsp; V: ...- &nbsp; W: .-- &nbsp; X: -..-<br>
+                    Y: -.-- &nbsp; Z: --..
+                </p>
+            </div>
+            <div class="morse-reference-section" style="margin-top:1rem;">
+                <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Numbers</h4>
+                <p class="morse-reference-text">
+                    0: ----- &nbsp; 1: .---- &nbsp; 2: ..--- &nbsp; 3: ...-- &nbsp; 4: ....- &nbsp; 5: .....<br>
+                    6: -.... &nbsp; 7: --... &nbsp; 8: ---.. &nbsp; 9: ----.
+                </p>
+            </div>
+            <div class="morse-reference-section" style="margin-top:1rem;">
+                <h4 style="color:var(--accent-color); margin-bottom:0.5rem;">Formatting Rules</h4>
+                <ul style="margin:0.5rem 0; padding-left:1.5rem;">
+                    <li>Letters are separated by spaces</li>
+                    <li>Words are separated by " / " (space-slash-space)</li>
+                    <li>Example: "HELLO WORLD" = ".... . .-.. .-.. --- / .-- --- .-. .-.. -.."</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include 'app/fragments/seo/morse-code-encoder-decoder-seo.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/morseCode.js' %}"></script>
+{% endblock %}
+

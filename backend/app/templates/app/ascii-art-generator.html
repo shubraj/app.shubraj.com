@@ -1,0 +1,68 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}ASCII Art Generator - Create Text Art Online | Shub Raj Apps{% endblock %}
+
+{% block description %}Generate ASCII art from text instantly. Create beautiful text-based art for code comments, README files, banners, and more. Free online tool.{% endblock %}
+
+{% block keywords %}ascii art generator, text art generator, ascii art maker, create ascii art, text to ascii, banner generator, code art{% endblock %}
+
+{% block og_title %}ASCII Art Generator - Free Online Tool{% endblock %}
+
+{% block og_description %}Convert text to ASCII art instantly. Perfect for code comments, documentation, and creative projects.{% endblock %}
+
+{% block breadcrumb_items %}
+<li aria-current="page">ASCII Art Generator</li>
+{% endblock %}
+
+{% block content %}
+<section class="hash-section">
+    <h2>ASCII Art Generator</h2>
+    <p>Enter text to generate ASCII art. Perfect for code comments, README files, and creative projects.</p>
+
+    <div class="card">
+        <label for="asciiTextInput">Enter Text</label>
+        <textarea id="asciiTextInput" class="input-text" rows="4" placeholder="Enter text here... (e.g., HELLO WORLD)"></textarea>
+
+        <div class="ascii-controls">
+            <div class="ascii-font-selector">
+                <label for="asciiFont">Font Style</label>
+                <select id="asciiFont" class="text-input">
+                    <option value="standard" selected>Standard</option>
+                    <option value="block">Block</option>
+                </select>
+            </div>
+            <div class="ascii-action-buttons">
+                <button class="btn" id="asciiShowBtn">Preview</button>
+                <button class="btn" id="asciiCopyBtn" disabled>Copy Output</button>
+                <button class="btn" id="asciiClearBtn">Clear</button>
+            </div>
+        </div>
+
+        <label class="output-label" for="asciiOutput">ASCII Art Output</label>
+        <textarea id="asciiOutput" class="output-text" rows="12" readonly placeholder="ASCII art will appear here..."></textarea>
+
+        <div id="asciiPreview" class="header-info ascii-preview" style="display:none; margin-top:1rem;">
+            <h3>Preview</h3>
+            <pre id="asciiPreviewContent" class="ascii-preview-content"></pre>
+        </div>
+    </div>
+
+    <div class="header-info" style="margin-top:1rem;">
+        <h3>Tips</h3>
+        <ul>
+            <li>Uppercase letters generally produce better results</li>
+            <li>Keep text short for best visual effect (recommended: 10-15 characters)</li>
+            <li>Use the preview to see how it looks in monospace font</li>
+            <li>Works great for code comments, banners, and documentation</li>
+        </ul>
+    </div>
+</section>
+
+{% include 'app/fragments/seo/ascii-art-generator-seo.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'app/js/asciiArtGenerator.js' %}"></script>
+{% endblock %}
+

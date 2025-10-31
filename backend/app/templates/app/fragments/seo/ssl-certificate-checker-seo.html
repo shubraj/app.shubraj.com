@@ -1,0 +1,41 @@
+<section class="seo-blog">
+  <h2>Verify SSL Certificates and Monitor Expiration</h2>
+  <p>Check SSL/TLS certificate details for any domain to confirm validity, expiration dates, issuer information, and certificate chain. Useful for monitoring your own sites or auditing third‑party endpoints.</p>
+
+  <h3>What This Tool Shows</h3>
+  <ul>
+    <li><strong>Validity status:</strong> Valid, expired, or expiring soon (within 30 days).</li>
+    <li><strong>Issuer information:</strong> Certificate Authority (CA) that issued the certificate.</li>
+    <li><strong>Expiration dates:</strong> When the certificate was issued and when it expires.</li>
+    <li><strong>Subject details:</strong> Domain or organization name on the certificate.</li>
+    <li><strong>Subject Alternative Names:</strong> Additional domains covered by the certificate.</li>
+  </ul>
+
+  <h3>Use Cases</h3>
+  <ul>
+    <li><strong>Monitoring:</strong> Track expiration dates for your domains and subdomains.</li>
+    <li><strong>Troubleshooting:</strong> Verify certificate configuration when debugging connection issues.</li>
+    <li><strong>Audits:</strong> Check certificate details for partner sites or API endpoints.</li>
+    <li><strong>Compliance:</strong> Ensure certificates meet policy requirements.</li>
+  </ul>
+
+  <h3>Important Notes</h3>
+  <ul>
+    <li>Certificates expiring within 30 days are flagged as "expiring soon"—renew them promptly.</li>
+    <li>Some certificates may include multiple domains via Subject Alternative Names (SANs).</li>
+    <li>If a domain doesn't have SSL/TLS, you'll see a connection error.</li>
+  </ul>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"How do I check if an SSL certificate is valid?","acceptedAnswer":{"@type":"Answer","text":"Enter the domain name (without https://). The tool shows validity status, expiration date, and days remaining."}},
+    {"@type":"Question","name":"What does 'expiring soon' mean?","acceptedAnswer":{"@type":"Answer","text":"Certificates with 30 days or less until expiration are flagged. Renew them before they expire to avoid service disruption."}},
+    {"@type":"Question","name":"Why can't I check some domains?","acceptedAnswer":{"@type":"Answer","text":"Domains without SSL/TLS, with connection issues, or behind firewalls may not be checkable. Ensure the domain supports HTTPS on port 443."}}
+  ]
+}
+</script>
+
